@@ -1,0 +1,38 @@
+# Activar RewriteEngine
+RewriteEngine on
+
+RewriteCond %{SERVER_PORT} 80
+
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+
+#   Reescribir la URL solicitada por el usuario
+
+#   Home
+RewriteRule ^inicio$ /index.php [L]
+
+#   PQR online
+#   Entrada: pqr_online/NOMBRE_PRODUCTO/
+#   Salida: productos.php?id=NOMBRE_PRODUCTO
+RewriteRule ^pqr_online$ /modulos/pqr_online/index.php [L]
+
+#   Entrada: pqr_online/registro/
+RewriteRule ^pqr_registro /modulos/pqr_online/registro/index.php
+RewriteRule ^pqr_panel /modulos/pqr_online/panel.php [L]
+
+RewriteRule ^pqr_nueva_solicitud /modulos/pqr_online/solicitudes/nueva_solicitud/index.php [L]
+RewriteRule ^pqr_mis_solicitudes /modulos/pqr_online/solicitudes/ver_solicitudes/index.php [L]
+# RewriteRule ^pqr_ver_solicitude/(.*)$  /modulos/pqr_online/solicitudes/mis_solicitudes.php?id=$1 [L]
+
+
+
+#************************************************************************************************
+# VENTANILLA
+#************************************************************************************************
+
+#   PQR
+# RewriteRule ^pqr_pendientes  /modulos/ventanilla/pqrsf/pendientes/index.php [L]
+RewriteRule ^pqr_tramitar/(.*)$  /modulos/ventanilla/pqrsf/pendientes/tramitar.php?id=$1 [L]

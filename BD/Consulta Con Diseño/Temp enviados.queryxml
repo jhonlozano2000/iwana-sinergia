@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querybuilder version="8.3">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_general_ci">iwana_local</database>
+</source>
+<canvas>
+<table tablename="archivo_radica_enviados_temp_quienes_firman" alias="temp_funcio_firma" left="304" top="155" width="150" height="113" />
+<table tablename="archivo_radica_enviados_temp" alias="Temp" left="109" top="27" width="150" height="398" />
+<table tablename="gene_funcionarios_deta" alias="funcio_firma_deta" left="464" top="156" width="150" height="113" />
+<table tablename="areas_oficinas" alias="ofi_firma" left="782" top="156" width="150" height="113" />
+<table tablename="areas_dependencias" alias="depen_firma" left="947" top="156" width="150" height="113" />
+<table tablename="archivo_trd_series" alias="serie" left="300" top="30" width="150" height="113" />
+<table tablename="archivo_trd_subserie" alias="sub_serie" left="466" top="28" width="150" height="113" />
+<table tablename="archivo_trd_tipo_docu" alias="tip_docu" left="624" top="32" width="150" height="113" />
+<table tablename="config_saludo" alias="saludo" left="303" top="430" width="150" height="113" />
+<table tablename="config_status" alias="status" left="469" top="431" width="150" height="113" />
+<table tablename="config_despedida" alias="despedida" left="630" top="430" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="funcio_firma" left="624" top="157" width="150" height="113" />
+<table tablename="gene_terceros_contac" alias="contac" left="304" top="559" width="150" height="203" />
+<table tablename="gene_terceros_empresas" alias="empre" left="731" top="557" width="150" height="173" />
+<table tablename="config_muni" alias="muni_contac" left="469" top="649" width="150" height="113" />
+<table tablename="config_depar" alias="depar_contac" left="306" top="649" width="150" height="188" />
+<table tablename="config_muni" alias="muni_empre" left="974" top="607" width="150" height="113" />
+<table tablename="config_depar" alias="depar_empre" left="790" top="616" width="150" height="113" />
+<table tablename="archivo_radica_enviados_temp_responsa" alias="temp_funcio_respon" left="304" top="281" width="150" height="113" />
+<table tablename="gene_funcionarios_deta" alias="funcio_respon_deta" left="464" top="282" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="funcio_respon" left="624" top="283" width="150" height="113" />
+<table tablename="areas_oficinas" alias="ofi_respon" left="785" top="282" width="150" height="113" />
+<table tablename="areas_dependencias" alias="depen_respon" left="949" top="282" width="150" height="113" />
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_temp_quienes_firman" alias = "temp_funcio_firma">id_temp</from>
+<to tablename = "archivo_radica_enviados_temp" alias = "Temp">id_temp</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_temp_quienes_firman" alias = "temp_funcio_firma">id_funcio_deta</from>
+<to tablename = "gene_funcionarios_deta" alias = "funcio_firma_deta">id_funcio_deta</to>
+</join>
+<join type = "Left Join">
+<from tablename = "archivo_radica_enviados_temp" alias = "Temp">id_serie</from>
+<to tablename = "archivo_trd_series" alias = "serie">id_serie</to>
+</join>
+<join type = "Left Join">
+<from tablename = "archivo_radica_enviados_temp" alias = "Temp">id_subserie</from>
+<to tablename = "archivo_trd_subserie" alias = "sub_serie">id_subserie</to>
+</join>
+<join type = "Left Join">
+<from tablename = "archivo_radica_enviados_temp" alias = "Temp">id_tipodoc</from>
+<to tablename = "archivo_trd_tipo_docu" alias = "tip_docu">id_tipodoc</to>
+</join>
+<join type = "Left Join">
+<from tablename = "archivo_radica_enviados_temp" alias = "Temp">id_saludo</from>
+<to tablename = "config_saludo" alias = "saludo">id_saludo</to>
+</join>
+<join type = "Left Join">
+<from tablename = "archivo_radica_enviados_temp" alias = "Temp">id_status</from>
+<to tablename = "config_status" alias = "status">id_status</to>
+</join>
+<join type = "Left Join">
+<from tablename = "archivo_radica_enviados_temp" alias = "Temp">id_despedida</from>
+<to tablename = "config_despedida" alias = "despedida">id_despedida</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_firma_deta">id_oficina</from>
+<to tablename = "areas_oficinas" alias = "ofi_firma">id_oficina</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_firma_deta">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "funcio_firma">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "areas_oficinas" alias = "ofi_firma">id_depen</from>
+<to tablename = "areas_dependencias" alias = "depen_firma">id_depen</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_terceros_contac" alias = "contac">id_tercero</from>
+<to tablename = "archivo_radica_enviados_temp" alias = "Temp">id_destina</to>
+</join>
+<join type = "Left Join">
+<from tablename = "gene_terceros_contac" alias = "contac">id_empre</from>
+<to tablename = "gene_terceros_empresas" alias = "empre">id_empre</to>
+</join>
+<join type = "Left Join">
+<from tablename = "gene_terceros_contac" alias = "contac">id_muni</from>
+<to tablename = "config_muni" alias = "muni_contac">id_muni</to>
+</join>
+<join type = "Left Join">
+<from tablename = "gene_terceros_contac" alias = "contac">id_depar</from>
+<to tablename = "config_depar" alias = "depar_contac">id_depar</to>
+</join>
+<join type = "Left Join">
+<from tablename = "gene_terceros_empresas" alias = "empre">id_muni</from>
+<to tablename = "config_muni" alias = "muni_empre">id_muni</to>
+</join>
+<join type = "Left Join">
+<from tablename = "gene_terceros_empresas" alias = "empre">id_depar</from>
+<to tablename = "config_depar" alias = "depar_empre">id_depar</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_temp_responsa" alias = "temp_funcio_respon">id_temp</from>
+<to tablename = "archivo_radica_enviados_temp" alias = "Temp">id_temp</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_temp_responsa" alias = "temp_funcio_respon">id_funcio_deta</from>
+<to tablename = "gene_funcionarios_deta" alias = "funcio_respon_deta">id_funcio_deta</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_respon_deta">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "funcio_respon">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_respon_deta">id_oficina</from>
+<to tablename = "areas_oficinas" alias = "ofi_respon">id_oficina</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "areas_oficinas" alias = "ofi_respon">id_depen</from>
+<to tablename = "areas_dependencias" alias = "depen_respon">id_depen</to>
+</join>
+</canvas>
+<grid>
+<column id="1">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>id_temp</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>= 37</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="2">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>id_temp</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="3">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>fechor_registro</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="4">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>asunto</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="5">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>con_copia</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="6">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>anexos</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="7">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>adjunto</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="8">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>terminado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="9">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>existen_proyectores</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="10">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>nom_archivo</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="11">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>genera_plantilla</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="12">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>plantilla_cargada</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="13">
+<table tablename="archivo_radica_enviados_temp">Temp</table>
+<field>radicado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="14">
+<table tablename="archivo_trd_series">serie</table>
+<field>cod_serie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="15">
+<table tablename="archivo_trd_series">serie</table>
+<field>nom_serie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="16">
+<table tablename="archivo_trd_subserie">sub_serie</table>
+<field>cod_subserie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="17">
+<table tablename="archivo_trd_subserie">sub_serie</table>
+<field>nom_subserie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="18">
+<table tablename="archivo_trd_tipo_docu">tip_docu</table>
+<field>nom_tipodoc</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="19">
+<table tablename="gene_funcionarios">funcio_firma</table>
+<field>cod_funcio</field>
+<alias>cod_funcio_firma</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="20">
+<table tablename="gene_funcionarios">funcio_firma</table>
+<field>nom_funcio</field>
+<alias>nom_funcio_firma</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="21">
+<table tablename="gene_funcionarios">funcio_firma</table>
+<field>ape_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="22">
+<table tablename="gene_funcionarios">funcio_firma</table>
+<field>genero</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="23">
+<table tablename="areas_oficinas">ofi_firma</table>
+<field>cod_oficina</field>
+<alias>cod_oficina_firma</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="24">
+<table tablename="areas_oficinas">ofi_firma</table>
+<field>cod_corres</field>
+<alias>cod_corres_firma</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="25">
+<table tablename="areas_oficinas">ofi_firma</table>
+<field>nom_oficina</field>
+<alias>nom_oficina_firma</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="26">
+<table tablename="areas_dependencias">depen_firma</table>
+<field>cod_depen</field>
+<alias>cod_depen_firma</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="27">
+<table tablename="areas_dependencias">depen_firma</table>
+<field>cod_corres</field>
+<alias>cod_corres_firma</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="28">
+<table tablename="areas_dependencias">depen_firma</table>
+<field>nom_depen</field>
+<alias>nom_depen_firma</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="29">
+<table tablename="config_saludo">saludo</table>
+<field>saludo</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="30">
+<table tablename="config_status">status</table>
+<field>status</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="31">
+<table tablename="config_despedida">despedida</table>
+<field>despedida</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="32">
+<table tablename="gene_terceros_contac">contac</table>
+<field>num_docu</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="33">
+<table tablename="gene_terceros_contac">contac</table>
+<field>nom_contac</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="34">
+<table tablename="gene_terceros_contac">contac</table>
+<field>dir</field>
+<alias>dir_contac</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="35">
+<table tablename="gene_terceros_contac">contac</table>
+<field>tel</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="36">
+<table tablename="gene_terceros_contac">contac</table>
+<field>cel</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="37">
+<table tablename="gene_terceros_contac">contac</table>
+<field>cargo</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="38">
+<table tablename="config_depar">depar_contac</table>
+<field>nom_depar</field>
+<alias>nom_depar_contac</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="39">
+<table tablename="config_muni">muni_contac</table>
+<field>nom_muni</field>
+<alias>nom_muni_contac</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="40">
+<table tablename="gene_terceros_empresas">empre</table>
+<field>nit_empre</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="41">
+<table tablename="gene_terceros_empresas">empre</table>
+<field>razo_soci</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="42">
+<table tablename="gene_terceros_empresas">empre</table>
+<field>dir</field>
+<alias>dir_empre</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="43">
+<table tablename="gene_terceros_empresas">empre</table>
+<field>tel</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="44">
+<table tablename="gene_terceros_empresas">empre</table>
+<field>cel</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="45">
+<table tablename="config_depar">depar_empre</table>
+<field>nom_depar</field>
+<alias>nom_depar_empre</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="46">
+<table tablename="config_muni">muni_empre</table>
+<field>nom_muni</field>
+<alias>nom_muni_empre</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="47">
+<table tablename="archivo_radica_enviados_temp_quienes_firman">temp_funcio_firma</table>
+<field>firma_principal</field>
+<alias></alias>
+<show>false</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>= 1</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="48">
+<table tablename="gene_funcionarios">funcio_respon</table>
+<field>cod_funcio</field>
+<alias>cod_funcio_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="49">
+<table tablename="gene_funcionarios">funcio_respon</table>
+<field>nom_funcio</field>
+<alias>nom_funcio_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="50">
+<table tablename="gene_funcionarios">funcio_respon</table>
+<field>ape_funcio</field>
+<alias>ape_funcio_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="51">
+<table tablename="areas_oficinas">ofi_respon</table>
+<field>cod_oficina</field>
+<alias>cod_oficina_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="52">
+<table tablename="areas_oficinas">ofi_respon</table>
+<field>cod_corres</field>
+<alias>cod_corres_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="53">
+<table tablename="areas_oficinas">ofi_respon</table>
+<field>nom_oficina</field>
+<alias>nom_oficina_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="54">
+<table tablename="areas_dependencias">depen_respon</table>
+<field>cod_depen</field>
+<alias>cod_depen_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="55">
+<table tablename="areas_dependencias">depen_respon</table>
+<field>cod_corres</field>
+<alias>cod_corres_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="56">
+<table tablename="areas_dependencias">depen_respon</table>
+<field>nom_depen</field>
+<alias>nom_depen_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+</grid>
+</querybuilder>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querybuilder version="8.3">
+<source>
+<database charset="utf8mb3" collation="utf8mb3_general_ci">iwana_espinal</database>
+</source>
+<canvas>
+<table tablename="archivo_radica_recibidos" alias="ra" left="17" top="15" width="249" height="518" />
+<table tablename="gene_terceros_contac" alias="contac" left="317" top="19" width="150" height="173" />
+<table tablename="archivo_radica_recibidos_pqrsf" alias="qpr" left="498" top="163" width="216" height="323" />
+<table tablename="config_formaenvio" alias="" left="319" top="209" width="150" height="143" />
+<table tablename="config_depar" alias="depar_peticio" left="501" top="27" width="150" height="113" />
+<table tablename="config_muni" alias="muni_peticio" left="665" top="31" width="150" height="113" />
+<table tablename="config_depar" alias="depar_afecta" left="732" top="165" width="150" height="113" />
+<table tablename="config_muni" alias="muni_afecta" left="896" top="168" width="150" height="113" />
+<table tablename="config_regimen" alias="regimen" left="752" top="305" width="150" height="113" />
+<table tablename="config_tipo_correspondencia" alias="tipo_soli" left="952" top="312" width="150" height="113" />
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos" alias = "ra">id_remite</from>
+<to tablename = "gene_terceros_contac" alias = "contac">id_tercero</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_terceros_contac" alias = "contac">id_depar</from>
+<to tablename = "config_depar" alias = "depar_peticio">id_depar</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_terceros_contac" alias = "contac">id_muni</from>
+<to tablename = "config_muni" alias = "muni_peticio">id_muni</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos_pqrsf" alias = "qpr">id_radica</from>
+<to tablename = "archivo_radica_recibidos" alias = "ra">id_radica</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos" alias = "ra">id_forma_llegada</from>
+<to tablename = "config_formaenvio" alias = "">id_formaenvio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos_pqrsf" alias = "qpr">id_depar_afectado</from>
+<to tablename = "config_depar" alias = "depar_afecta">id_depar</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos_pqrsf" alias = "qpr">id_muni_afectado</from>
+<to tablename = "config_muni" alias = "muni_afecta">id_muni</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos_pqrsf" alias = "qpr">id_regimen</from>
+<to tablename = "config_regimen" alias = "regimen">id_regimen</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos_pqrsf" alias = "qpr">id_tipodocumental</from>
+<to tablename = "config_tipo_correspondencia" alias = "tipo_soli">id_tipo</to>
+</join>
+</canvas>
+<grid>
+<column id="1">
+<table tablename="archivo_radica_recibidos">ra</table>
+<field>id_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="2">
+<table tablename="archivo_radica_recibidos">ra</table>
+<field>fechor_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="3">
+<table tablename="gene_terceros_contac">contac</table>
+<field>num_docu</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="4">
+<table tablename="gene_terceros_contac">contac</table>
+<field>nom_contac</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="5">
+<table tablename="config_depar">depar_peticio</table>
+<field>nom_depar</field>
+<alias>depar_peticio</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="6">
+<table tablename="config_muni">muni_peticio</table>
+<field>nom_muni</field>
+<alias>muni_peticio</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="7">
+<table tablename="gene_terceros_contac">contac</table>
+<field>dir</field>
+<alias>dir_peticio</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="8">
+<table tablename="gene_terceros_contac">contac</table>
+<field>tel</field>
+<alias>tel_peticio</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="9">
+<table tablename="gene_terceros_contac">contac</table>
+<field>cel</field>
+<alias>cel_peticio</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="10">
+<table tablename="archivo_radica_recibidos_pqrsf">qpr</table>
+<field>num_docu_afectado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="11">
+<table tablename="archivo_radica_recibidos_pqrsf">qpr</table>
+<field>nom_afectado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="12">
+<table tablename="config_depar">depar_afecta</table>
+<field>nom_depar</field>
+<alias>depar_afectado</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="13">
+<table tablename="config_muni">muni_afecta</table>
+<field>nom_muni</field>
+<alias>muni_afectado</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="14">
+<table tablename="archivo_radica_recibidos_pqrsf">qpr</table>
+<field>dir_afectado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="15">
+<table tablename="archivo_radica_recibidos_pqrsf">qpr</table>
+<field>tel_afectado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="16">
+<table tablename="archivo_radica_recibidos_pqrsf">qpr</table>
+<field>movil_afectado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="17">
+<table tablename="archivo_radica_recibidos_pqrsf">qpr</table>
+<field>detalle_solicitud</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="18">
+<table tablename="archivo_radica_recibidos_pqrsf">qpr</table>
+<field>fallo_judicial</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="19">
+<table tablename="archivo_radica_recibidos">ra</table>
+<field>id_serie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>is null</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="20">
+<table tablename="archivo_radica_recibidos">ra</table>
+<field>id_subserie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>is null</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="21">
+<table tablename="config_formaenvio"></table>
+<field>nom_formaenvi</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="22">
+<table tablename="config_regimen">regimen</table>
+<field>nom_regimen</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="23">
+<table tablename="config_tipo_correspondencia">tipo_soli</table>
+<field>nom_tipo</field>
+<alias>tipo_solicitud</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+</grid>
+</querybuilder>

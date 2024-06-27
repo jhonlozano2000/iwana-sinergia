@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querybuilder version="8.3">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_general_ci">iwana_espinal</database>
+</source>
+<canvas>
+<table tablename="archivo_radica_recibidos" alias="" left="43" top="63" width="150" height="248" />
+<table tablename="archivo_trd_series" alias="" left="232" top="87" width="150" height="113" />
+<table tablename="archivo_trd_subserie" alias="" left="424" top="88" width="150" height="113" />
+<table tablename="archivo_trd_tipo_docu" alias="" left="648" top="109" width="150" height="113" />
+<table tablename="archivo_radica_recibidos_responsa" alias="" left="243" top="225" width="150" height="113" />
+<table tablename="gene_funcionarios_deta" alias="" left="466" top="240" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="" left="693" top="245" width="150" height="143" />
+<table tablename="areas_oficinas" alias="" left="871" top="98" width="150" height="113" />
+<table tablename="areas_dependencias" alias="" left="968" top="249" width="150" height="113" />
+<table tablename="gene_terceros_contac" alias="" left="140" top="350" width="150" height="113" />
+<table tablename="gene_terceros_empresas" alias="" left="374" top="365" width="150" height="113" />
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos" alias = "">id_serie</from>
+<to tablename = "archivo_trd_series" alias = "">id_serie</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos" alias = "">id_subserie</from>
+<to tablename = "archivo_trd_subserie" alias = "">id_subserie</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos" alias = "">id_tipodoc</from>
+<to tablename = "archivo_trd_tipo_docu" alias = "">id_tipodoc</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos_responsa" alias = "">id_radica</from>
+<to tablename = "archivo_radica_recibidos" alias = "">id_radica</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos_responsa" alias = "">id_funcio</from>
+<to tablename = "gene_funcionarios_deta" alias = "">id_funcio_deta</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "">id_oficina</from>
+<to tablename = "areas_oficinas" alias = "">id_oficina</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "areas_oficinas" alias = "">id_depen</from>
+<to tablename = "areas_dependencias" alias = "">id_depen</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos" alias = "">id_remite</from>
+<to tablename = "gene_terceros_contac" alias = "">id_tercero</to>
+</join>
+<join type = "Left Join">
+<from tablename = "gene_terceros_contac" alias = "">id_empre</from>
+<to tablename = "gene_terceros_empresas" alias = "">id_empre</to>
+</join>
+</canvas>
+<grid>
+<column id="1">
+<table tablename="archivo_radica_recibidos"></table>
+<field>id_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="2">
+<table tablename="archivo_radica_recibidos"></table>
+<field>fechor_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>between '2020-01-01' and '2020-05-05'</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="3">
+<table tablename="archivo_radica_recibidos"></table>
+<field>fec_docu</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="4">
+<table tablename="archivo_radica_recibidos"></table>
+<field>fec_venci</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="5">
+<table tablename="archivo_radica_recibidos"></table>
+<field>asunto</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="6">
+<table tablename="archivo_trd_series"></table>
+<field>nom_serie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="7">
+<table tablename="archivo_trd_subserie"></table>
+<field>nom_subserie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="8">
+<table tablename="archivo_trd_tipo_docu"></table>
+<field>nom_tipodoc</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="9">
+<table tablename="areas_dependencias"></table>
+<field>nom_depen</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="10">
+<table tablename="areas_oficinas"></table>
+<field>nom_oficina</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="11">
+<table tablename="gene_funcionarios"></table>
+<field>nom_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="12">
+<table tablename="gene_funcionarios"></table>
+<field>ape_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="13">
+<table tablename="archivo_radica_recibidos_responsa"></table>
+<field>respon</field>
+<alias></alias>
+<show>false</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>= 1</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="14">
+<table tablename="gene_terceros_contac"></table>
+<field>nom_contac</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="15">
+<table tablename="gene_terceros_empresas"></table>
+<field>razo_soci</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>LIKE '%comparta%'</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="16">
+<table tablename="archivo_radica_recibidos"></table>
+<field>radica_respuesta</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+</grid>
+</querybuilder>

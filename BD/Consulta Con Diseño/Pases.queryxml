@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querybuilder version="8.3">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_general_ci">chaparral</database>
+</source>
+<canvas>
+<table tablename="archivo_radica_recibidos_pase" alias="pase" left="45" top="31" width="150" height="203" />
+<table tablename="gene_funcionarios_deta" alias="funcio_deta_origen" left="223" top="28" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="funcio_oprigen" left="394" top="33" width="150" height="113" />
+<table tablename="gene_funcionarios_deta" alias="funcio_deta_desti" left="222" top="159" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="funcio_desti" left="394" top="163" width="150" height="113" />
+<table tablename="areas_oficinas" alias="ofi_origen" left="566" top="33" width="150" height="113" />
+<table tablename="areas_dependencias" alias="depen_origen" left="728" top="37" width="150" height="113" />
+<table tablename="areas_oficinas" alias="ofi_desti" left="564" top="174" width="150" height="113" />
+<table tablename="areas_dependencias" alias="depen_desti" left="738" top="181" width="150" height="113" />
+<join type = "Inner Join">
+<from tablename = "archivo_radica_recibidos_pase" alias = "pase">id_funcio_deta_origen</from>
+<to tablename = "gene_funcionarios_deta" alias = "funcio_deta_origen">id_funcio_deta</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_deta_origen">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "funcio_oprigen">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_deta_origen">id_oficina</from>
+<to tablename = "areas_oficinas" alias = "ofi_origen">id_oficina</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_deta_desti">id_funcio_deta</from>
+<to tablename = "archivo_radica_recibidos_pase" alias = "pase">id_funcio_deta_destino</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_deta_desti">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "funcio_desti">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_deta_desti">id_oficina</from>
+<to tablename = "areas_oficinas" alias = "ofi_desti">id_oficina</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "areas_oficinas" alias = "ofi_origen">id_depen</from>
+<to tablename = "areas_dependencias" alias = "depen_origen">id_depen</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "areas_oficinas" alias = "ofi_desti">id_depen</from>
+<to tablename = "areas_dependencias" alias = "depen_desti">id_depen</to>
+</join>
+</canvas>
+<grid>
+<column id="1">
+<table tablename="archivo_radica_recibidos_pase">pase</table>
+<field>id_pase</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="2">
+<table tablename="archivo_radica_recibidos_pase">pase</table>
+<field>id_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder>1</sortorder>
+<sort>Ascending</sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>= '20200331-00766'</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="3">
+<table tablename="archivo_radica_recibidos_pase">pase</table>
+<field>fechor_pase</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="4">
+<table tablename="gene_funcionarios">funcio_oprigen</table>
+<field>nom_funcio</field>
+<alias>nom_funcio_origen</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="5">
+<table tablename="gene_funcionarios">funcio_oprigen</table>
+<field>ape_funcio</field>
+<alias>ape_funcio_origen</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="6">
+<table tablename="areas_dependencias">depen_origen</table>
+<field>nom_depen</field>
+<alias>nom_depen_origen</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="7">
+<table tablename="areas_oficinas">ofi_origen</table>
+<field>nom_oficina</field>
+<alias>nom_oficina_origen</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="8">
+<table tablename="archivo_radica_recibidos_pase">pase</table>
+<field>fehor_acepta</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="9">
+<table tablename="gene_funcionarios">funcio_desti</table>
+<field>nom_funcio</field>
+<alias>nom_funcio_desti</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="10">
+<table tablename="gene_funcionarios">funcio_desti</table>
+<field>ape_funcio</field>
+<alias>ape_funcio_desti</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="11">
+<table tablename="areas_dependencias">depen_desti</table>
+<field>nom_depen</field>
+<alias>nom_depen_desti</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="12">
+<table tablename="areas_oficinas">ofi_desti</table>
+<field>nom_oficina</field>
+<alias>nom_oficina_desti</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+</grid>
+</querybuilder>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querybuilder version="8.3">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">iwana_espinal</database>
+</source>
+<canvas>
+<table tablename="archivo_radica_enviados" alias="radi" left="29" top="39" width="150" height="263" />
+<table tablename="archivo_trd_series" alias="serie" left="200" top="169" width="150" height="113" />
+<table tablename="archivo_trd_subserie" alias="sub_serie" left="367" top="171" width="150" height="113" />
+<table tablename="archivo_trd_tipo_docu" alias="tip_docu" left="525" top="173" width="150" height="113" />
+<table tablename="archivo_radica_enviados_responsa" alias="radi_respon" left="203" top="39" width="150" height="113" />
+<table tablename="gene_funcionarios_deta" alias="funcio_Deta" left="366" top="40" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="funcio" left="527" top="40" width="150" height="113" />
+<table tablename="areas_oficinas" alias="ofici" left="686" top="40" width="150" height="113" />
+<table tablename="areas_dependencias" alias="depen" left="846" top="42" width="150" height="113" />
+<table tablename="gene_terceros_contac" alias="contac" left="201" top="298" width="150" height="113" />
+<table tablename="gene_terceros_empresas" alias="contac_empre" left="364" top="298" width="150" height="113" />
+<table tablename="config_formaenvio" alias="" left="724" top="177" width="150" height="113" />
+<table tablename="config_tipos_respuestas" alias="" left="1090" top="303" width="150" height="113" />
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "radi">id_serie</from>
+<to tablename = "archivo_trd_series" alias = "serie">id_serie</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "radi">id_subserie</from>
+<to tablename = "archivo_trd_subserie" alias = "sub_serie">id_subserie</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "radi">id_tipodoc</from>
+<to tablename = "archivo_trd_tipo_docu" alias = "tip_docu">id_tipodoc</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_responsa" alias = "radi_respon">id_radica</from>
+<to tablename = "archivo_radica_enviados" alias = "radi">id_radica</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_responsa" alias = "radi_respon">id_funcio_deta</from>
+<to tablename = "gene_funcionarios_deta" alias = "funcio_Deta">id_funcio_deta</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_Deta">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "funcio">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_Deta">id_oficina</from>
+<to tablename = "areas_oficinas" alias = "ofici">id_oficina</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "areas_oficinas" alias = "ofici">id_depen</from>
+<to tablename = "areas_dependencias" alias = "depen">id_depen</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "radi">id_destina</from>
+<to tablename = "gene_terceros_contac" alias = "contac">id_tercero</to>
+</join>
+<join type = "Left Join">
+<from tablename = "gene_terceros_contac" alias = "contac">id_empre</from>
+<to tablename = "gene_terceros_empresas" alias = "contac_empre">id_empre</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "radi">id_formaenvio</from>
+<to tablename = "config_formaenvio" alias = "">id_formaenvio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "radi">id_tipo_respue</from>
+<to tablename = "config_tipos_respuestas" alias = "">id_respue</to>
+</join>
+</canvas>
+<grid>
+<column id="1">
+<table tablename="archivo_radica_enviados">radi</table>
+<field>id_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="2">
+<table tablename="archivo_radica_enviados">radi</table>
+<field>fechor_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>between '2020-05-01' and '2020-05-15'</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="3">
+<table tablename="archivo_radica_enviados">radi</table>
+<field>fec_docu</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="4">
+<table tablename="archivo_radica_enviados">radi</table>
+<field>asunto</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="5">
+<table tablename="config_formaenvio"></table>
+<field>nom_formaenvi</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="6">
+<table tablename="archivo_radica_enviados">radi</table>
+<field>digital</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="7">
+<table tablename="archivo_trd_series">serie</table>
+<field>nom_serie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="8">
+<table tablename="archivo_trd_subserie">sub_serie</table>
+<field>nom_subserie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="9">
+<table tablename="archivo_trd_tipo_docu">tip_docu</table>
+<field>nom_tipodoc</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="10">
+<table tablename="gene_funcionarios">funcio</table>
+<field>nom_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="11">
+<table tablename="gene_funcionarios">funcio</table>
+<field>ape_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="12">
+<table tablename="areas_oficinas">ofici</table>
+<field>nom_oficina</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="13">
+<table tablename="areas_dependencias">depen</table>
+<field>nom_depen</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="14">
+<table tablename="gene_terceros_contac">contac</table>
+<field>nom_contac</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="15">
+<table tablename="gene_terceros_empresas">contac_empre</table>
+<field>razo_soci</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="16">
+<table tablename="config_tipos_respuestas"></table>
+<field>nom_respues</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+</grid>
+</querybuilder>

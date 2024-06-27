@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querybuilder version="8.3">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">iwana_espinal</database>
+</source>
+<canvas>
+<table tablename="archivo_radica_enviados" alias="RaEnvia" left="18" top="27" width="150" height="488" />
+<table tablename="config_formaenvio" alias="FormaEnvi" left="535" top="22" width="150" height="113" />
+<table tablename="archivo_trd_series" alias="Serie" left="209" top="145" width="150" height="113" />
+<table tablename="archivo_trd_subserie" alias="SubSerie" left="367" top="146" width="150" height="113" />
+<table tablename="archivo_trd_tipo_docu" alias="TipDoc" left="535" top="145" width="150" height="113" />
+<table tablename="gene_terceros_contac" alias="DestinaContac" left="209" top="25" width="150" height="113" />
+<table tablename="gene_terceros_empresas" alias="DestinaEmpre" left="370" top="23" width="150" height="113" />
+<table tablename="segu_usua" alias="UsuaRegis" left="188" top="410" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="FunRegis" left="374" top="396" width="150" height="143" />
+<table tablename="archivo_radica_enviados_responsa" alias="RaRespon" left="209" top="275" width="150" height="113" />
+<table tablename="archivo_radica_recibidos" alias="re_recibido" left="936" top="231" width="150" height="203" />
+<table tablename="gene_funcionarios_deta" alias="funcio_respon_deta" left="375" top="276" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="funcio_respon" left="553" top="273" width="150" height="113" />
+<table tablename="config_tipos_respuestas" alias="" left="888" top="62" width="150" height="113" />
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "RaEnvia">id_formaenvio</from>
+<to tablename = "config_formaenvio" alias = "FormaEnvi">id_formaenvio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_trd_series" alias = "Serie">id_serie</from>
+<to tablename = "archivo_radica_enviados" alias = "RaEnvia">id_serie</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_trd_subserie" alias = "SubSerie">id_subserie</from>
+<to tablename = "archivo_radica_enviados" alias = "RaEnvia">id_subserie</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "RaEnvia">id_tipodoc</from>
+<to tablename = "archivo_trd_tipo_docu" alias = "TipDoc">id_tipodoc</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "RaEnvia">id_destina</from>
+<to tablename = "gene_terceros_contac" alias = "DestinaContac">id_tercero</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "RaEnvia">id_usua_regis</from>
+<to tablename = "segu_usua" alias = "UsuaRegis">id_usua</to>
+</join>
+<join type = "Left Join">
+<from tablename = "archivo_radica_enviados" alias = "RaEnvia">id_radica</from>
+<to tablename = "archivo_radica_recibidos" alias = "re_recibido">radica_respuesta</to>
+</join>
+<join type = "Left Join">
+<from tablename = "gene_terceros_contac" alias = "DestinaContac">id_empre</from>
+<to tablename = "gene_terceros_empresas" alias = "DestinaEmpre">id_empre</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "segu_usua" alias = "UsuaRegis">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "FunRegis">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_responsa" alias = "RaRespon">id_radica</from>
+<to tablename = "archivo_radica_enviados" alias = "RaEnvia">id_radica</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_responsa" alias = "RaRespon">id_funcio_deta</from>
+<to tablename = "gene_funcionarios_deta" alias = "funcio_respon_deta">id_funcio_deta</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "funcio_respon_deta">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "funcio_respon">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados" alias = "RaEnvia">id_tipo_respue</from>
+<to tablename = "config_tipos_respuestas" alias = "">id_respue</to>
+</join>
+</canvas>
+<grid>
+<column id="1">
+<table tablename="archivo_radica_enviados">RaEnvia</table>
+<field>id_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort>Ascending</sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="2">
+<table tablename="archivo_radica_enviados">RaEnvia</table>
+<field>fec_docu</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="3">
+<table tablename="archivo_radica_enviados">RaEnvia</table>
+<field>fechor_radica</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>between '' and ''</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="4">
+<table tablename="archivo_radica_enviados">RaEnvia</table>
+<field>asunto</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="5">
+<table tablename="archivo_radica_enviados">RaEnvia</table>
+<field>digital</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="6">
+<table tablename="config_formaenvio">FormaEnvi</table>
+<field>nom_formaenvi</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="7">
+<table tablename="archivo_trd_series">Serie</table>
+<field>nom_serie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="8">
+<table tablename="archivo_trd_subserie">SubSerie</table>
+<field>nom_subserie</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="9">
+<table tablename="archivo_trd_tipo_docu">TipDoc</table>
+<field>nom_tipodoc</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="10">
+<table tablename="archivo_radica_recibidos">re_recibido</table>
+<field>id_radica</field>
+<alias>radica_recibido</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="11">
+<table tablename="gene_funcionarios">funcio_respon</table>
+<field>nom_funcio</field>
+<alias>nom_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="12">
+<table tablename="gene_funcionarios">funcio_respon</table>
+<field>ape_funcio</field>
+<alias>ape_respon</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="13">
+<table tablename="gene_terceros_contac">DestinaContac</table>
+<field>nom_contac</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="14">
+<table tablename="gene_terceros_contac">DestinaContac</table>
+<field>cargo</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="15">
+<table tablename="gene_terceros_empresas">DestinaEmpre</table>
+<field>razo_soci</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="16">
+<table tablename="gene_funcionarios">FunRegis</table>
+<field>nom_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="17">
+<table tablename="gene_funcionarios">FunRegis</table>
+<field>ape_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="18">
+<table tablename="archivo_radica_enviados_responsa">RaRespon</table>
+<field>respon</field>
+<alias></alias>
+<show>false</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>= 1</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="19">
+<table tablename="config_tipos_respuestas"></table>
+<field>nom_respues</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+</grid>
+</querybuilder>

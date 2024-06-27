@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querybuilder version="8.3">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_general_ci">chaparral</database>
+</source>
+<canvas>
+<table tablename="archivo_radica_enviados_temp" alias="temp" left="73" top="14" width="150" height="248" />
+<table tablename="archivo_radica_enviados_temp_quienes_firman" alias="quien_firma" left="276" top="28" width="159" height="143" />
+<table tablename="gene_funcionarios_deta" alias="usua_regis_deta" left="273" top="199" width="150" height="113" />
+<table tablename="gene_funcionarios" alias="usua_regis" left="450" top="198" width="150" height="113" />
+<table tablename="areas_cargos" alias="usua_cargo_depen" left="629" top="196" width="150" height="113" />
+<table tablename="areas_dependencias" alias="usua_regis_depen" left="791" top="194" width="150" height="113" />
+<table tablename="areas_oficinas" alias="usua_regis_ofi" left="963" top="195" width="150" height="113" />
+<table tablename="gene_funcionarios_deta" alias="quien_firma_deta" left="464" top="31" width="150" height="128" />
+<table tablename="areas_cargos" alias="quien_firma_cargo" left="635" top="34" width="150" height="113" />
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_temp_quienes_firman" alias = "quien_firma">id_temp</from>
+<to tablename = "archivo_radica_enviados_temp" alias = "temp">id_temp</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_temp" alias = "temp">id_usua_regis</from>
+<to tablename = "gene_funcionarios_deta" alias = "usua_regis_deta">id_funcio_deta</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "archivo_radica_enviados_temp_quienes_firman" alias = "quien_firma">id_funcio_deta</from>
+<to tablename = "gene_funcionarios_deta" alias = "quien_firma_deta">id_funcio_deta</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "usua_regis_deta">id_funcio</from>
+<to tablename = "gene_funcionarios" alias = "usua_regis">id_funcio</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "usua_regis_deta">id_cargo</from>
+<to tablename = "areas_cargos" alias = "usua_cargo_depen">id_cargo</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "usua_regis_deta">id_oficina</from>
+<to tablename = "areas_oficinas" alias = "usua_regis_ofi">id_oficina</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "areas_cargos" alias = "usua_cargo_depen">id_depen</from>
+<to tablename = "areas_dependencias" alias = "usua_regis_depen">id_depen</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "gene_funcionarios_deta" alias = "quien_firma_deta">id_cargo</from>
+<to tablename = "areas_cargos" alias = "quien_firma_cargo">id_cargo</to>
+</join>
+</canvas>
+<grid>
+<column id="1">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>id_temp</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="2">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>fechor_registro</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="3">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>id_ruta</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="4">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>asunto</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="5">
+<table tablename="gene_funcionarios">usua_regis</table>
+<field>nom_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="6">
+<table tablename="gene_funcionarios">usua_regis</table>
+<field>ape_funcio</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="7">
+<table tablename="areas_dependencias">usua_regis_depen</table>
+<field>id_depen</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="8">
+<table tablename="areas_dependencias">usua_regis_depen</table>
+<field>nom_depen</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="9">
+<table tablename="areas_oficinas">usua_regis_ofi</table>
+<field>nom_oficina</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="10">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>genera_plantilla</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="11">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>plantilla_cargada</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="12">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>nom_archivo</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="13">
+<table tablename="archivo_radica_enviados_temp_quienes_firman">quien_firma</table>
+<field>firmando</field>
+<alias>'estado_gestion'</alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="14">
+<table tablename="archivo_radica_enviados_temp_quienes_firman">quien_firma</table>
+<field>descargo_plantilla</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="15">
+<table tablename="archivo_radica_enviados_temp_quienes_firman">quien_firma</table>
+<field>subio_plantilla</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="16">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>radicado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="17">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>terminado</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="18">
+<table tablename="archivo_radica_enviados_temp">temp</table>
+<field>anulado</field>
+<alias></alias>
+<show>false</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>= 0</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="19">
+<table tablename="areas_cargos">quien_firma_cargo</table>
+<field>id_depen</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria>= 3</criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+</grid>
+</querybuilder>

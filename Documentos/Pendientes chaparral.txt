@@ -1,0 +1,201 @@
+Alexandra favor responder a Cafesalud de acuerdo a la informacion solicitada enviar al correo relacionado en el oficio y adjuntar base de datos sdfsdfdsfdsfsdfsdfsdfsdfsdfds antes del lunes
+
+* verificar notas de un radicado pendiente por getionar
+* agregar observaciones cuando se delegue quien va a crear el grupo colaborativo
+* agregar la opcion de porver ver el historial de pase
+* revisar el modulo Compartidos conmigo
+* en correspondencia enviada->pendientes por radicar, agregar un boton para que se pueda ver la platilla cargada desde las oficinas
+* agregar el tercero al q se la enviar la correspondencia en el listado de los radicados.
+
+
+
+20200224-00473
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$.ajax({
+				url: '../../../../varios/ftp.acciones.php',
+				type: 'POST',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function(){
+					$("#DivAlertarAdjuntoDigital").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Subiendo el archivo, por favor espere. </div>');
+				},
+				success:function(msj){
+					$("#DivAlertarAdjuntoDigital").empty();
+					
+					var Elementos = msj.split('-');
+					if (Elementos[0] == 1){
+						$('#id_ruta').val(Elementos[1])
+						$("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> La plantilla se subio correctamente.</div>');			
+						$('#myModalAdjuntarDocumento').modal('hide');
+
+						var formDataPlantilla = new FormData($(".formulario")[0]);
+						var IdTemp                 = $('#id_temp').val();
+						var IdFuncioDeta           = $('#id_funcio_deta').val();
+						var TipoFuncionario        = $('#tipo_funcionario').val();
+						var EstadoGestion          = $('#estado_gestion').val();
+
+						$.ajax({
+							url: 'acciones.ajax.php',
+							type: 'POST',
+							data: formDataPlantilla,
+							cache: false,
+							contentType: false,
+							processData: false,
+							beforeSend: function(){
+								$("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Por favor espera!!!...</a><br><img src="../../../../../public/assets/img/loading.gif" width="20" height="20" /> Estableciendo criterios, por favor espere...</div>');
+							},
+							success: function(msj){
+								
+								if(msj == 1){
+
+									$("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> La plantilla se subio correctamente. </div>');
+
+									$('#BtnCancelarCargarPlantilla').click();
+									
+									if(TipoFuncionario === "QUIEN_FIRMA" && EstadoGestion == 0){
+										swal({ 
+											title: "Subiste la plantilla pero aun no las has firmado ¿Desea firmar el documento?",
+											type: "warning",
+											showCancelButton: true,
+											confirmButtonColor: "#f0ad4e",
+											confirmButtonText: "Si, Firmar el documento!",
+											closeOnConfirm: false
+										},
+
+										function(){
+											$.ajax({
+												url: 'acciones.ajax.php',
+												type: 'POST',
+												data: 'accion=FIRMAR_DOCUMENTO&IdTemp='+IdTemp+'&IdFuncioDeta='+IdFuncioDeta,
+												beforeSend: function(){
+													$("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Por favor espera!!!...</a><br><img src="../../../../../public/assets/img/loading.gif" width="50" height="50" />Enviando información...</div>');
+												},
+												success: function(msj){
+													if(msj == 1){
+														$("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> El documento fue firmado correctamente. </div>');
+														swal('Ok!',
+															'El documento fue firmado correctamente.',
+															'success');
+													}else{
+														$("#DivAlertas").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> '+msj+'.</div>');
+													}
+												},
+												error:function(msj){
+													$("#DivAlertas").html('<div class="alert alert-danger alert-dismissable""><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><b>Alerta!</b> Ha ocurrido un error durante la ejecución, '+msj+'.</div>');
+												}
+											});
+										});
+									}else if(TipoFuncionario === "RESPONSABLE" && EstadoGestion == 0){
+										
+										swal({ 
+											title: "Subiste la plantilla pero aun no las has aprobado ¿Desea aprobar el documento?",
+											type: "warning",
+											showCancelButton: true,
+											confirmButtonColor: "#f0ad4e",
+											confirmButtonText: "Si, Aprobar el documento!",
+											closeOnConfirm: false
+										},
+
+										function(){
+											$.ajax({
+												url: 'acciones.ajax.php',
+												type: 'POST',
+												data: 'accion=APROBAR_DOCUMENTO&IdTemp='+IdTemp+'&IdFuncioDeta='+IdFuncioDeta,
+												beforeSend: function(){
+													$("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Por favor espera!!!...</a><br><img src="../../../../../public/assets/img/loading.gif" width="50" height="50" />Enviando información...</div>');
+												},
+												success: function(msj){
+													if(msj == 1){
+														$("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> El documento fue aprobado correctamente. </div>');
+														swal('Ok!',
+															'El documento fue aprobado correctamente.',
+															'success');
+													}else{
+														$("#DivAlertas").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> '+msj+'.</div>');
+													}
+												},
+												error:function(msj){
+													$("#DivAlertas").html('<div class="alert alert-danger alert-dismissable""><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><b>Alerta!</b> Ha ocurrido un error durante la ejecución, '+msj+'.</div>');
+												}
+											});
+										});
+									}else if(TipoFuncionario === "PROYECTOR" && EstadoGestion == 0){
+										
+										swal({ 
+											title: "Subiste la plantilla pero aun no has terminado de proyectarla ¿Desea terminar la proyección del documento?",
+											type: "warning",
+											showCancelButton: true,
+											confirmButtonColor: "#f0ad4e",
+											confirmButtonText: "Si, Terminar proyección!",
+											closeOnConfirm: false
+										},
+
+										function(){
+											$.ajax({
+												url: 'acciones.ajax.php',
+												type: 'POST',
+												data: 'accion=PROYECTAR_DOCUMENTO&IdTemp='+IdTemp+'&IdFuncioDeta='+IdFuncioDeta,
+												beforeSend: function(){
+													$("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Por favor espera!!!...</a><br><img src="../../../../../public/assets/img/loading.gif" width="50" height="50" />Enviando información...</div>');
+												},
+												success: function(msj){
+													
+													if(msj == 1){
+														$("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> El documento se proyecto correctamente. </div>');
+														swal('Ok!',
+															'El documento se proyecto correctamente.',
+															'success');
+													}else{
+														$("#DivAlertas").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> '+msj+'.</div>');
+													}
+												},
+												error:function(msj){
+													$("#DivAlertas").html('<div class="alert alert-danger alert-dismissable""><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><b>Alerta!</b> Ha ocurrido un error durante la ejecución, '+msj+'.</div>');
+												}
+											});
+										});
+									}
+								}
+							},
+							error:function(msj){
+								$("#DivAlertas").html('<div class="alert alert-danger alert-dismissable""><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><b>Alerta!</b> Ha ocurrido un error durante la ejecución, '+msj+'.</div>');
+							}
+						});
+					}else{
+						sweetAlert("Oops...", msj, "error");
+					}
+				},
+				warning:function(){
+					sweetAlert("Oops...", msj, "error");
+				}
+			});	

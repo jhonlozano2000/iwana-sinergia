@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<querybuilder version="8.3">
+<source>
+<database charset="utf8" collation="utf8_general_ci">jieru</database>
+</source>
+<canvas>
+<table tablename="gene_pacientes" alias="pacien" left="63" top="111" width="150" height="278" />
+<table tablename="demanda_inducida_captacion" alias="capta" left="295" top="98" width="150" height="188" />
+<table tablename="demanda_inducida_cargue_bd" alias="deman" left="565" top="98" width="150" height="113" />
+<table tablename="config_estado_llamada" alias="tip_llama" left="857" top="237" width="150" height="113" />
+<join type = "Inner Join">
+<from tablename = "demanda_inducida_captacion" alias = "capta">id_pacien</from>
+<to tablename = "gene_pacientes" alias = "pacien">id_pacien</to>
+</join>
+<join type = "Inner Join">
+<from tablename = "demanda_inducida_captacion" alias = "capta">id_cargue_bd</from>
+<to tablename = "demanda_inducida_cargue_bd" alias = "deman">id_cargue</to>
+</join>
+<join type = "Left Join">
+<from tablename = "demanda_inducida_captacion" alias = "capta">id_estado_llamada</from>
+<to tablename = "config_estado_llamada" alias = "tip_llama">id_estado_llamada</to>
+</join>
+</canvas>
+<grid>
+<column id="1">
+<table tablename="gene_pacientes">pacien</table>
+<field>id_pacien</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="2">
+<table tablename="gene_pacientes">pacien</table>
+<field>num_docu</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="3">
+<table tablename="gene_pacientes">pacien</table>
+<field>pri_nom</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="4">
+<table tablename="gene_pacientes">pacien</table>
+<field>seg_nom</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="5">
+<table tablename="gene_pacientes">pacien</table>
+<field>pri_ape</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="6">
+<table tablename="gene_pacientes">pacien</table>
+<field>seg_ape</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="7">
+<table tablename="gene_pacientes">pacien</table>
+<field>fec_naci</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="8">
+<table tablename="demanda_inducida_cargue_bd">deman</table>
+<field>fechor_cargue</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="9">
+<table tablename="config_estado_llamada">tip_llama</table>
+<field>nom_estado_llamadacol</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="10">
+<table tablename="demanda_inducida_captacion">capta</table>
+<field>observaciones</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+</grid>
+</querybuilder>
