@@ -16,11 +16,6 @@ class ConfigOtras
 	private $CoresInternaCodigo;
 	private $CoresInternaVersion;
 	private $PlantiCorrespon;
-	private $HC_Titulo;
-	private $HC_SubTitulo;
-	private $HC_Codigo;
-	private $HC_Version;
-	private $HC_NumDias;
 	private $TipoRadicadRecibida;
 	private $TipoRadicadEnviada;
 	private $TipoRadicadInterna;
@@ -49,11 +44,6 @@ class ConfigOtras
 		$CoresInternaCodigo = null,
 		$CoresInternaVersion = null,
 		$PlantiCorrespon = null,
-		$HC_Titulo = null,
-		$HC_SubTitulo = null,
-		$HC_Codigo = null,
-		$HC_Version = null,
-		$HC_NumDias = null,
 		$TipoRadicadRecibida = null,
 		$TipoRadicadEnviada = null,
 		$TipoRadicadInterna = null,
@@ -82,10 +72,6 @@ class ConfigOtras
 		$this->CoresInternaCodigo      = $CoresInternaCodigo;
 		$this->CoresInternaVersion     = $CoresInternaVersion;
 		$this->PlantiCorrespon         = $PlantiCorrespon;
-		$this->HC_Titulo               = $HC_Titulo;
-		$this->HC_SubTitulo            = $HC_SubTitulo;
-		$this->HC_Codigo               = $HC_Codigo;
-		$this->HC_NumDias              = $HC_NumDias;
 		$this->TipoRadicadRecibida     = $TipoRadicadRecibida;
 		$this->TipoRadicadEnviada      = $TipoRadicadEnviada;
 		$this->TipoRadicadInterna      = $TipoRadicadInterna;
@@ -167,31 +153,6 @@ class ConfigOtras
 	public function get_PlantiCorrespon()
 	{
 		return $this->PlantiCorrespon;
-	}
-
-	public function get_HC_Titulo()
-	{
-		return $this->HC_Titulo;
-	}
-
-	public function get_HC_SubTitulo()
-	{
-		return $this->HC_SubTitulo;
-	}
-
-	public function get_HC_Codigo()
-	{
-		return $this->HC_Codigo;
-	}
-
-	public function get_HC_Version()
-	{
-		return $this->HC_Version;
-	}
-
-	public function get_HC_NumDias()
-	{
-		return $this->HC_NumDias;
 	}
 
 	public function get_TipoRadicadRecibida()
@@ -320,31 +281,6 @@ class ConfigOtras
 		$this->PlantiCorrespon = $PlantiCorrespon;
 	}
 
-	public function set_HC_Titulo($HC_Titulo)
-	{
-		$this->HC_Titulo = $HC_Titulo;
-	}
-
-	public function set_HC_SubTitulo($HC_SubTitulo)
-	{
-		$this->HC_SubTitulo = $HC_SubTitulo;
-	}
-
-	public function set_HC_Codigo($HC_Codigo)
-	{
-		$this->HC_Codigo = $HC_Codigo;
-	}
-
-	public function set_HC_Version($HC_Version)
-	{
-		$this->HC_Version = $HC_Version;
-	}
-
-	public function set_HC_NumDias($HC_NumDias)
-	{
-		$this->HC_NumDias = $HC_NumDias;
-	}
-
 	public function set_TipoRadicadRecibida($TipoRadicadRecibida)
 	{
 		$this->TipoRadicadRecibida = $TipoRadicadRecibida;
@@ -406,12 +342,14 @@ class ConfigOtras
 
 		try {
 			if ($this->Accion == 0) {
-				$Sql = "INSERT INTO `config_otras`(`corres_recibida_titulo`, `corres_recibida_subtitulo`, `corres_recibida_codigo`, `corres_recibida_version`, `corres_enviada_titulo`, `corres_enviada_subtitulo`, `corres_enviada_codigo`, `corres_enviada_version`, 
-									`corres_interna_titulo`, `corres_interna_subtitulo`, `corres_interna_codigo`, `corres_interna_version`, `planti_correspondencia`, `hc_titulo`, `hc_subtitulo`, `hc_codigo`, `hc_version`, `hc_num_dias`, `tipo_radica_recibida`, 
-									`tipo_radica_enviado`, `tipo_radica_interno`, `tipo_impre_torulo`, `incluir_trd`, `incluir_oficina_trd`, `email_ventanilla_usuario`, `email_ventanilla_contra`, `mail_ventanilla_servidor`, `email_ventanilla_puerto`, `email_ventanilla_autenti`)
-						VALUES (:corres_recibida_titulo, :corres_recibida_subtitulo, :corres_recibida_codigo, :corres_recibida_version, :corres_enviada_titulo, :corres_enviada_subtitulo, :corres_enviada_codigo, :corres_enviada_version, :corres_interna_titulo,
-								:corres_interna_subtitulo, :corres_interna_codigo, :corres_interna_version, :planti_correspondencia, :hc_titulo, :hc_subtitulo, :hc_codigo, :hc_version, :hc_num_dias, :tipo_radica_recibida, :tipo_radica_enviado, :tipo_radica_interno, 
-								:tipo_impre_torulo, :incluir_trd, :incluir_oficina_trd, :email_ventanilla_usuario, :email_ventanilla_contra, :mail_ventanilla_servidor, :email_ventanilla_puerto, :email_ventanilla_autenti);";
+				$Sql = "INSERT INTO `config_otras`(`corres_recibida_titulo`, `corres_recibida_subtitulo`, `corres_recibida_codigo`, `corres_recibida_version`, `corres_enviada_titulo`, 
+									`corres_enviada_subtitulo`, `corres_enviada_codigo`, `corres_enviada_version`, `corres_interna_titulo`, `corres_interna_subtitulo`, `corres_interna_codigo`, 
+									`corres_interna_version`, `planti_correspondencia`, `tipo_radica_recibida`, `tipo_radica_enviado`, `tipo_radica_interno`, `tipo_impre_torulo`, `incluir_trd`, 
+									`incluir_oficina_trd`, `email_ventanilla_usuario`, `email_ventanilla_contra`, `mail_ventanilla_servidor`, `email_ventanilla_puerto`, `email_ventanilla_autenti`)
+						VALUES (:corres_recibida_titulo, :corres_recibida_subtitulo, :corres_recibida_codigo, :corres_recibida_version, :corres_enviada_titulo, :corres_enviada_subtitulo, 
+								:corres_enviada_codigo, :corres_enviada_version, :corres_interna_titulo, :corres_interna_subtitulo, :corres_interna_codigo, :corres_interna_version, 
+								:planti_correspondencia, :tipo_radica_recibida, :tipo_radica_enviado, :tipo_radica_interno, :tipo_impre_torulo, :incluir_trd, :incluir_oficina_trd, 
+								:email_ventanilla_usuario, :email_ventanilla_contra, :mail_ventanilla_servidor, :email_ventanilla_puerto, :email_ventanilla_autenti);";
 
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':corres_recbida_titulo', $this->CoresReciTitulo, PDO::PARAM_STR);
@@ -426,11 +364,6 @@ class ConfigOtras
 				$Instruc->bindParam(':corres_interna_subtitulo', $this->CoresInternaSubTitulo, PDO::PARAM_STR);
 				$Instruc->bindParam(':corres_interna_codigo', $this->CoresInternaCodigo, PDO::PARAM_STR);
 				$Instruc->bindParam(':corres_interna_version', $this->CoresInternaVersion, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_titulo', $this->HC_Titulo, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_subtitulo', $this->HC_SubTitulo, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_codigo', $this->HC_Codigo, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_version', $this->HC_Version, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_num_dias', $this->HC_NumDias, PDO::PARAM_INT);
 				$Instruc->bindParam(':incluir_trd', $this->Incluir_TRD, PDO::PARAM_INT);
 				$Instruc->bindParam(':incluir_oficina_trd', $this->Incluir_Oficina_TRD, PDO::PARAM_INT);
 				$Instruc->bindParam(':tipo_radica_recibida', $this->TipoRadicadRecibida, PDO::PARAM_INT);
@@ -448,8 +381,7 @@ class ConfigOtras
 							corres_enviada_titulo = :corres_enviada_titulo, corres_enviada_subtitulo = :corres_enviada_subtitulo, 
 							corres_enviada_codigo = :corres_enviada_codigo, corres_enviada_version = :corres_enviada_version, 
 							corres_interna_titulo = :corres_interna_titulo, corres_interna_subtitulo = :corres_interna_subtitulo, 
-							corres_interna_codigo = :corres_interna_codigo, corres_interna_version = :corres_interna_version, hc_titulo = :hc_titulo, 
-							hc_subtitulo = :hc_subtitulo, hc_codigo = :hc_codigo, hc_version = :hc_version, hc_num_dias = :hc_num_dias, 
+							corres_interna_codigo = :corres_interna_codigo, corres_interna_version = :corres_interna_version, 
 							incluir_trd = :incluir_trd, incluir_oficina_trd = :incluir_oficina_trd, tipo_radica_recibida = :tipo_radica_recibida, tipo_radica_enviado = :tipo_radica_enviado, 
 							tipo_radica_interno = :tipo_radica_interno, tipo_impre_torulo = :tipo_impre_torulo, email_ventanilla_usuario = :email_ventanilla_usuario, 
 							email_ventanilla_contra = :email_ventanilla_contra, mail_ventanilla_servidor = :mail_ventanilla_servidor, 
@@ -468,11 +400,6 @@ class ConfigOtras
 				$Instruc->bindParam(':corres_interna_subtitulo', $this->CoresInternaSubTitulo, PDO::PARAM_STR);
 				$Instruc->bindParam(':corres_interna_codigo', $this->CoresInternaCodigo, PDO::PARAM_STR);
 				$Instruc->bindParam(':corres_interna_version', $this->CoresInternaVersion, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_titulo', $this->HC_Titulo, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_subtitulo', $this->HC_SubTitulo, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_codigo', $this->HC_Codigo, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_version', $this->HC_Version, PDO::PARAM_STR);
-				$Instruc->bindParam(':hc_num_dias', $this->HC_NumDias, PDO::PARAM_INT);
 				$Instruc->bindParam(':incluir_trd', $this->Incluir_TRD, PDO::PARAM_INT);
 				$Instruc->bindParam(':incluir_oficina_trd', $this->Incluir_Oficina_TRD, PDO::PARAM_INT);
 				$Instruc->bindParam(':tipo_radica_recibida', $this->TipoRadicadRecibida, PDO::PARAM_INT);
@@ -485,7 +412,7 @@ class ConfigOtras
 				$Instruc->bindParam(':email_ventanilla_puerto', $this->EmailVentanillaPuerto, PDO::PARAM_STR);
 				$Instruc->bindParam(':email_ventanilla_autenti', $this->EmailVentanillaAutenti, PDO::PARAM_STR);
 			} elseif ($this->Accion == 2) {
-				$Sql = "UPDATE config_otras 
+				$Sql = "UPDATE config_otras
 						SET planti_correspondencia = :planti_correspondencia";
 
 				$Instruc = $conexion->prepare($Sql);
@@ -558,11 +485,6 @@ class ConfigOtras
 					$Result['corres_interna_codigo'],
 					$Result['corres_interna_version'],
 					$Result['planti_correspondencia'],
-					$Result['hc_titulo'],
-					$Result['hc_subtitulo'],
-					$Result['hc_codigo'],
-					$Result['hc_version'],
-					$Result['hc_num_dias'],
 					$Result['tipo_radica_recibida'],
 					$Result['tipo_radica_enviado'],
 					$Result['tipo_radica_interno'],

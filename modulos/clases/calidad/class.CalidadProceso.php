@@ -98,7 +98,7 @@ class Proceso
 			$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
 		} elseif ($this->accion == 'DELETE') {
 
-			$sql = "DELETE FROM cali_procesos 
+			$sql = "DELETE FROM cali_procesos
 						WHERE procesos_id = :procesos_id";
 
 			$Instruc = $conexion->prepare($sql);

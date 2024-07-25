@@ -69,7 +69,6 @@ class FTPClient
 	//Create a directory
 	public function makeDir($directory)
 	{
-
 		//Check directory is available in ftp or not
 		if ($this->_ftp_is_dir($directory)) {
 			//$this->logMessage('Directory "' . $directory . '" already present in ftp');

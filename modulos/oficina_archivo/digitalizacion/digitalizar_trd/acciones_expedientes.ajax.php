@@ -1,5 +1,5 @@
 <?php
-if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 
 	require_once '../../../../config/class.Conexion.php';
 	require_once '../../../../config/funciones.php';
@@ -27,7 +27,7 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 	$Caja          = isset($_POST['caja']) ? $_POST['caja'] : null;
 	$Carpeta       = isset($_POST['carpeta']) ? $_POST['carpeta'] : null;
 	$FoliosExpediente = isset($_POST['folios_expedientes']) ? $_POST['folios_expedientes'] : 0;
-	if($FoliosExpediente === ""){
+	if ($FoliosExpediente === "") {
 		$FoliosExpediente = 0;
 	}
 	$Acti             = isset($_POST['acti']) ? $_POST['acti'] : null;
@@ -38,7 +38,7 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 	$ArchivoDigital     = isset($_POST['archivo']) ? $_POST['archivo'] : null;
 	$TipoArchivoDigital = isset($_POST['tipo_archivo']) ? $_POST['tipo_archivo'] : null;
 
-	switch($Accion){
+	switch ($Accion) {
 		case 'NUEVO_EXPEDIENTE':
 			/*
 			$BuscarExpediente = Digitalizacion::Buscar(2, $IdDigital, $IdDependencia, $IdSerie, $IdSubSerie, $Codigo, "", "", "", "");
@@ -48,25 +48,25 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 			}
 			*/
 			$Digitalizado = new DigitalizacionTRD();
-			$Digitalizado-> set_Accion($Accion);
-			$Digitalizado-> set_IdDigital($IdDigital);
-			$Digitalizado-> set_IdDependencia($IdDependencia);
-			$Digitalizado-> set_IdOficina($IdOficina);
-			$Digitalizado-> set_IdSerie($IdSerie);
-			$Digitalizado-> set_IdSubSerie($IdSubSerie);
-			$Digitalizado-> set_Codigo($Codigo);
-			$Digitalizado-> set_Titulo($Titulo);
-			$Digitalizado-> set_FechaInicio($FechaInicio);
-			$Digitalizado-> set_FechaFin($FechaFin);
-			$Digitalizado-> set_Criterio1($Criterio1);
-			$Digitalizado-> set_Criterio2($Criterio2);
-			$Digitalizado-> set_Criterio3($Criterio3);
-			$Digitalizado-> set_Deposito($Deposito);
-			$Digitalizado-> set_Caja($Caja);
-			$Digitalizado-> set_Carpeta($Carpeta);
-			$Digitalizado-> set_Folios($FoliosExpediente);
-			$Digitalizado-> set_Acti($Acti);
-			if($Digitalizado->Gestionar() == true){
+			$Digitalizado->set_Accion($Accion);
+			$Digitalizado->set_IdDigital($IdDigital);
+			$Digitalizado->set_IdDependencia($IdDependencia);
+			$Digitalizado->set_IdOficina($IdOficina);
+			$Digitalizado->set_IdSerie($IdSerie);
+			$Digitalizado->set_IdSubSerie($IdSubSerie);
+			$Digitalizado->set_Codigo($Codigo);
+			$Digitalizado->set_Titulo($Titulo);
+			$Digitalizado->set_FechaInicio($FechaInicio);
+			$Digitalizado->set_FechaFin($FechaFin);
+			$Digitalizado->set_Criterio1($Criterio1);
+			$Digitalizado->set_Criterio2($Criterio2);
+			$Digitalizado->set_Criterio3($Criterio3);
+			$Digitalizado->set_Deposito($Deposito);
+			$Digitalizado->set_Caja($Caja);
+			$Digitalizado->set_Carpeta($Carpeta);
+			$Digitalizado->set_Folios($FoliosExpediente);
+			$Digitalizado->set_Acti($Acti);
+			if ($Digitalizado->Gestionar() == true) {
 
 				$IdDigital = $Digitalizado->get_IdDigital();
 
@@ -74,7 +74,7 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 				/* CREO EL PRIMER TOMO
 				/********************************************************************************/
 				$TotalTomo = DigitalizacioTRDTomo::Listar(1, "", $Digitalizado->get_IdDigital(), "");
-				$NomTomo = $TotalTomo['TotalTomos']+1;
+				$NomTomo = $TotalTomo['TotalTomos'] + 1;
 				$Tomo = new DigitalizacioTRDTomo();
 				$Tomo->set_Accion('INSERTAR_TOMO');
 				$Tomo->set_IdDigital($IdDigital);
@@ -83,6 +83,10 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 				$IdTomo = $Tomo->get_IdTomo();
 
 				$Servidor = ServidorDigitalizacion::Buscar(3, 0, "", "");
+				if (!$Servidor) {
+					echo "No se encontro ruta del repositorio documental para los expendientes, por favor consulte con el administrador del sistema.";
+					exit();
+				}
 				$IdRuta   = $Servidor->get_IdRuta();
 				$Ip       = $Servidor->get_Servidor();
 				$Usuario  = $Servidor->get_Usua();
@@ -93,21 +97,22 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 				$ftpObj = new FTPClient();
 
 				$ftpObj->connect($Ip, $Usuario, $Contra);
-				if($ftpObj->pr($ftpObj->getMessages()[0]) == 'true'){
+				if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
 
 					/********************************************************************************
 					/* SUBO LOS ARCHIVOS POR TIPO DOCUMENTAL
 					/********************************************************************************/
-					if(count($_FILES["file"]["name"]) > 0){
+					if (count($_FILES["file"]["name"]) > 0) {
 
 						//CREO LA CARPETA EN DONDE SE ALMACENARAN LOS ARCHIVOS DIGITALIZADOS
-						$RutaDigitales = $RutaFtp."/".$Digitalizado->get_IdDigital();
+						$RutaDigitales = $RutaFtp . "/" . $Digitalizado->get_IdDigital();
+						$ftpObj->makeDir($RutaFtp);
 						$ftpObj->makeDir($RutaDigitales);
-						$ftpObj->makeDir($RutaDigitales."/".$NomTomo);
+						$ftpObj->makeDir($RutaDigitales . "/" . $NomTomo);
 
 						$DigitalArchivos = new DigitalizacionTRDArchivos();
 
-						for($x=0; $x<=count($_FILES["file"]["name"])-1; $x++){
+						for ($x = 0; $x <= count($_FILES["file"]["name"]) - 1; $x++) {
 
 							$file             = $_FILES["file"];
 							$nombre           = $file["name"][$x];
@@ -116,11 +121,11 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 							$size             = $file["size"][$x];
 							$extension        = Extencion_Archivo($nombre);
 
-							if($nombre != ""){
+							if ($nombre != "") {
 
-								if($_POST["folios_archi"][$x] === ""){
+								if ($_POST["folios_archi"][$x] === "") {
 									$FolioArchi = 0;
-								}else{
+								} else {
 									$FolioArchi = $_POST["folios_archi"][$x];
 								}
 
@@ -133,10 +138,10 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 								$DigitalArchivos->set_IdTomo($IdTomo);
 								$DigitalArchivos->set_IdRuta($IdRuta);
 								$DigitalArchivos->set_IdTipoDocu($IdTipoDocu);
-								if($DigitalArchivos->Gestionar() == true){
+								if ($DigitalArchivos->Gestionar() == true) {
 
-									$ftpObj->uploadFile($ruta_provisional, $RutaDigitales."/".$NomTomo."/".$DigitalArchivos->get_IdArchivo().".".$extension);
-									if($ftpObj->pr($ftpObj->getMessages()[1]) == true){
+									$ftpObj->uploadFile($ruta_provisional, $RutaDigitales . "/" . $NomTomo . "/" . $DigitalArchivos->get_IdArchivo() . "." . $extension);
+									if ($ftpObj->pr($ftpObj->getMessages()[1]) == true) {
 
 										$DigitalArchivos->set_Accion("ACTUALIZAR_ARCHIVO");
 										$DigitalArchivos->set_IdArchivo($DigitalArchivos->get_IdArchivo());
@@ -156,11 +161,11 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 					/********************************************************************************
 					/* SUBO LOS ARCHIVOS COMO UN TODO
 					/********************************************************************************/
-					if($_FILES["file_como_un_todo"]["name"] != ""){
+					if ($_FILES["file_como_un_todo"]["name"] != "") {
 
-						$RutaDigitales = $RutaFtp."/".$Digitalizado->get_IdDigital();
+						$RutaDigitales = $RutaFtp . "/" . $Digitalizado->get_IdDigital();
 						$ftpObj->makeDir($RutaDigitales);
-						$ftpObj->makeDir($RutaDigitales."/".$NomTomo);
+						$ftpObj->makeDir($RutaDigitales . "/" . $NomTomo);
 
 						$file             = $_FILES["file_como_un_todo"];
 						$nombre           = $file["name"];
@@ -169,9 +174,9 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 						$size             = $file["size"];
 						$extension        = Extencion_Archivo($nombre);
 
-						if($_POST["folios_archi_como_un_todo"] === ""){
+						if ($_POST["folios_archi_como_un_todo"] === "") {
 							$FolioArchi = 0;
-						}else{
+						} else {
 							$FolioArchi   = $_POST["folios_archi_como_un_todo"];
 						}
 
@@ -183,10 +188,10 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 						$DigitalArchivos->set_IdDigital($Digitalizado->get_IdDigital());
 						$DigitalArchivos->set_IdTomo($IdTomo);
 						$DigitalArchivos->set_IdRuta($IdRuta);
-						if($DigitalArchivos->Gestionar() == true){
-							
-							$ftpObj->uploadFile($ruta_provisional, $RutaDigitales."/".$NomTomo."/".$DigitalArchivos->get_IdArchivo().".".$extension);
-							if($ftpObj->pr($ftpObj->getMessages()[1]) == true){
+						if ($DigitalArchivos->Gestionar() == true) {
+
+							$ftpObj->uploadFile($ruta_provisional, $RutaDigitales . "/" . $NomTomo . "/" . $DigitalArchivos->get_IdArchivo() . "." . $extension);
+							if ($ftpObj->pr($ftpObj->getMessages()[1]) == true) {
 								$DigitalArchivos->set_Accion("ACTUALIZAR_ARCHIVO");
 								$DigitalArchivos->set_IdArchivo($DigitalArchivos->get_IdArchivo());
 								$DigitalArchivos->set_Archivo($nombre);
@@ -199,28 +204,28 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 						}
 					}
 
-					echo "1-".$Digitalizado->get_IdDigital()."-".$IdTomo;
+					echo "1-" . $Digitalizado->get_IdDigital() . "-" . $IdTomo;
 					exit();
-				}else{
+				} else {
 					echo "Iwana no se pudo conectar con el servidor de archivos digitalizados, por favor consulte con el administrador del sistema";
 					exit();
 				}
 			}
-		break;
+			break;
 		case 'SUBIR_ARCHIVOS':
 
 			$Digitalizado = new DigitalizacionTRD();
-			$Digitalizado-> set_Accion('EDITAR_EXPEDIENTE');
-			$Digitalizado-> set_IdDigital($IdDigital);
-			$Digitalizado-> set_Codigo($Codigo);
-			$Digitalizado-> set_Titulo($Titulo);
-			$Digitalizado-> set_FechaInicio($FechaInicio);
-			$Digitalizado-> set_FechaFin($FechaFin);
-			$Digitalizado-> set_Criterio1($Criterio1);
-			$Digitalizado-> set_Criterio2($Criterio2);
-			$Digitalizado-> set_Criterio3($Criterio3);
-			$Digitalizado-> set_Acti($Acti);
-			if($Digitalizado->Gestionar() == true){
+			$Digitalizado->set_Accion('EDITAR_EXPEDIENTE');
+			$Digitalizado->set_IdDigital($IdDigital);
+			$Digitalizado->set_Codigo($Codigo);
+			$Digitalizado->set_Titulo($Titulo);
+			$Digitalizado->set_FechaInicio($FechaInicio);
+			$Digitalizado->set_FechaFin($FechaFin);
+			$Digitalizado->set_Criterio1($Criterio1);
+			$Digitalizado->set_Criterio2($Criterio2);
+			$Digitalizado->set_Criterio3($Criterio3);
+			$Digitalizado->set_Acti($Acti);
+			if ($Digitalizado->Gestionar() == true) {
 
 				$Servidor = ServidorDigitalizacion::Buscar(3, 0, "", "");
 				$IdRuta   = $Servidor->get_IdRuta();
@@ -232,20 +237,20 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 				//Connect
 				$ftpObj->connect($Servidor->get_Servidor(), $Servidor->get_Usua(), $Servidor->get_Contra());
 
-				if($ftpObj->pr($ftpObj->getMessages()[0]) == "true"){
+				if ($ftpObj->pr($ftpObj->getMessages()[0]) == "true") {
 
 					/********************************************************************************
 					/* SUBO LOS ARCHIVOS POR TIPO DOCUMENTAL
 					/********************************************************************************/
-					if(count($_FILES["file"]["name"]) > 0){
+					if (count($_FILES["file"]["name"]) > 0) {
 
 						$DigitalArchivos = new DigitalizacionTRDArchivos();
 						$Tomo = DigitalizacioTRDTomo::Buscar(1, $IdTomo, "", "");
-						
-						$RutaDigitales = $RutaFtp."/".$IdDigital."/".$Tomo->get_NomTomo();
+
+						$RutaDigitales = $RutaFtp . "/" . $IdDigital . "/" . $Tomo->get_NomTomo();
 						$ftpObj->makeDir($RutaDigitales);
-						
-						for($x=0; $x<=count($_FILES["file"]["name"])-1; $x++){
+
+						for ($x = 0; $x <= count($_FILES["file"]["name"]) - 1; $x++) {
 
 							$file             = $_FILES["file"];
 							$nombre           = $file["name"][$x];
@@ -254,27 +259,27 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 							$size             = $file["size"][$x];
 							$extension        = Extencion_Archivo($nombre);
 
-							if($nombre != ""){
+							if ($nombre != "") {
 
-								if($_POST["folios_archi"][$x] === ""){
+								if ($_POST["folios_archi"][$x] === "") {
 									$FolioArchi = 0;
-								}else{
+								} else {
 									$FolioArchi   = $_POST["folios_archi"][$x];
 								}
 
 								$DetalleArchi = $_POST["detalle_archi"][$x];
 								$FechaArchi   = $_POST["fecha_archi"][$x];
 								$IdTipoDocu   = $_POST["id_tipodoc"][$x];
-								
+
 								$DigitalArchivos->set_Accion("INSERTAR_ARCHIVO");
 								$DigitalArchivos->set_IdDigital($IdDigital);
 								$DigitalArchivos->set_IdTomo($IdTomo);
 								$DigitalArchivos->set_IdRuta($IdRuta);
 								$DigitalArchivos->set_IdTipoDocu($IdTipoDocu);
-								if($DigitalArchivos->Gestionar() == true){
+								if ($DigitalArchivos->Gestionar() == true) {
 
-									$ftpObj->uploadFile($ruta_provisional, $RutaDigitales."/".$DigitalArchivos->get_IdArchivo().".".$extension);
-									if($ftpObj->pr($ftpObj->getMessages()[1]) == true){
+									$ftpObj->uploadFile($ruta_provisional, $RutaDigitales . "/" . $DigitalArchivos->get_IdArchivo() . "." . $extension);
+									if ($ftpObj->pr($ftpObj->getMessages()[1]) == true) {
 
 										$DigitalArchivos->set_Accion("ACTUALIZAR_ARCHIVO");
 										$DigitalArchivos->set_IdArchivo($IdDigital);
@@ -290,16 +295,16 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 							}
 						}
 					}
-							
+
 
 					/********************************************************************************
 					/* SUBO LOS ARCHIVOS COMO UN TODO
 					/********************************************************************************/
-					if($_FILES["file_como_un_todo"]["name"] != ""){
-					
-						$RutaDigitales = $RutaFtp."/".$IdDigital;
+					if ($_FILES["file_como_un_todo"]["name"] != "") {
+
+						$RutaDigitales = $RutaFtp . "/" . $IdDigital;
 						$ftpObj->makeDir($RutaDigitales);
-						$ftpObj->makeDir($RutaDigitales."/".$Tomo->get_NomTomo());
+						$ftpObj->makeDir($RutaDigitales . "/" . $Tomo->get_NomTomo());
 
 						$file             = $_FILES["file_como_un_todo"];
 						$nombre           = $file["name"];
@@ -308,9 +313,9 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 						$size             = $file["size"];
 						$extension        = Extencion_Archivo($nombre);
 
-						if($_POST["folios_archi_como_un_todo"] === ""){
+						if ($_POST["folios_archi_como_un_todo"] === "") {
 							$FolioArchi = 0;
-						}else{
+						} else {
 							$FolioArchi   = $_POST["folios_archi_como_un_todo"];
 						}
 
@@ -322,10 +327,10 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 						$DigitalArchivos->set_IdDigital($IdDigital);
 						$DigitalArchivos->set_IdTomo($IdTomo);
 						$DigitalArchivos->set_IdRuta($IdRuta);
-						if($DigitalArchivos->Gestionar() == true){
-							
-							$ftpObj->uploadFile($ruta_provisional, $RutaDigitales."/".$Tomo->get_NomTomo()."/".$DigitalArchivos->get_IdArchivo().".".$extension);
-							if($ftpObj->pr($ftpObj->getMessages()[1]) == true){
+						if ($DigitalArchivos->Gestionar() == true) {
+
+							$ftpObj->uploadFile($ruta_provisional, $RutaDigitales . "/" . $Tomo->get_NomTomo() . "/" . $DigitalArchivos->get_IdArchivo() . "." . $extension);
+							if ($ftpObj->pr($ftpObj->getMessages()[1]) == true) {
 								$DigitalArchivos->set_Accion("ACTUALIZAR_ARCHIVO");
 								$DigitalArchivos->set_IdArchivo($DigitalArchivos->get_IdArchivo());
 								$DigitalArchivos->set_Archivo($nombre);
@@ -337,13 +342,13 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 							}
 						}
 					}
-					
+
 					echo "1";
-				}else{
+				} else {
 					echo "Iwana no pudo crear el repositorio de archivos, por favor consulte con el administrador del sistema.";
 				}
 			}
-		break;
+			break;
 		case 'ELIMINAR_DIGITAL':
 
 			$Servidor = ServidorDigitalizacion::Buscar(2, $IdRuta, "");
@@ -353,42 +358,41 @@ if (! empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_RE
 			$RutaFtp  = $Servidor->get_Ruta();
 
 			$ArchivParaEliminar = "";
-			if($TipoArchivoDigital == 'Lista de Checkeo'){
-				$ArchivParaEliminar = $RutaFtp."/".$IdDigital."/".$ArchivoDigital;
-			}else{
-				$ArchivParaEliminar = $RutaFtp."/".$IdDigital."/como_un_todo/".$ArchivoDigital;
+			if ($TipoArchivoDigital == 'Lista de Checkeo') {
+				$ArchivParaEliminar = $RutaFtp . "/" . $IdDigital . "/" . $ArchivoDigital;
+			} else {
+				$ArchivParaEliminar = $RutaFtp . "/" . $IdDigital . "/como_un_todo/" . $ArchivoDigital;
 			}
 
 			$ftpObj = new FTPClient();
 			$ftpObj->connect($Ip, $Usuario, $Contra);
-			if($ftpObj->pr($ftpObj->getMessages()[0]) == 'true'){
+			if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
 				$ftpObj->deleteFile($ArchivParaEliminar);
-				if($ftpObj->pr($ftpObj->getMessages()[0]) == 'true'){
+				if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
 
-					DigitalizacionTRD::Gestionar_Archivos(2, $IdArchivoDigital, "", "", "" , "", "", "", "", "", "");
+					DigitalizacionTRD::Gestionar_Archivos(2, $IdArchivoDigital, "", "", "", "", "", "", "", "", "");
 
 					echo 1;
 					exit();
-				}else{
+				} else {
 					echo "No fue posible descargar el archivo o el arhivo non existe";
 					exit();
 				}
 			}
-		break;
+			break;
 		case 'NUEVO_TOMO':
 			$TotalTomo = DigitalizacioTRDTomo::Listar(1, "", $IdDigital, "");
 
 			$Tomo = new DigitalizacioTRDTomo();
 			$Tomo->set_Accion('INSERTAR_TOMO');
 			$Tomo->set_IdDigital($IdDigital);
-			$Tomo->set_NomTomo($TotalTomo['TotalTomos']+1);
-			if($Tomo->Gestionar() == true){
-				echo "1-".$Tomo->get_IdTomo();
+			$Tomo->set_NomTomo($TotalTomo['TotalTomos'] + 1);
+			if ($Tomo->Gestionar() == true) {
+				echo "1-" . $Tomo->get_IdTomo();
 			}
-		break;
+			break;
 		default:
-			echo 'No hay accion para realizar.'.$Accion;
-		break;
+			echo 'No hay accion para realizar.' . $Accion;
+			break;
 	}
 }
-?>

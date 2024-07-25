@@ -2,12 +2,11 @@
 $PrimeraParte = explode("/", $_SERVER['REQUEST_URI']);
 $raiz = 'iwana-sinergia';
 if (isset($_SERVER['HTTPS'])) {
-    $RutaMiServidor = 'https://' . $_SERVER['HTTP_HOST'] . "/iwana-sinergia";
+    $RutaMiServidor = 'https://' . $_SERVER['HTTP_HOST'];
 } else {
-    $RutaMiServidor = 'http://' . $_SERVER['HTTP_HOST'] . "/iwana-sinergia";
+    $RutaMiServidor = 'http://' . $_SERVER['HTTP_HOST'];
 }
 
-$RutaMiServidor . "/iwana-sinergia";
 
 define("MI_NOMBRE", 'Iwana');
 define("MI_ROOT", $RutaMiServidor);

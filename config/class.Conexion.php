@@ -3,7 +3,7 @@ class Conexion extends PDO
 {
 	private $tipo_de_base   = 'mysql';
 	private $host           = 'localhost';
-	private $nombre_de_base = 'iwana_sinergia';
+	private $nombre_de_base = 'iwana_espinal';
 	private $usuario        = 'root';
 	private $contrasena     = '';
 
