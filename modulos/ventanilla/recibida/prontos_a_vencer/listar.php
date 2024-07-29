@@ -1,20 +1,20 @@
 ﻿<?php
-if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 
     session_start();
     include "../../../../config/class.Conexion.php";
-    include( "../../../../config/variable.php");
-    include( "../../../../config/funciones.php");
-    include( "../../../../config/funciones_seguridad.php");
+    include("../../../../config/variable.php");
+    include("../../../../config/funciones.php");
+    include("../../../../config/funciones_seguridad.php");
     require_once '../../../clases/radicar/class.RadicaRecibidoResponsable.php';
     require_once '../../../clases/radicar/class.RadicaRecibidoListarPorVencer.php';
 
     $estado = session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
-    if(!$estado){
+    if (!$estado) {
         session_start();
     }
 
-    $action = (isset($_REQUEST['action']) && $_REQUEST['action'] !=NULL) ? $_REQUEST['action'] : '';
+    $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
     $Buscar        = isset($_POST['Buscar']) ? $_POST['Buscar'] : null;
     $IdRadicado    = isset($_POST['IdRadicado']) ? $_POST['IdRadicado'] : null;
     $IdTercero     = isset($_POST['IdTercero']) ? $_POST['IdTercero'] : null;
@@ -27,23 +27,23 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     $TipoListar = $_REQUEST['tipo_listar'];
 
     $Accion = "";
-    if($TipoListar == 'buscar'){
+    if ($TipoListar == 'buscar') {
         $Accion = 5;
-    }elseif($TipoListar == 'listar'){
+    } elseif ($TipoListar == 'listar') {
         $Accion = 1;
     }
 
-    if($action == 'ajax'){
+    if ($action == 'ajax') {
         include 'pagination.php'; //incluir el archivo de paginación
         //las variables de paginación
-        $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page']))?$_REQUEST['page']:1;
+        $page          = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
         $per_page      = 50; //la cantidad de registros que desea mostrar
         $adjacents     = 4; //brecha entre páginas después de varios adyacentes
         $TotalPrimeros = 0;
         $TotalUltimos  = 0;
-        $TotalPrimeros = ($page*$per_page)-$per_page;
-        $TotalUltimos  = ($page*$per_page);
-        $Mostrar       = $TotalPrimeros.' a '.$TotalUltimos;
+        $TotalPrimeros = ($page * $per_page) - $per_page;
+        $TotalUltimos  = ($page * $per_page);
+        $Mostrar       = $TotalPrimeros . ' a ' . $TotalUltimos;
         $offset        = ($page - 1) * $per_page;
 
         $Registro = new RadicadoRecibidoProntoAVence();
@@ -59,18 +59,18 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         $Registro->set_Limite1($offset);
         $Registro->set_Limite2($per_page);
 
-        if($TipoListar == 'buscar'){
+        if ($TipoListar == 'buscar') {
             $query_services = $Registro->Filtro();
             $numrows = $Registro->TotalRegistros_Filtro();
-        }elseif($TipoListar == 'listar'){
+        } elseif ($TipoListar == 'listar') {
             $query_services = $Registro->Listar();
             $numrows = $Registro->TotalRegistros_Listar();
         }
-        
+
         //echo "Accion: ".$Accion."<br>Total: ".$numrows."<br>Respon Princi: ".$_SESSION['SesionFuncioResponPrinci']." , Jefe Depen: ".$_SESSION['SesionFuncioJefeDependencia'].", Funcio deta: ".$_SESSION['SesionFuncioDetaId'];
-        $total_pages = ceil($numrows/$per_page);
+        $total_pages = ceil($numrows / $per_page);
         $reload      = 'index.php';
-        ?>
+?>
         <div class="row-fluid dataTables_wrapper">
             <div class="pull-right margin-top-20">
                 <div class="dataTables_paginate paging_bootstrap pagination">
@@ -82,8 +82,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             </div>
         </div>
         <div class="clearfix"></div>
-        <div id="email-list">                  
-            <table class="table table-hover" id="emails"> 
+        <div id="email-list">
+            <table class="table table-hover" id="emails">
                 <thead>
                     <div class="row form-row">
                         <div class="col-md-4"><strong>INFO. DEL RADICADO</strong></div>
@@ -95,74 +95,74 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                 <tbody>
                     <?php
 
-                    if($numrows>0){
+                    if ($numrows > 0) {
 
-                        foreach($query_services as $item){
+                        foreach ($query_services as $item) {
 
                             $Clase = "";
                             $ClaseTexto = "";
                             $ClaseColorTexto = "";
                             $DiasTrascurridos = "";
-                            $DiasParaRespuesta = ""; 
+                            $DiasParaRespuesta = "";
                             $TotalDias = 0;
                             $FechaRadicado = $item['fechor_radica'];
                             $RequieRespues = "No";
                             $BagroundColor = "";
                             $ColorTextoTitulo = "";
 
-                            if($item['fec_venci'] != "" and $item['requie_respues'] == 1 and $item['respondido'] == 0){
+                            if ($item['fec_venci'] != "" and $item['requie_respues'] == 1 and $item['respondido'] == 0) {
 
                                 $DiasTrascurridos  = DiasTrascurridos($item['fechor_radica']);
                                 $DiasParaRespuesta = DiasParaRespuesta($item['fechor_radica'], $item['fec_venci']);
-                                $TotalDias         = $DiasParaRespuesta-$DiasTrascurridos;
+                                $TotalDias         = $DiasParaRespuesta - $DiasTrascurridos;
 
                                 $TiempoTrascurrido = "";
-                                if($item['radica_respuesta'] != ""){
+                                if ($item['radica_respuesta'] != "") {
                                     $Clase             = "info";
                                     $ClaseTexto        = "Con Respuesta";
                                     $ClaseColorTexto   = "text-white";
-                                    $TiempoTrascurrido = "<strong>Retraso de ".$TotalDias." días</strong>";
-                                    $FechaRadicado     = "<strong>".$item['fechor_radica']."</strong>";
+                                    $TiempoTrascurrido = "<strong>Retraso de " . $TotalDias . " días</strong>";
+                                    $FechaRadicado     = "<strong>" . $item['fechor_radica'] . "</strong>";
                                     $RequieRespues     = "<strong>Si</strong>";
                                     $BagroundColor     = "";
                                     $ColorTextoTitulo  = "text-black";
-                                }elseif($TotalDias < 0){
+                                } elseif ($TotalDias < 0) {
                                     $Clase             = "danger";
                                     $ClaseTexto        = "Vencido";
                                     $ClaseColorTexto   = "text-error";
-                                    $TiempoTrascurrido = "<strong>Retraso de ".$TotalDias." días</strong>";
-                                    $FechaRadicado     = "<strong>".$item['fechor_radica']."</strong>";
+                                    $TiempoTrascurrido = "<strong>Retraso de " . $TotalDias . " días</strong>";
+                                    $FechaRadicado     = "<strong>" . $item['fechor_radica'] . "</strong>";
                                     $RequieRespues     = "<strong>Si</strong>";
                                     $BagroundColor     = "#FA5858";
                                     $ColorTextoTitulo  = "text-white";
-                                }elseif($TotalDias >= 0 and $TotalDias <= 3){
+                                } elseif ($TotalDias >= 0 and $TotalDias <= 3) {
                                     $Clase             = "warning";
                                     $ClaseTexto        = "Por Vencer";
                                     $ClaseColorTexto   = "text-warning";
-                                    $TiempoTrascurrido = "<strong>Faltan ".$TotalDias." días de ".$DiasParaRespuesta."</strong>";
-                                    $FechaRadicado     = "<strong>".$item['fechor_radica']."</strong>";
+                                    $TiempoTrascurrido = "<strong>Faltan " . $TotalDias . " días de " . $DiasParaRespuesta . "</strong>";
+                                    $FechaRadicado     = "<strong>" . $item['fechor_radica'] . "</strong>";
                                     $RequieRespues     = "<strong>Si</strong>";
                                     $BagroundColor     = "#FACC2E";
                                     $ColorTextoTitulo  = "text-light";
-                                }elseif($TotalDias >= 4 and $TotalDias <= 5){
+                                } elseif ($TotalDias >= 4 and $TotalDias <= 5) {
                                     $Clase             = "warning";
                                     $ClaseTexto        = "Pro Vencer";
                                     $ClaseColorTexto   = "text-warning";
-                                    $TiempoTrascurrido = "<strong>Faltan ".$TotalDias." días de ".$DiasParaRespuesta."</strong>";
-                                    $FechaRadicado     = "<strong>".$item['fechor_radica']."</strong>";
+                                    $TiempoTrascurrido = "<strong>Faltan " . $TotalDias . " días de " . $DiasParaRespuesta . "</strong>";
+                                    $FechaRadicado     = "<strong>" . $item['fechor_radica'] . "</strong>";
                                     $RequieRespues     = "<strong>Si</strong>";
                                     $BagroundColor     = "#FACC2E";
                                     $ColorTextoTitulo  = "text-light";
-                                }elseif($TotalDias > 5){
+                                } elseif ($TotalDias > 5) {
                                     $Clase             = "";
                                     $ClaseTexto        = "";
                                     $ClaseColorTexto   = "";
-                                    $TiempoTrascurrido = "<strong>Faltan ".$TotalDias." días de ".$DiasParaRespuesta."</strong>";
-                                    $FechaRadicado     = "<strong>".$item['fechor_radica']."</strong>";
+                                    $TiempoTrascurrido = "<strong>Faltan " . $TotalDias . " días de " . $DiasParaRespuesta . "</strong>";
+                                    $FechaRadicado     = "<strong>" . $item['fechor_radica'] . "</strong>";
                                     $RequieRespues     = "<strong>Si</strong>";
                                     $ColorTextoTitulo  = "";
                                 }
-                            }else{
+                            } else {
                                 $Clase             = "";
                                 $ClaseTexto        = "";
                                 $ClaseColorTexto   = "";
@@ -170,19 +170,19 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                             }
 
                             $Remitente = "";
-                            if($item['razo_soci'] != ""){
+                            if ($item['razo_soci'] != "") {
                                 $Remitente = $item['razo_soci'];
-                            }else{
+                            } else {
                                 $Remitente = $item['nom_contac'];
                             }
 
-                            $Destinatario = $item['nom_funcio']." ".$item['ape_funcio'].", Depen.: ".$item['nom_depen'].", Ofi.: ".$item['nom_oficina'];
-                            $RadicadoPor  = $item['nom_funcio_radi']." ".$item['ape_funcio_radi'];
+                            $Destinatario = $item['nom_funcio'] . " " . $item['ape_funcio'] . ", Depen.: " . $item['nom_depen'] . ", Ofi.: " . $item['nom_oficina'];
+                            $RadicadoPor  = $item['nom_funcio_radi'] . " " . $item['ape_funcio_radi'];
 
-                            if($item['requie_respues'] == 1){
+                            if ($item['requie_respues'] == 1) {
                                 $RequieRespues = "Si";
                             }
-                            ?>
+                    ?>
                             <tr id="TRRadicado" data-id_radicado="<?php echo $item['id_radica']; ?>">
                                 <td class="small-cell v-align-middle">
                                     <div class="row">
@@ -198,15 +198,15 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                                 <?php echo $Destinatario; ?>
                                             </strong>
                                             <?php
-                                            if($Clase != ""){
-                                                ?>
+                                            if ($Clase != "") {
+                                            ?>
                                                 <span class="label label-<?php echo $Clase; ?> pull-right text-dark"><?php echo $ClaseTexto; ?></span>
-                                                <?php
+                                            <?php
                                             }
                                             ?>
                                         </div>
 
-                                        <hr style="border-width: 2px; height: 0px; border-style: dashed; border-color: default;"/>
+                                        <hr style="border-width: 2px; height: 0px; border-style: dashed; border-color: default;" />
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
@@ -228,18 +228,18 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                                 <dd class="col-sm-7"><?php echo $RadicadoPor; ?></dd>
                                             </dl>
                                         </div>
-                                        
+
                                         <div class="col-md-3">
                                             <dl class="row">
                                                 <dt class="col-sm-3">Remitente:</dt>
                                                 <dd class="col-sm-7"><?php echo $Remitente; ?></dd>
 
                                                 <?php
-                                                if($item['radica_respuesta'] != ""){
-                                                    ?>
+                                                if ($item['radica_respuesta'] != "") {
+                                                ?>
                                                     <dt class="col-sm-3">Respuesta:</dt>
                                                     <dd class="col-sm-7"><?php echo $item['radica_respuesta']; ?></dd>
-                                                    <?php
+                                                <?php
                                                 }
                                                 ?>
 
@@ -247,15 +247,15 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                                 <dd class="col-sm-7"><?php echo $item['nom_forma_llega']; ?></dd>
                                             </dl>
                                         </div>
-                                        
+
                                         <div class="col-md-4">
                                             <?php
                                             $Responsable = RadicadoRecibidoResponsable::Listar(1, $item['id_radica'], "");
-                                            foreach ($Responsable as $ItemRespon):
+                                            foreach ($Responsable as $ItemRespon) :
 
                                                 $array = explode(" ", $ItemRespon['ape_funcio']);
-                                                $NomResponsable = $ItemRespon['nom_funcio']." ".$array[0];
-                                                ?>
+                                                $NomResponsable = $ItemRespon['nom_funcio'] . " " . $array[0];
+                                            ?>
                                                 <dl class="row">
                                                     <dt class="col-sm-2">Respon:</dt>
                                                     <dd class="col-sm-7"><?php echo $NomResponsable; ?></dd>
@@ -268,7 +268,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                                     <dt class="col-sm-2">Ofi:</dt>
                                                     <dd class="col-sm-7"><?php echo $ItemRespon['nom_oficina']; ?></dd>
                                                 </dl>
-                                                <?php
+                                            <?php
                                             endforeach;
                                             ?>
                                         </div>
@@ -276,35 +276,35 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                         <div class="col-md-2">
                                             <dl class="row">
                                                 <?php
-                                                if($item['digital'] == 0 and $item['requie_digital'] == 1){ 
-                                                    ?>
+                                                if ($item['digital'] == 0 and $item['requie_digital'] == 1) {
+                                                ?>
                                                     <button type="button" class="idradicado btn btn-warning btn-xs btn-mini btn-circle idradicado" data-toggle="modal" data-target="#myModalAdjuntarDocumento" data-id_radicado="<?php echo $item['id_radica']; ?>" id="BtnAdjunarDigital<?php echo $item['id_radica']; ?>" title="Subir archivo digital">
-                                                        <i class="fa fa-cloud-upload"></i> 
+                                                        <i class="fa fa-cloud-upload"></i>
                                                     </button>
-                                                    <?php 
+                                                <?php
                                                 }
 
-                                                if($item['impri_rotu'] == 1){
+                                                if ($item['impri_rotu'] == 1) {
                                                     $ClaseImpimirRotulo = "primary";
-                                                }elseif($item['impri_rotu'] == 0){
+                                                } elseif ($item['impri_rotu'] == 0) {
                                                     $ClaseImpimirRotulo = "warning";
                                                 }
                                                 ?>
-                                                
+
                                                 <button type="button" class="ImprimirRotulo btn btn-<?php echo $ClaseImpimirRotulo; ?> btn-xs btn-mini btn-circle" data-toggle="modal" data-target="#myModalImprimirRotulo" data-id_radicado="<?php echo $item['id_radica']; ?>" id="BtnImprimirRotulo<?php echo $item['id_radica']; ?>" title="Imprimir rotulo">
-                                                    <i class="fa fa-credit-card text-white"></i> 
+                                                    <i class="fa fa-credit-card text-white"></i>
                                                 </button>
-                                                
+
                                                 <button type="button" class="btn btn-success btn-xs btn-mini btn-circle" data-toggle="modal" data-target="#myModalMostrarInfoRadicadoRecibido" id="BtnMostarInfoRadicadoRecibido" data-id_radicado="<?php echo $item['id_radica']; ?>" title="Mostrar Info. radicado">
-                                                    <i class="fa fa-info text-white"></i> 
+                                                    <i class="fa fa-info text-white"></i>
                                                 </button>
                                                 <?php
-                                                if($item['fec_venci'] != ""){
-                                                    ?>
+                                                if ($item['fec_venci'] != "") {
+                                                ?>
                                                     <button type="button" class="btn btn-warning btn-xs btn-mini btn-circle" title="Notificar via correo electronico" id="BtnNotificarPorEmail" data-id_radicado="<?php echo $item['id_radica'];; ?>" data-autoriza="<?php echo $item['autoriza'];; ?>">
-                                                        <i class="fa fa-envelope-o text-white"></i> 
+                                                        <i class="fa fa-envelope-o text-white"></i>
                                                     </button>
-                                                    <?php
+                                                <?php
                                                 }
                                                 ?>
                                             </dl>
@@ -320,21 +320,21 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                                     </div>
                                 </td>
                             </tr>
-                            <?php
+                        <?php
                         }
-                    }else{
+                    } else {
                         ?>
                         <div class="alert alert-warning alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h4>Aviso!!!</h4> No hay datos para mostrar
                         </div>
-                        <?php
+                    <?php
                     }
                     ?>
                 </tbody>
             </table>
         </div>
-        <?php
+<?php
     }
 }
 ?>

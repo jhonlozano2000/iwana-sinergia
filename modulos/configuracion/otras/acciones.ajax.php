@@ -48,11 +48,7 @@ $corres_interna_codigo     = isset($_POST['corres_interna_codigo']) ? $_POST['co
 $corres_interna_version    = isset($_POST['corres_interna_version']) ? $_POST['corres_interna_version'] : null;
 
 $planti_correspondencia    = isset($_FILES['plantilla_comunicaciones']['name']) ? $_FILES['plantilla_comunicaciones']['name'] : null;
-$hc_titulo                 = isset($_POST['hc_titulo']) ? $_POST['hc_titulo'] : null;
-$hc_subtitulo              = isset($_POST['hc_subtitulo']) ? $_POST['hc_subtitulo'] : null;
-$hc_codigo                 = isset($_POST['hc_codigo']) ? $_POST['hc_codigo'] : null;
-$hc_version                = isset($_POST['hc_version']) ? $_POST['hc_version'] : null;
-$hc_num_dias               = isset($_POST['hc_num_dias']) ? $_POST['hc_num_dias'] : null;
+
 $hc_depen                  = isset($_POST['id_depen']) ? $_POST['id_depen'] : null;
 $hc_serie                  = isset($_POST['id_serie']) ? $_POST['id_serie'] : null;
 $hc_subserie               = isset($_POST['id_subserie']) ? $_POST['id_subserie'] : null;
@@ -96,8 +92,6 @@ $ConfigOtras->set_CoresInternaTitulo($corres_interna_titulo);
 $ConfigOtras->set_CoresInternaSubTitulo($corres_interna_subtitulo);
 $ConfigOtras->set_CoresInternaCodigo($corres_interna_codigo);
 $ConfigOtras->set_CoresInternaVersion($corres_interna_version);
-$ConfigOtras->set_HC_Titulo($hc_titulo);
-$ConfigOtras->set_HC_SubTitulo($hc_subtitulo);
 $ConfigOtras->set_Incluir_TRD($incluir_trd);
 $ConfigOtras->set_Incluir_Oficina_TRD($incluir_oficina_trd);
 $ConfigOtras->set_TipoRadicadRecibida($tipo_radica_recibi);

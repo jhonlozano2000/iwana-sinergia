@@ -87,7 +87,7 @@ class ConfigOtras
 
 	public function get_Id()
 	{
-		return $this->Id;
+		return $this->id;
 	}
 
 	public function get_CoresReciTitulo()
