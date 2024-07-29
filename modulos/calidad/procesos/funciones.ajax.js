@@ -19,7 +19,7 @@ $(document).ready(function () {
                 type: "POST",
                 // Form data
                 //datos del formulario
-                data: "accion=Insertar&id_depen=" + $("#id_depen").val() + "&cod_proce=" + $("#cod_proce").val() + "&nom_proce=" + $("#nom_proce").val() + "&acti=" + acti,
+                data: "accion=INSERTAR&id_depen=" + $("#id_depen").val() + "&cod_proce=" + $("#cod_proce").val() + "&nom_proce=" + $("#nom_proce").val() + "&acti=" + acti,
                 beforeSend: function () {
                     $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información...", Imagen: "../../../public/assets/img/loading.gif" }, function () {});
                 },

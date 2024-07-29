@@ -8,48 +8,70 @@ $idDepen = isset($_POST['id_depen']) ? $_POST['id_depen'] : null;
 $codProce = isset($_POST['cod_proce']) ? $_POST['cod_proce'] : null;
 $nomProce = isset($_POST['nom_proce']) ? $_POST['nom_proce'] : null;
 $Acti = isset($_POST['acti']) ? $_POST['acti'] : null;
-/* 
-switch ($Accion) {
-	case 'Insertar': */
-$proceso = new Proceso();
-$proceso->setAccion($Accion);
-$proceso->setidProceso($idProceso);
-$proceso->setidDepen($idDepen);
-$proceso->setcodProceso($codProce);
-$proceso->setnomProceso($nomProce);
-$proceso->setActi($Acti);
-if ($proceso->Gestionar() == true) {
-	echo 1;
-	exit();
-} else {
-	echo "No fue posible almecenar el proces";
-	exit();
-}
 
-		/* break;
-	case 'EDITAR':
-		$proceso = Cargo::Buscar(2, $idProceso, 0, "", "", "");
+switch ($Accion) {
+	case 'INSERTAR':
+
+		//Busco el proceso para saber si ya se registró
+		$busProceso = Proceso::Buscar(1, '', $codProce, '');
+		if ($busProceso) {
+			echo "El código del proceso ya se encuentra registrado.";
+			exit();
+		}
+
+		$busProceso = Proceso::Buscar(2, '', '', $nomProce);
+		if ($busProceso) {
+			echo "El nombre del proceso ya se encuentra registrado.";
+			exit();
+		}
+
+		$proceso = new Proceso();
+		$proceso->setAccion($Accion);
 		$proceso->setidProceso($idProceso);
 		$proceso->setidDepen($idDepen);
 		$proceso->setcodProceso($codProce);
 		$proceso->setnomProceso($nomProce);
 		$proceso->setActi($Acti);
-		$proceso->Gestionar();
+		if ($proceso->Gestionar() == true) {
+			echo 1;
+			exit();
+		} else {
+			echo "No fue posible almecenar el proces";
+			exit();
+		}
+
+		break;
+	case 'EDITAR':
+		//$proceso = Proceso::Buscar(2, $idProceso, 0, "", "", "");
+		$proceso = new Proceso();
+		$proceso->setAccion($Accion);
+		$proceso->setidProceso($idProceso);
+		$proceso->setidDepen($idDepen);
+		$proceso->setcodProceso($codProce);
+		$proceso->setnomProceso($nomProce);
+		$proceso->setActi($Acti);
+		if ($proceso->Gestionar() == true) {
+			echo 1;
+			exit();
+		} else {
+			echo "No fue posible actualizar el proces";
+			exit();
+		}
 		break;
 	case 'ELIMINAR':
 		if ($idProceso) {
-			$proceso = Cargo::Buscar(2, $idProceso, 0, "", "", "");
-			$proceso->Eliminar();
+			$proceso = Proceso::Buscar(2, $idProceso, 0, "", "", "");
+			//$proceso->Eliminar();
 		} else {
 			echo "No hay registro para eliminar.";
 		}
 		break;
 	case 'ACTIVAR_INACTIVAR':
 		if ($idProceso) {
-			$proceso = Cargo::Buscar(2, $idProceso, 0, "", "", "");
+			$proceso = Proceso::Buscar(2, $idProceso, 0, "", "", "");
 			$proceso->setidProceso($idProceso);
 			$proceso->setActi($Acti);
-			$proceso->ActivarInactivar();
+			//$proceso->ActivarInactivar();
 		} else {
 			echo "No hay registro para eliminar.";
 		}
@@ -57,4 +79,3 @@ if ($proceso->Gestionar() == true) {
 	default:
 		echo 'No hay accion para realizar.';
 }
- */

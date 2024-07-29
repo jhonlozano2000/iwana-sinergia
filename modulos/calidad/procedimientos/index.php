@@ -5,14 +5,15 @@ require_once '../../../config/funciones.php';
 require_once '../../../config/funciones_seguridad.php';
 require_once '../../../config/class.Conexion.php';
 require_once '../../clases/seguridad/class.SeguridadUsuario.php';
-require_once '../../clases/areas/class.AreasDependencia.php';
+require_once '../../clases/calidad/class.CalidadProcedimientos.php';
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>...::: Iwana - Areas, Dependencias :::...</title>
+    <title>...::: Iwana - Calidad, Procedimientos :::...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -21,32 +22,31 @@ require_once '../../clases/areas/class.AreasDependencia.php';
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/shape-hover/css/component.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.carousel.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.theme.css" />
-    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen" >
-    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen" >
+    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen">
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
 
     <!-- BEGIN CSS TEMPLATE -->
-    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
     <script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <link href="../../mi_archivo/archivo_digitalizado/menuarbolaccesible.css" rel="stylesheet" type="text/css" />
-    <link href="../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../public/assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen" />
 
     <style>
-
         .btn-circle {
             width: 23px;
             height: 23px;
@@ -54,8 +54,9 @@ require_once '../../clases/areas/class.AreasDependencia.php';
             padding: 4px 0;
             font-size: 8px;
             line-height: 1.33;
-            border-radius:15px;
+            border-radius: 15px;
         }
+
         .btn-circle.btn-lg {
             width: 20px;
             height: 20px;
@@ -64,6 +65,7 @@ require_once '../../clases/areas/class.AreasDependencia.php';
             line-height: 1.33;
             border-radius: 15px;
         }
+
         .btn-circle.btn-xl {
             width: 50px;
             height: 50px;
@@ -76,6 +78,7 @@ require_once '../../clases/areas/class.AreasDependencia.php';
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body class="">
     <!-- BEGIN HEADER -->
     <?php require_once '../../../config/cabeza.php'; ?>
@@ -113,7 +116,7 @@ require_once '../../clases/areas/class.AreasDependencia.php';
                     <li>
                         <p>Tú estas</p>
                     </li>
-                    <li><a href="#" class="active">Áreas - Dependencias.</a> </li>
+                    <li><a href="#" class="active">Calidad - Procedimientos.</a> </li>
                 </ul>
                 <div id="DivAlerta"></div>
                 <!-- BEGIN DASHBOARD TILES -->
@@ -127,61 +130,63 @@ require_once '../../clases/areas/class.AreasDependencia.php';
                                             <i class="glyphicon glyphicon-plus"></i>
                                         </a>
                                         <div class="col-md-12">
-                                            <table class="table table-striped" id="example1" >
+                                            <table class="table table-striped" id="example1">
                                                 <thead>
                                                     <tr>
                                                         <th>Acti</th>
-                                                        <th>Cod. Depen.</th>
-                                                        <th>Cod. Corres.</th>
                                                         <th>Dependencia</th>
-                                                        <th>Observaciones</th>
+                                                        <th>Cod. Proceso</th>
+                                                        <th>Proceso</th>
+                                                        <th>Cod. Procedimiento</th>
+                                                        <th>Procedimiento</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $Dependencias = Dependencia::Listar(1, "", "", "", "");;
-                                                    foreach ($Dependencias as $item):
-                                                        ?>
-                                                        <tr id="TrDatos<?php echo $item['id_depen']; ?>">
+                                                    $procesos = Procedimiento::Listar(1, 0, 0, "");
+                                                    foreach ($procesos as $item) :
+                                                    ?>
+                                                        <tr id="TblDatos<?php echo $item['procedimiento_id']; ?>">
                                                             <td>
                                                                 <div class="checkbox check-success">
                                                                     <?php
-                                                                    if($item['acti'] == 1){
+                                                                    if ($item['estado'] == 1) {
                                                                         $checked = "checked";
-                                                                    }else{
+                                                                    } else {
                                                                         $checked = "";
                                                                     }
                                                                     ?>
-                                                                    <input id="acti<?php echo $item['id_depen']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['id_depen']; ?>" data-nom="<?php echo $item['nom_depen']; ?>">
-                                                                    <label for="acti<?php echo $item['id_depen']; ?>"></label>
+                                                                    <input id="acti<?php echo $item['procedimiento_id']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['procedimiento_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
+                                                                    <label for="acti<?php echo $item['procedimiento_id']; ?>"></label>
                                                                 </div>
                                                             </td>
-                                                            <td><?php echo substr($item['cod_depen'],0, 200); ?></td>
-                                                            <td><?php echo substr($item['cod_corres'],0, 200); ?></td>
                                                             <td><?php echo $item['nom_depen']; ?></td>
-                                                            <td><?php echo substr($item['observa'],0, 200); ?></td>
-
+                                                            <td><?php echo $item['cod_proce']; ?></td>
+                                                            <td><?php echo $item['nom_proce']; ?></td>
+                                                            <td><?php echo $item['cod_procedimiento']; ?></td>
+                                                            <td><?php echo $item['nom_procedimiento']; ?></td>
                                                             <td>
-                                                                <a href="edit.php?id=<?php echo $item['id_depen']; ?>" class="btn btn-warning btn-circle">
+                                                                <a href="edit.php?id=<?php echo $item['procedimiento_id']; ?>" class="btn btn-warning btn-circle">
                                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                                 </a>
-                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['id_depen']; ?>" data-nom="<?php echo $item['nom_depen']; ?>">
+                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['procedimiento_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
                                                                     <i class="glyphicon glyphicon-trash"></i>
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                        <?php
+                                                    <?php
                                                     endforeach;
                                                     ?>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <th>Acti</th>
-                                                        <th>Cod. Depen.</th>
-                                                        <th>Cod. Corres.</th>
                                                         <th>Dependencia</th>
-                                                        <th >Observaciones</th>
+                                                        <th>Cod. Proceso</th>
+                                                        <th>Proceso</th>
+                                                        <th>Cod. Procedimiento</th>
+                                                        <th>Procedimiento</th>
                                                         <th></th>
                                                     </tr>
                                                 </tfoot>
@@ -193,14 +198,13 @@ require_once '../../clases/areas/class.AreasDependencia.php';
                         </div>
                     </div>
                 </form>
-                <!-- END DASHBOARD TILES -->
             </div>
         </div>
-        <!-- BEGIN CHAT --> 
+        <!-- BEGIN CHAT -->
         <div class="chat-window-wrapper">
             <?php require_once '../../chat/chat.php'; ?>
         </div>
-        <!-- END CHAT -->		  
+        <!-- END CHAT -->
     </div>
     <!-- END CONTAINER -->
 
@@ -228,7 +232,7 @@ require_once '../../clases/areas/class.AreasDependencia.php';
 
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.resize.min.js" type="text/javascript"></script>
-    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript" ></script>
+    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="../../../public/assets/js/core.js" type="text/javascript"></script>
@@ -236,13 +240,15 @@ require_once '../../clases/areas/class.AreasDependencia.php';
     <script src="../../../public/assets/js/demo.js" type="text/javascript"></script>
     <script src="../../../public/assets/js/dashboard_v2.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".live-tile,.flip-list").liveTile();
         });
     </script>
 
     <script src="../../../public/assets/sweetalert2/sweetalert-dev.js"></script>
     <link href="../../../public/assets/sweetalert2/sweetalert.css" rel="stylesheet" type="text/css">
-    
+    c/assets/js/datatables.js" type="text/javascript"></script>
+    <!-- END JAVASCRIPTS -->
 </body>
+
 </html>

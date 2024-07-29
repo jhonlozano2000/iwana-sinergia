@@ -5,16 +5,38 @@ require_once '../../../config/funciones.php';
 require_once '../../../config/funciones_seguridad.php';
 require_once '../../../config/class.Conexion.php';
 require_once '../../clases/seguridad/class.SeguridadUsuario.php';
-require_once "../../clases/areas/class.AreasDependencia.php";
+require_once '../../clases/calidad/class.CalidadProceso.php';
+require_once '../../clases/calidad/class.CalidadProcedimientos.php';
 
-$Dependencia = Dependencia::Buscar(2, $_REQUEST['id'], "", "", "");
+$proceso = Proceso::Buscar(3, $_REQUEST['id'], 0, "");
+
+$Dependencia = Dependencia::Listar(6, "", "", "", "");;
+$Combo_Dependencias = "";
+foreach ($Dependencia as $Item) :
+    if ($Item['id_depen'] == $proceso->getidDepen()) {
+        $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "' selected>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
+    } else {
+        $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "'>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
+    }
+endforeach;
+
+$Procesos = Proceso::Listar(2, $proceso->getidDepen(), "", "", "");;
+$Combo_Procesos = "";
+foreach ($Procesos as $Item) :
+    if ($Item['procesos_id'] == $proceso->getidDepen()) {
+        $Combo_Procesos .= "<option value='" . $Item['procesos_id'] . "' selected>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
+    } else {
+        $Combo_Procesos .= "<option value='" . $Item['procesos_id'] . "'>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
+    }
+endforeach;
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>...::: Iwana - Areas, Dependencias :::...</title>
+    <title>...::: Iwana - Caldiad, Procesos :::...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -23,23 +45,23 @@ $Dependencia = Dependencia::Buscar(2, $_REQUEST['id'], "", "", "");
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/shape-hover/css/component.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.carousel.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.theme.css" />
-    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen" >
-    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen" >
+    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen">
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
 
     <!-- BEGIN CSS TEMPLATE -->
-    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
     <script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <link href="../../mi_archivo/archivo_digitalizado/menuarbolaccesible.css" rel="stylesheet" type="text/css" />
@@ -47,6 +69,7 @@ $Dependencia = Dependencia::Buscar(2, $_REQUEST['id'], "", "", "");
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body class="">
     <!-- BEGIN HEADER -->
     <?php require_once '../../../config/cabeza.php'; ?>
@@ -84,88 +107,88 @@ $Dependencia = Dependencia::Buscar(2, $_REQUEST['id'], "", "", "");
                     <li>
                         <p>Tú estas</p>
                     </li>
-                    <li><a href="#" class="active">Áreas - Dependencias.</a> </li>
+                    <li><a href="#" class="active">Caldiad, Procesos.</a> </li>
                 </ul>
                 <div id="DivAlerta"></div>
                 <!-- BEGIN DASHBOARD TILES -->
                 <form role="form" name="FrmDatos" id="FrmDatos">
                     <div class="grid simple">
                         <div class="grid-body no-border">
-                            <form class="form-no-horizontal-spacing" id="form-condensed">
 
-                                <input name="id_depen" id="id_depen" type="hidden" value="<?php echo $Dependencia -> getId(); ?>">
-                                <input name="accion" id="accion" type="hidden" value="EDITAR">
+                            <input name="procesos_id" id="procesos_id" type="hidden" value="<?php echo $proceso->getidProceso(); ?>">
+                            <input name="accion" id="accion" type="hidden" value="EDITAR">
 
-                                <div class="row column-seperation">
-                                    <div class="col-md-6">
-                                        <h4><span class="text-warning">Editar</span>, Información básica de la Dependencia</h4>
-                                        <div class="row form-row">
-                                            <div class="col-md-5">
-                                                <input name="cod_depen" type="text" class="form-control" id="cod_depen"
-                                                placeholder="Código de la dependencia"
-                                                value="<?php echo $Dependencia -> getCod_Dependencia(); ?>">
-                                            </div>
-                                            <div class="col-md-7">
-                                                <input name="cod_corres" type="text" class="form-control" id="cod_corres"
-                                                placeholder="Código de correspondencia"
-                                                value="<?php echo $Dependencia -> getCod_Correspondencia(); ?>">
-                                            </div>
+                            <div class="row column-seperation">
+                                <div class="col-md-6">
+                                    <h4><span class="text-warning">Editar</span>, Información básica del nuevo proceso</h4>
+                                    <div class="row form-row">
+                                        <div class="col-md-5">
+                                            <select name="id_depen" id="id_depen" class="select2 form-control">
+                                                <option value="0">...::: Elije la Dependencia :::...</option>
+                                                <?php echo $Combo_Dependencias; ?>
+                                            </select>
                                         </div>
-                                        <div class="row form-row">
-                                            <div class="col-md-12">
-                                                <input name="nom_depen" type="text" class="form-control" id="nom_depen"
-                                                placeholder="Nombre de la dependencia..."
-                                                value="<?php echo $Dependencia -> getNom_Dependencia(); ?>">
-                                            </div>
-                                        </div>
-                                        <div class="row form-row">
-                                            <div class="col-md-12">
-                                                <textarea name="observa" rows="3" class="form-control" id="observa"
-                                                placeholder="Observaciones si las hay..."><?php echo trim($Dependencia -> getObserva()); ?></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="row form-row">
-                                            <div class="col-md-8">
-                                                <div class="checkbox check-success">
-                                                    <?php
-                                                    if($Dependencia->getActi() == 1){
-                                                        $checked = "checked";
-                                                    }else{
-                                                        $checked = "";
-                                                    }
-                                                    ?>
-                                                    <input name="acti" id="acti" type="checkbox" id="acti" value="1" <?php echo $checked; ?>>
-                                                    <label for="acti">Activo</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <div class="col-md-6"> </div>
-                                </div>
-                                <div class="form-actions">
-
-                                    <div class="pull-left">
-                                        <button class="btn btn-warning btn-cons" type="button" id="BtnEditar" name="BtnEditar">
-                                            <i class="glyphicon glyphicon-pencil"></i> Editar
-                                        </button>
-                                        <button class="btn btn-white btn-cons" type="button" id="BtnRegresar" name="BtnRegresar">
-                                            <i class="fa fa-mail-reply-all"></i> Regresar
-                                        </button>
+                                    <div class="row form-row">
+                                        <div class="col-md-5">
+                                            <select name="id_depen" id="id_depen" class="select2 form-control">
+                                                <option value="0">...::: Elije el proceso :::...</option>
+                                                <?php echo $Combo_Dependencias; ?>
+                                            </select>
+                                        </div>
                                     </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="cod_proce" type="text" class="form-control" id="cod_proce" placeholder="Código del proceso" value="<?php echo $proceso->getcodProceso(); ?>">
+                                        </div>
+                                    </div>
+                                    <div class="row form-row">
+                                        <div class="col-md-12">
+                                            <input name="nom_proce" type="text" class="form-control" id="nom_proce" placeholder="Nombre del proceso" value="<?php echo $proceso->getnomProceso(); ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-row">
+                                        <div class="col-md-8">
+                                            <div class="checkbox check-success  ">
+                                                <?php
+                                                if ($proceso->getActi() == 1) {
+                                                    $checked = "checked";
+                                                } else {
+                                                    $checked = "";
+                                                }
+                                                ?>
+                                                <input name="acti" id="acti" type="checkbox" value="1" <?php echo $checked; ?>>
+                                                <label for="checkbox2">Activo</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </form>
+                                <div class="col-md-6"> </div>
+                            </div>
+                            <div class="form-actions">
+
+                                <div class="pull-left">
+                                    <button class="btn btn-warning btn-cons" type="button" id="BtnEditar" name="BtnEditar">
+                                        <i class="glyphicon glyphicon-pencil"></i> Editar
+                                    </button>
+                                    <button class="btn btn-white btn-cons" type="button" id="BtnRegresar" name="BtnRegresar">
+                                        <i class="fa fa-mail-reply-all"></i> Regresar
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
                 <!-- END DASHBOARD TILES -->
             </div>
         </div>
-        <!-- BEGIN CHAT --> 
+        <!-- BEGIN CHAT -->
         <div class="chat-window-wrapper">
             <?php require_once '../../chat/chat.php'; ?>
         </div>
-        <!-- END CHAT -->		  
+        <!-- END CHAT -->
     </div>
     <!-- END CONTAINER -->
 
@@ -193,7 +216,7 @@ $Dependencia = Dependencia::Buscar(2, $_REQUEST['id'], "", "", "");
 
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.resize.min.js" type="text/javascript"></script>
-    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript" ></script>
+    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="../../../public/assets/js/core.js" type="text/javascript"></script>
@@ -201,7 +224,7 @@ $Dependencia = Dependencia::Buscar(2, $_REQUEST['id'], "", "", "");
     <script src="../../../public/assets/js/demo.js" type="text/javascript"></script>
     <script src="../../../public/assets/js/dashboard_v2.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".live-tile,.flip-list").liveTile();
         });
     </script>
@@ -210,4 +233,5 @@ $Dependencia = Dependencia::Buscar(2, $_REQUEST['id'], "", "", "");
 
     <!-- END CORE TEMPLATE JS -->
 </body>
+
 </html>

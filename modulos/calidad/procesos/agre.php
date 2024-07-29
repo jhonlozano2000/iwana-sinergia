@@ -122,7 +122,7 @@ endforeach;
                                             </div>
                                             <div class="row form-row">
                                                 <div class="col-md-12">
-                                                    <input name="cod_proce" type="text" class="form-control" id="cod_proce" placeholder="Nombre del proceso">
+                                                    <input name="cod_proce" type="text" class="form-control" id="cod_proce" placeholder="Código del proceso">
                                                 </div>
                                             </div>
                                             <div class="row form-row">

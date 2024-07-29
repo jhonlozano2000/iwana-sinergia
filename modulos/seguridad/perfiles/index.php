@@ -9,6 +9,7 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
@@ -21,33 +22,32 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/shape-hover/css/component.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.carousel.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.theme.css" />
-    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen" >
-    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen" >
+    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen">
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
 
     <!-- BEGIN CSS TEMPLATE -->
-    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
     <script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <link href="../../mi_archivo/archivo_digitalizado/menuarbolaccesible.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="../../mi_archivo/archivo_digitalizado/menuarbolaccesible.js"></script>
-    <link href="../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../public/assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen" />
 
     <style>
-
         .btn-circle {
             width: 23px;
             height: 23px;
@@ -55,8 +55,9 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
             padding: 4px 0;
             font-size: 8px;
             line-height: 1.33;
-            border-radius:15px;
+            border-radius: 15px;
         }
+
         .btn-circle.btn-lg {
             width: 20px;
             height: 20px;
@@ -65,6 +66,7 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
             line-height: 1.33;
             border-radius: 15px;
         }
+
         .btn-circle.btn-xl {
             width: 50px;
             height: 50px;
@@ -77,6 +79,7 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body class="">
     <!-- BEGIN HEADER -->
     <?php require_once '../../../config/cabeza.php'; ?>
@@ -115,7 +118,7 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
                         <p>Tú estas</p>
                     </li>
                     <li>
-                        <a href="#" class="active">Seguridad - Usuarios.</a>
+                        <a href="#" class="active">Seguridad - Perfiles.</a>
                     </li>
                 </ul>
                 <div id="DivAlerta"></div>
@@ -142,15 +145,15 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
                                                 <tbody>
                                                     <?php
                                                     $Usuario = Perfiles::Listar(2, 0, "", 0);
-                                                    foreach ($Usuario as $item):
-                                                        ?>
+                                                    foreach ($Usuario as $item) :
+                                                    ?>
                                                         <tr id="TrDatos<?php echo $item['id_perfil']; ?>">
                                                             <td>
                                                                 <div class="checkbox check-success">
                                                                     <?php
-                                                                    if($item['acti'] == 1){
+                                                                    if ($item['acti'] == 1) {
                                                                         $checked = "checked";
-                                                                    }else{
+                                                                    } else {
                                                                         $checked = "";
                                                                     }
                                                                     ?>
@@ -164,12 +167,12 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
                                                                 <a href="edit.php?id=<?php echo $item['id_perfil']; ?>" class="btn btn-warning btn-circle">
                                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                                 </a>
-                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id_funcio_deta="<?php echo $item['id_funcio_deta']; ?>" data-id="<?php echo $item['id_perfil']; ?>" data-nom="<?php echo $item['nom_perfil']; ?>">
+                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['id_perfil']; ?>" data-nom="<?php echo $item['nom_perfil']; ?>">
                                                                     <i class="glyphicon glyphicon-trash"></i>
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                        <?php
+                                                    <?php
                                                     endforeach;
                                                     ?>
                                                 </tbody>
@@ -192,11 +195,11 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
                 <!-- END DASHBOARD TILES -->
             </div>
         </div>
-        <!-- BEGIN CHAT --> 
+        <!-- BEGIN CHAT -->
         <div class="chat-window-wrapper">
             <?php require_once '../../chat/chat.php'; ?>
         </div>
-        <!-- END CHAT -->		  
+        <!-- END CHAT -->
     </div>
     <!-- END CONTAINER -->
 
@@ -224,7 +227,7 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
 
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.resize.min.js" type="text/javascript"></script>
-    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript" ></script>
+    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="../../../public/assets/js/core.js" type="text/javascript"></script>
@@ -232,7 +235,7 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
     <script src="../../../public/assets/js/demo.js" type="text/javascript"></script>
     <script src="../../../public/assets/js/dashboard_v2.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".live-tile,.flip-list").liveTile();
         });
     </script>
@@ -252,12 +255,13 @@ require_once '../../clases/seguridad/class.SeguridadPerfiles.php';
     <script src="../../../public/assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
     <script src="../../../public/assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
     <script src="../../../public/assets/plugins/bootstrap-select2/select2.min.js" type="text/javascript"></script>
-    <script src="../../../public/assets/plugins/jquery-datatable/js/jquery.dataTables.min.js" type="text/javascript" ></script>
-    <script src="../../../public/assets/plugins/jquery-datatable/extra/js/dataTables.tableTools.min.js" type="text/javascript" ></script>
+    <script src="../../../public/assets/plugins/jquery-datatable/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="../../../public/assets/plugins/jquery-datatable/extra/js/dataTables.tableTools.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="../../../public/assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
     <script type="text/javascript" src="../../../public/assets/plugins/datatables-responsive/js/lodash.min.js"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <script src="../../../public/assets/js/datatables.js" type="text/javascript"></script>
     <!-- END JAVASCRIPTS -->
 </body>
+
 </html>

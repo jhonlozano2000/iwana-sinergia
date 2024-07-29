@@ -151,13 +151,13 @@ require_once '../../clases/calidad/class.CalidadProceso.php';
                                                             <td>
                                                                 <div class="checkbox check-success">
                                                                     <?php
-                                                                    if ($item['acti'] == 1) {
+                                                                    if ($item['estado'] == 1) {
                                                                         $checked = "checked";
                                                                     } else {
                                                                         $checked = "";
                                                                     }
                                                                     ?>
-                                                                    <input id="acti<?php echo $item['procesos_id']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['procesos_id']; ?>" data-nom="<?php echo $item['nom_cargo']; ?>">
+                                                                    <input id="acti<?php echo $item['procesos_id']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['procesos_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
                                                                     <label for="acti<?php echo $item['procesos_id']; ?>"></label>
                                                                 </div>
                                                             </td>
@@ -168,7 +168,7 @@ require_once '../../clases/calidad/class.CalidadProceso.php';
                                                                 <a href="edit.php?id=<?php echo $item['procesos_id']; ?>" class="btn btn-warning btn-circle">
                                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                                 </a>
-                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['procesos_id']; ?>" data-nom="<?php echo $item['nom_cargo']; ?>">
+                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['procesos_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
                                                                     <i class="glyphicon glyphicon-trash"></i>
                                                                 </button>
                                                             </td>
