@@ -19,7 +19,7 @@
         </a>
         <ul class="sub-menu">
             <li id="Men_Gene_Funcionarios" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/general/funcionarios/index.php"><i class="fa fa-users"></i> Funcionarios </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/general/funcionarios/"><i class="fa fa-users"></i> Funcionarios </a>
             </li>
             <noscript>
                 <li id="">
@@ -47,10 +47,10 @@
         </a>
         <ul class="sub-menu">
             <li id="Men_Mi_Archivo_Bandeja" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/mi_archivo/bandeja/externa/recibidas/index.php"> Bandeja De Correo </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/mi_archivo/bandeja/externa/recibidas/"> Bandeja De Correo </a>
             </li>
             <li id="Men_Mi_Archivo_Digitalizados">
-                <a href="<?php echo MI_ROOT; ?>/modulos/mi_archivo/archivo_digitalizado/index.php"> Archivo Digitalizado</a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/mi_archivo/archivo_digitalizado/"> Archivo Digitalizado</a>
             </li>
             <li id="Men_Mi_Disco">
                 <a href="#"> Mi Disco</a>
@@ -66,7 +66,7 @@
         </a>
         <ul class="sub-menu">
             <li id="Men_Venta_Unica_Radica" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/ventanilla/index.php"> Radicar Correspondencia </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/ventanilla/"> Radicar Correspondencia </a>
             </li>
         </ul>
     </li>
@@ -87,16 +87,16 @@
                 </a>
                 <ul class="sub-menu">
                     <li id="Men_OfiArchi_TRD_TRD" style="display:none">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/reten_documental/trd/index.php"> TRD </a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/reten_documental/trd/"> TRD </a>
                     </li>
                     <li id="Men_OfiArchi_Reten_Series" style="display:none">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/reten_documental/serie/index.php"> Series</a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/reten_documental/serie/"> Series</a>
                     </li>
                     <li id="Men_OfiArchi_Reten_SubSeries" style="display:none">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/reten_documental/sub_serie/index.php"> Subserie</a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/reten_documental/sub_serie/"> Subserie</a>
                     </li>
                     <li id="Men_OfiArchi_Reten_TipoDocumento" style="display:none">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/reten_documental/tipo_documentos/index.php"> Tipos de Documentos</a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/reten_documental/tipo_documentos/"> Tipos de Documentos</a>
                     </li>
                 </ul>
             </li>
@@ -108,10 +108,10 @@
 
                 <ul class="sub-menu">
                     <li id="Men_OfiArchi_Digitalizacion">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/digitalizacion/digitalizar_trd/index.php"> Digitalizar con TRD</a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/digitalizacion/digitalizar_trd/"> Digitalizar con TRD</a>
                     </li>
                     <li id="Men_OfiArchi_Digitalizacion_TVD">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/digitalizacion/digitalizar_tvd/index.php"> Digitalizar con TVD</a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/digitalizacion/digitalizar_tvd/"> Digitalizar con TVD</a>
                     </li>
                 </ul>
             </li>
@@ -128,10 +128,10 @@
                         </a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/dependencias/index.php"> Dependencias</a>
+                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/dependencias/"> Dependencias</a>
                             </li>
                             <li>
-                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/oficinas/index.php"> Oficinas</a>
+                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/oficinas/"> Oficinas</a>
                             </li>
                         </ul>
                     </li>
@@ -142,16 +142,16 @@
                         </a>
                         <ul class="sub-menu">
                             <li>
-                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/tvd/index.php"> TVD</a>
+                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/tvd/"> TVD</a>
                             </li>
                             <li>
-                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/serie/index.php"> Series</a>
+                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/serie/"> Series</a>
                             </li>
                             <li>
-                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/sub_serie/index.php"> Subseries</a>
+                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/sub_serie/"> Subseries</a>
                             </li>
                             <li>
-                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/tipo_documentos/index.php"> Tipos Documentales</a>
+                                <a href="<?php echo MI_ROOT; ?>/modulos/oficina_archivo/tvd/tipo_documentos/"> Tipos Documentales</a>
                             </li>
                         </ul>
                     </li>
@@ -211,37 +211,40 @@
         </a>
         <ul class="sub-menu">
             <li id="Men_Config_FormaEnvio" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/forma_envio/index.php"> Formas de Envio </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/forma_envio/"> Formas de Envio </a>
             </li>
             <li id="Men_Config_Saludo" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/saludo/index.php"> Saludo </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/saludo/"> Saludo </a>
             </li>
             <li id="Men_Config_Depedida" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/despedida/index.php"> Despedida </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/despedida/"> Despedida </a>
             </li>
             <li id="Men_Config_Estatus" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/status/index.php"> Status </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/status/"> Status </a>
             </li>
             <li id="Men_Config_tipos_correspondencia" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipo_correspondencia/index.php"> Tipo de Correspondencia </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipo_correspondencia/"> Tipo de Correspondencia </a>
             </li>
             <li id="Men_Config_tipos_documentos" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipos_documentos/index.php"> Tipo de documentos </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipos_documentos/"> Tipo de documentos </a>
             </li>
             <li id="Men_Config_tipos_respuestas" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipos_respuesta/index.php"> Tipo de respuestas </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipos_respuesta/"> Tipo de respuestas </a>
             </li>
             <li id="Men_Config_RutasGestion" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/ruta_gestion/index.php"> Rutas de Archivo de Gestión </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/ruta_gestion/"> Rutas de Archivo de Gestión </a>
             </li>
             <li id="Men_Config_RutasTemp" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/ruta_temp/index.php"> Rutas para archivos Temp </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/ruta_temp/"> Rutas para archivos Temp </a>
+            </li>
+            <li id="Men_Config_Calidad" style="display:none">
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/ruta_calidad/"> Rutas para archivo de caldiad </a>
             </li>
             <li id="Men_Config_RutasDigitalizacion" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/ruta_digitalizacion/index.php"> Rutas para digitalización </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/ruta_digitalizacion/"> Rutas para digitalización </a>
             </li>
             <li id="Men_Config_Otras" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/otras/index.php"> Otras configuraciones </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/otras/"> Otras configuraciones </a>
             </li>
         </ul>
     </li>
@@ -254,10 +257,10 @@
         </a>
         <ul class="sub-menu">
             <li id="Men_Seguri_Explora" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/seguridad/usuarios/index.php"><i class="fa fa-users"></i> Usuarios </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/seguridad/usuarios/"><i class="fa fa-users"></i> Usuarios </a>
             </li>
             <li id="Men_Seguri_Perfiles" style="display:none">
-                <a href="<?php echo MI_ROOT; ?>/modulos/seguridad/perfiles/index.php"> Explorador de Perfiles </a>
+                <a href="<?php echo MI_ROOT; ?>/modulos/seguridad/perfiles/"> Explorador de Perfiles </a>
             </li>
         </ul>
     </li>
@@ -275,10 +278,10 @@
                     <span class="arrow "></span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="<?php echo MI_ROOT; ?>/modulos/reportes/ventanilla/detallado/index.php"> Detallados</a></li>
-                    <li><a href="<?php echo MI_ROOT; ?>/modulos/reportes/ventanilla/indicador/index.php"> Indicador</a></li>
+                    <li><a href="<?php echo MI_ROOT; ?>/modulos/reportes/ventanilla/detallado/"> Detallados</a></li>
+                    <li><a href="<?php echo MI_ROOT; ?>/modulos/reportes/ventanilla/indicador/"> Indicador</a></li>
                     <li><a href="#"> Pendientes</a></li>
-                    <li><a href="<?php echo MI_ROOT; ?>/modulos/reportes/ventanilla/pqrsf/index.php"> PQRSF</a></li>
+                    <li><a href="<?php echo MI_ROOT; ?>/modulos/reportes/ventanilla/pqrsf/"> PQRSF</a></li>
                 </ul>
             </li>
             <li>
@@ -287,7 +290,7 @@
                     <span class="arrow "></span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="<?php echo MI_ROOT; ?>/modulos/reportes/oficina_archivo/trd/index.php"> TRD</a></li>
+                    <li><a href="<?php echo MI_ROOT; ?>/modulos/reportes/oficina_archivo/trd/"> TRD</a></li>
                 </ul>
             </li>
         </ul>
