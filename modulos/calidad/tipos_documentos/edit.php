@@ -5,36 +5,14 @@ require_once '../../../config/funciones.php';
 require_once '../../../config/funciones_seguridad.php';
 require_once '../../../config/class.Conexion.php';
 require_once '../../clases/seguridad/class.SeguridadUsuario.php';
-require_once '../../clases/calidad/class.CalidadProceso.php';
-require_once '../../clases/calidad/class.CalidadProcedimientos.php';
-require_once "../../clases/areas/class.AreasDependencia.php";
+require_once '../../clases/calidad/class.TipoDocumenCalidad.php';
 
-//Busco el procedimiento
-$procesodimiento = Procedimiento::Buscar(3, "", $_REQUEST['id'], 0, "");
+$tipoDocumento = TipoDocumentoCalidad::Buscar(1, $_REQUEST['id'], "");
 
-//Busco el procesos por el id del procedimiento
-$proceso = Proceso::Buscar(3, $procesodimiento->getidProceso(), "", "");
-
-$Dependencia = Dependencia::Listar(6, "", "", "", "");;
-$Combo_Dependencias = "";
-foreach ($Dependencia as $Item) :
-    if ($Item['id_depen'] == $proceso->getidDepen()) {
-        $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "' selected>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
-    } else {
-        $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "'>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
-    }
-endforeach;
-
-//Listo los procesos para llenar el combo de los procesos
-$Procesos = Proceso::Listar(2, $proceso->getidDepen(), "", "", "");;
-$Combo_Procesos = "";
-foreach ($Procesos as $Item) :
-    if ($Item['procesos_id'] == $proceso->getidProceso()) {
-        $Combo_Procesos .= "<option value='" . $Item['procesos_id'] . "' selected>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
-    } else {
-        $Combo_Procesos .= "<option value='" . $Item['procesos_id'] . "'>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
-    }
-endforeach;
+/* if (!$tipoDocumento) {
+    header('Location: index.php');
+    exit;  // Salimos del script si el registro no existe.
+} */
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,7 +20,7 @@ endforeach;
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>...::: Iwana - Caldiad, Procesos :::...</title>
+    <title>...::: Iwana - Caldiad, Tipos de documentos :::...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -113,7 +91,7 @@ endforeach;
                     <li>
                         <p>Tú estas</p>
                     </li>
-                    <li><a href="#" class="active">Caldiad, Procedimiento.</a> </li>
+                    <li><a href="#" class="active">Caldiad, Tipos de documentos.</a> </li>
                 </ul>
                 <div id="DivAlerta"></div>
                 <!-- BEGIN DASHBOARD TILES -->
@@ -121,36 +99,16 @@ endforeach;
                     <div class="grid simple">
                         <div class="grid-body no-border">
 
-                            <input name="procedimiento_id" id="procedimiento_id" type="hidden" value="<?php echo $procesodimiento->getidProcedimiento(); ?>">
+                            <input name="tipo_docu_id" id="tipo_docu_id" type="hidden" value="<?php echo $tipoDocumento->getTipoDocuId(); ?>">
                             <input name="accion" id="accion" type="hidden" value="EDITAR">
 
                             <div class="row column-seperation">
                                 <div class="col-md-6">
-                                    <h4><span class="text-warning">Editar</span>, Información básica del nuevo procedimiento</h4>
-                                    <div class="row form-row">
-                                        <div class="col-md-5">
-                                            <select name="id_depen" id="id_depen" class="select2 form-control">
-                                                <option value="0">...::: Elije la Dependencia :::...</option>
-                                                <?php echo $Combo_Dependencias; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-5">
-                                            <select name="procesos_id" id="procesos_id" class="select2 form-control">
-                                                <option value="0">...::: Elije el proceso :::...</option>
-                                                <?php echo $Combo_Procesos; ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <h4><span class="text-warning">Editar</span>, Información básica del nuevo tipo de documento</h4>
+
                                     <div class="row form-row">
                                         <div class="col-md-12">
-                                            <input name="cod_procedimiento" type="text" class="form-control" id="cod_procedimiento" placeholder="Código del procedimiento" value="<?php echo $procesodimiento->getcodProcedimiento(); ?>">
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="nom_procedimiento" type="text" class="form-control" id="nom_procedimiento" placeholder="Nombre del procedimiento" value="<?php echo $procesodimiento->getnomProcedimiento(); ?>">
+                                            <input name="nom_tipo_documento" type="text" class="form-control" id="nom_tipo_documento" placeholder="Nombre del tipo de documento" value="<?php echo $tipoDocumento->getnomTipoDocu(); ?>">
                                         </div>
                                     </div>
 
@@ -158,7 +116,7 @@ endforeach;
                                         <div class="col-md-8">
                                             <div class="checkbox check-success  ">
                                                 <?php
-                                                if ($procesodimiento->getEstado() == 1) {
+                                                if ($tipoDocumento->getEstado() == 1) {
                                                     $checked = "checked";
                                                 } else {
                                                     $checked = "";

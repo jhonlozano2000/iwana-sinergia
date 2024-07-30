@@ -42,7 +42,6 @@ switch ($Accion) {
 
 		break;
 	case 'EDITAR':
-		//$proceso = Proceso::Buscar(2, $idProceso, 0, "", "", "");
 		$proceso = new Proceso();
 		$proceso->setAccion($Accion);
 		$proceso->setidProceso($idProceso);
@@ -60,20 +59,35 @@ switch ($Accion) {
 		break;
 	case 'ELIMINAR':
 		if ($idProceso) {
-			$proceso = Proceso::Buscar(2, $idProceso, 0, "", "", "");
-			//$proceso->Eliminar();
+			$proceso = new Proceso();
+			$proceso->setAccion($Accion);
+			$proceso->setidProceso($idProceso);
+			if ($proceso->Gestionar() == true) {
+				echo 1;
+				exit();
+			} else {
+				echo "No fue posible actualizar el proces";
+				exit();
+			}
 		} else {
 			echo "No hay registro para eliminar.";
 		}
 		break;
 	case 'ACTIVAR_INACTIVAR':
 		if ($idProceso) {
-			$proceso = Proceso::Buscar(2, $idProceso, 0, "", "", "");
+			$proceso = new Proceso();
+			$proceso->setAccion($Accion);
 			$proceso->setidProceso($idProceso);
 			$proceso->setActi($Acti);
-			//$proceso->ActivarInactivar();
+			if ($proceso->Gestionar() == true) {
+				echo 1;
+				exit();
+			} else {
+				echo "No fue posible actualizar el proces";
+				exit();
+			}
 		} else {
-			echo "No hay registro para eliminar.";
+			echo "No hay registro para procesas.";
 		}
 		break;
 	default:

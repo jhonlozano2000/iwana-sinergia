@@ -5,36 +5,7 @@ require_once '../../../config/funciones.php';
 require_once '../../../config/funciones_seguridad.php';
 require_once '../../../config/class.Conexion.php';
 require_once '../../clases/seguridad/class.SeguridadUsuario.php';
-require_once '../../clases/calidad/class.CalidadProceso.php';
-require_once '../../clases/calidad/class.CalidadProcedimientos.php';
-require_once "../../clases/areas/class.AreasDependencia.php";
-
-//Busco el procedimiento
-$procesodimiento = Procedimiento::Buscar(3, "", $_REQUEST['id'], 0, "");
-
-//Busco el procesos por el id del procedimiento
-$proceso = Proceso::Buscar(3, $procesodimiento->getidProceso(), "", "");
-
-$Dependencia = Dependencia::Listar(6, "", "", "", "");;
-$Combo_Dependencias = "";
-foreach ($Dependencia as $Item) :
-    if ($Item['id_depen'] == $proceso->getidDepen()) {
-        $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "' selected>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
-    } else {
-        $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "'>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
-    }
-endforeach;
-
-//Listo los procesos para llenar el combo de los procesos
-$Procesos = Proceso::Listar(2, $proceso->getidDepen(), "", "", "");;
-$Combo_Procesos = "";
-foreach ($Procesos as $Item) :
-    if ($Item['procesos_id'] == $proceso->getidProceso()) {
-        $Combo_Procesos .= "<option value='" . $Item['procesos_id'] . "' selected>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
-    } else {
-        $Combo_Procesos .= "<option value='" . $Item['procesos_id'] . "'>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
-    }
-endforeach;
+require_once '../../clases/calidad/class.TipoDocumenCalidad.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,7 +13,7 @@ endforeach;
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>...::: Iwana - Caldiad, Procesos :::...</title>
+    <title>...::: Iwana - Calidad, Tipos de documentos :::...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -71,7 +42,39 @@ endforeach;
     <!-- END CSS TEMPLATE -->
     <script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <link href="../../mi_archivo/archivo_digitalizado/menuarbolaccesible.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="../../mi_archivo/archivo_digitalizado/menuarbolaccesible.js"></script>
+    <link href="../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <style>
+        .btn-circle {
+            width: 23px;
+            height: 23px;
+            text-align: center;
+            padding: 4px 0;
+            font-size: 8px;
+            line-height: 1.33;
+            border-radius: 15px;
+        }
+
+        .btn-circle.btn-lg {
+            width: 20px;
+            height: 20px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 15px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+        }
+    </style>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -113,81 +116,76 @@ endforeach;
                     <li>
                         <p>Tú estas</p>
                     </li>
-                    <li><a href="#" class="active">Caldiad, Procedimiento.</a> </li>
+                    <li><a href="#" class="active">Calidad - Tipos de documentos.</a> </li>
                 </ul>
                 <div id="DivAlerta"></div>
                 <!-- BEGIN DASHBOARD TILES -->
                 <form role="form" name="FrmDatos" id="FrmDatos">
-                    <div class="grid simple">
-                        <div class="grid-body no-border">
-
-                            <input name="procedimiento_id" id="procedimiento_id" type="hidden" value="<?php echo $procesodimiento->getidProcedimiento(); ?>">
-                            <input name="accion" id="accion" type="hidden" value="EDITAR">
-
-                            <div class="row column-seperation">
-                                <div class="col-md-6">
-                                    <h4><span class="text-warning">Editar</span>, Información básica del nuevo procedimiento</h4>
-                                    <div class="row form-row">
-                                        <div class="col-md-5">
-                                            <select name="id_depen" id="id_depen" class="select2 form-control">
-                                                <option value="0">...::: Elije la Dependencia :::...</option>
-                                                <?php echo $Combo_Dependencias; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-5">
-                                            <select name="procesos_id" id="procesos_id" class="select2 form-control">
-                                                <option value="0">...::: Elije el proceso :::...</option>
-                                                <?php echo $Combo_Procesos; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-row">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="grid simple">
+                                <div class="grid-body no-border">
+                                    <div class="row column-seperation">
+                                        <a href="agre.php" class="btn btn-primary btn-circle">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </a>
                                         <div class="col-md-12">
-                                            <input name="cod_procedimiento" type="text" class="form-control" id="cod_procedimiento" placeholder="Código del procedimiento" value="<?php echo $procesodimiento->getcodProcedimiento(); ?>">
+                                            <table class="table table-striped" id="example1">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Acti</th>
+                                                        <th>Tipo de Documento</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $tiposDeDocumentos = TipoDocumentoCalidad::Listar(1, 0);
+                                                    foreach ($tiposDeDocumentos as $item) :
+                                                    ?>
+                                                        <tr id="TrDatos<?php echo $item['tipo_docu_id']; ?>">
+                                                            <td>
+                                                                <div class="checkbox check-success">
+                                                                    <?php
+                                                                    if ($item['estado'] == 1) {
+                                                                        $checked = "checked";
+                                                                    } else {
+                                                                        $checked = "";
+                                                                    }
+                                                                    ?>
+                                                                    <input id="acti<?php echo $item['tipo_docu_id']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['tipo_docu_id']; ?>" data-nom="<?php echo $item['nom_tipo_documento']; ?>">
+                                                                    <label for="acti<?php echo $item['tipo_docu_id']; ?>"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td><?php echo $item['nom_tipo_documento']; ?></td>
+                                                            <td>
+                                                                <a href="edit.php?id=<?php echo $item['tipo_docu_id']; ?>" class="btn btn-warning btn-circle">
+                                                                    <i class="glyphicon glyphicon-pencil"></i>
+                                                                </a>
+                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['tipo_docu_id']; ?>" data-nom="<?php echo $item['nom_tipo_documento']; ?>">
+                                                                    <i class="glyphicon glyphicon-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    <?php
+                                                    endforeach;
+                                                    ?>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Acti</th>
+                                                        <th>Tipo de Documento</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
-                                    <div class="row form-row">
-                                        <div class="col-md-12">
-                                            <input name="nom_procedimiento" type="text" class="form-control" id="nom_procedimiento" placeholder="Nombre del procedimiento" value="<?php echo $procesodimiento->getnomProcedimiento(); ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="row form-row">
-                                        <div class="col-md-8">
-                                            <div class="checkbox check-success  ">
-                                                <?php
-                                                if ($procesodimiento->getEstado() == 1) {
-                                                    $checked = "checked";
-                                                } else {
-                                                    $checked = "";
-                                                }
-                                                ?>
-                                                <input name="acti" id="acti" type="checkbox" value="1" <?php echo $checked; ?>>
-                                                <label for="checkbox2">Activo</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6"> </div>
-                            </div>
-                            <div class="form-actions">
-
-                                <div class="pull-left">
-                                    <button class="btn btn-warning btn-cons" type="button" id="BtnEditar" name="BtnEditar">
-                                        <i class="glyphicon glyphicon-pencil"></i> Editar
-                                    </button>
-                                    <button class="btn btn-white btn-cons" type="button" id="BtnRegresar" name="BtnRegresar">
-                                        <i class="fa fa-mail-reply-all"></i> Regresar
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
-                <!-- END DASHBOARD TILES -->
             </div>
         </div>
         <!-- BEGIN CHAT -->
@@ -234,10 +232,11 @@ endforeach;
             $(".live-tile,.flip-list").liveTile();
         });
     </script>
+
     <script src="../../../public/assets/sweetalert2/sweetalert-dev.js"></script>
     <link href="../../../public/assets/sweetalert2/sweetalert.css" rel="stylesheet" type="text/css">
-
-    <!-- END CORE TEMPLATE JS -->
+    c/assets/js/datatables.js" type="text/javascript"></script>
+    <!-- END JAVASCRIPTS -->
 </body>
 
 </html>

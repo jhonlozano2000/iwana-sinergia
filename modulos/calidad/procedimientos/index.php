@@ -147,7 +147,7 @@ require_once '../../clases/calidad/class.CalidadProcedimientos.php';
                                                     $procesos = Procedimiento::Listar(1, 0, 0, "");
                                                     foreach ($procesos as $item) :
                                                     ?>
-                                                        <tr id="TblDatos<?php echo $item['procedimiento_id']; ?>">
+                                                        <tr id="TrDatos<?php echo $item['procedimiento_id']; ?>">
                                                             <td>
                                                                 <div class="checkbox check-success">
                                                                     <?php
@@ -170,7 +170,7 @@ require_once '../../clases/calidad/class.CalidadProcedimientos.php';
                                                                 <a href="edit.php?id=<?php echo $item['procedimiento_id']; ?>" class="btn btn-warning btn-circle">
                                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                                 </a>
-                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['procedimiento_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
+                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['procedimiento_id']; ?>" data-nom="<?php echo $item['nom_procedimiento']; ?>">
                                                                     <i class="glyphicon glyphicon-trash"></i>
                                                                 </button>
                                                             </td>

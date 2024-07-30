@@ -96,12 +96,21 @@ class Proceso
 				$Instruc->bindParam(':cod_proce', $this->codProceso, PDO::PARAM_STR);
 				$Instruc->bindParam(':nom_proce', $this->nomProceso, PDO::PARAM_STR);
 				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
-			} elseif ($this->accion == 'DELETE') {
+			} elseif ($this->accion == 'ELIMINAR') {
 
 				$sql = "DELETE FROM cali_procesos
 						WHERE procesos_id = :procesos_id";
 
 				$Instruc = $conexion->prepare($sql);
+				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
+			} elseif ($this->accion == 'ACTIVAR_INACTIVAR') {
+
+				$sql = "UPDATE cali_procesos
+						SET estado = :estado
+						WHERE procesos_id = :procesos_id";
+
+				$Instruc = $conexion->prepare($sql);
+				$Instruc->bindParam(':estado', $this->Acti, PDO::PARAM_INT);
 				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
 			}
 
@@ -166,15 +175,27 @@ class Proceso
 		try {
 
 			if ($accion == 1) {
-				$sql = "SELECT * FROM cali_procesos WHERE cod_proce = :cod_proce";
+				// Buscar procedimientos por código
+				$sql = "SELECT *
+						FROM cali_procesos
+						WHERE cod_proce = :cod_proce";
+
 				$Instruc = $conexion->prepare($sql);
 				$Instruc->bindParam(':cod_proce', $codProceso, PDO::PARAM_STR);
 			} elseif ($accion == 2) {
-				$sql = "SELECT * FROM cali_procesos WHERE nom_proce = :nom_proce";
+				// Buscar procedimientos por nombre
+				$sql = "SELECT *
+						FROM cali_procesos
+						WHERE nom_proce = :nom_proce";
+
 				$Instruc = $conexion->prepare($sql);
 				$Instruc->bindParam(':nom_proce', $nomProceso, PDO::PARAM_STR);
 			} elseif ($accion == 3) {
-				$sql = "SELECT * FROM cali_procesos WHERE procesos_id = :procesos_id";
+				// Buscar procedimientos por id
+				$sql = "SELECT *
+						FROM cali_procesos
+						WHERE procesos_id = :procesos_id";
+
 				$Instruc = $conexion->prepare($sql);
 				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
 			}

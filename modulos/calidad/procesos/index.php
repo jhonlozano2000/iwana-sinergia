@@ -147,7 +147,7 @@ require_once '../../clases/calidad/class.CalidadProceso.php';
                                                     $procesos = Proceso::Listar(1, 0, 0, "");
                                                     foreach ($procesos as $item) :
                                                     ?>
-                                                        <tr id="TblDatos<?php echo $item['procesos_id']; ?>">
+                                                        <tr id="TrDatos<?php echo $item['procesos_id']; ?>">
                                                             <td>
                                                                 <div class="checkbox check-success">
                                                                     <?php

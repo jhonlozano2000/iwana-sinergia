@@ -1,19 +1,10 @@
 $(document).ready(function () {
-    $("#cod_procedimiento").focus();
+    $("#cod_proce").focus();
 
     $("#BtnGuardar").click(function () {
-        if ($("#id_depen").val() == 0) {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta elegir la dependencia a la cual corresponde el procedimiento" }, function () {});
-            $("#id_depen").focus();
-        } else if ($("#procesos_id").val() == 0) {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta elegir el proceso a la cual corresponde el procedimiento" }, function () {});
-            $("#procesos_id").focus();
-        } else if ($("#cod_procedimiento").val() == "") {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el código del procedimiento" }, function () {});
-            $("#cod_procedimiento").focus();
-        } else if ($("#nom_procedimiento").val() == "") {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el nombre del procedimiento" }, function () {});
-            $("#nom_procedimiento").focus();
+        if ($("#nom_tipo_documento").val() == 0) {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el nombre del tipo de documento" }, function () {});
+            $("#nom_tipo_documento").focus();
         } else {
             var acti = $("#acti").prop("checked") ? true : false;
 
@@ -22,16 +13,15 @@ $(document).ready(function () {
                 type: "POST",
                 // Form data
                 //datos del formulario
-                data: "accion=INSERTAR&id_depen=" + $("#id_depen").val() + "&procesos_id=" + $("#procesos_id").val() + "&cod_procedimiento=" + $("#cod_procedimiento").val() + "&nom_procedimiento=" + $("#nom_procedimiento").val() + "&acti=" + acti,
+                data: "accion=INSERTAR&nom_tipo_documento=" + $("#nom_tipo_documento").val() + "&acti=" + acti,
                 beforeSend: function () {
                     $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información...", Imagen: "../../../public/assets/img/loading.gif" }, function () {});
                 },
                 success: function (msj) {
                     if (msj == 1) {
                         $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 4, mensaje: "El registro se almaceno correctamente" }, function () {});
-                        $("#cod_procedimiento").val("");
-                        $("#nom_procedimiento").val("");
-                        $("#cod_procedimiento").focus();
+                        $("#nom_tipo_documento").val("");
+                        $("#nom_tipo_documento").focus();
                         $("#acti").prop("checked", true);
                     } else {
                         $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: msj }, function () {});
@@ -59,7 +49,7 @@ $(document).ready(function () {
     $("#BtnEditar").click(function () {
         swal(
             {
-                title: "¿Desea editar el registro: " + $("#nom_procedimiento").val() + "?",
+                title: "¿Desea editar el registro: " + $("#nom_tipo_documento").val() + "?",
                 type: "info",
                 showCancelButton: true,
                 closeOnConfirm: false,
@@ -121,7 +111,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: "acciones.ajax.php",
                     type: "POST",
-                    data: "accion=ELIMINAR&procedimiento_id=" + Id,
+                    data: "accion=ELIMINAR&tipo_docu_id=" + Id,
                     success: function (msj) {
                         if (msj == 1) {
                             $("#TrDatos" + Id).remove();
@@ -169,7 +159,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: "acciones.ajax.php",
                     type: "POST",
-                    data: "accion=ACTIVAR_INACTIVAR&procedimiento_id=" + Id + "&acti=" + Acti,
+                    data: "accion=ACTIVAR_INACTIVAR&tipo_docu_id=" + Id + "&acti=" + Acti,
                     beforeSend: function () {
                         $("#DivAlerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
                     },
@@ -187,15 +177,5 @@ $(document).ready(function () {
                 });
             }
         );
-    });
-
-    $("#id_depen").change(function () {
-        $("#id_depen option:selected").each(function () {
-            var idDepen = $(this).val();
-
-            $.post("../../varios/combo_Procesos.php", { idDepen: idDepen }, function (data) {
-                $("#procesos_id").html(data);
-            });
-        });
     });
 });

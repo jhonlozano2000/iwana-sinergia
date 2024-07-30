@@ -105,8 +105,8 @@ $(document).ready(function () {
      *
      *===========================================================================**/
     $(document).on("click", "#BtnEliminar", function (event) {
-        var Id = $(this).data("procesos_id");
-        var Nom = $(this).data("nom_proce");
+        var Id = $(this).data("id");
+        var Nom = $(this).data("nom");
 
         swal(
             {
@@ -123,7 +123,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: "acciones.ajax.php",
                     type: "POST",
-                    data: "accion=ELIMINAR&id_proce=" + Id,
+                    data: "accion=ELIMINAR&procesos_id=" + Id,
                     success: function (msj) {
                         if (msj == 1) {
                             $("#TrDatos" + Id).remove();
@@ -141,8 +141,8 @@ $(document).ready(function () {
     });
 
     $(document).on("click", ".acti", function (event) {
-        var Id = $(this).data("procesos_id");
-        var Nom = $(this).data("nom_proce");
+        var Id = $(this).data("id");
+        var Nom = $(this).data("nom");
         var Acti = 0;
         var Accion = "";
         var Boton = "";

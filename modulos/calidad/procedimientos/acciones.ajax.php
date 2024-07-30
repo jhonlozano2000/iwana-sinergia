@@ -12,26 +12,26 @@ $Acti = isset($_POST['acti']) ? $_POST['acti'] : null;
 switch ($Accion) {
 	case 'INSERTAR':
 
-		//Busco el proceso para saber si ya se registró
-		$busProcedimiento = Procedimientos::Buscar(1, '', $codProcedimiento, '');
+		//Busco el procedimiento para saber si ya se registró
+		$busProcedimiento = Procedimiento::Buscar(1, $idProceso, $codProcedimiento, '', '');
 		if ($busProcedimiento) {
-			echo "El código del proceso ya se encuentra registrado.";
+			echo "El código del procedimiento ya se encuentra registrado.";
 			exit();
 		}
 
-		$busProcedimiento = Procedimientos::Buscar(2, '', '', $nomProcedimientos);
+		$busProcedimiento = Procedimiento::Buscar(2, $idProceso, '', $nomProcedimientos, '');
 		if ($busProcedimiento) {
-			echo "El nombre del proceso ya se encuentra registrado.";
+			echo "El nombre del procedimiento ya se encuentra registrado.";
 			exit();
 		}
 
-		$procedimiento = new Procedimientos();
+		$procedimiento = new Procedimiento();
 		$procedimiento->setAccion($Accion);
 		$procedimiento->setidProceso($idProceso);
 		$procedimiento->setidProcedimiento($idProcedimiento);
 		$procedimiento->setcodProcedimiento($codProcedimiento);
 		$procedimiento->setnomProcedimiento($nomProcedimientos);
-		$procedimiento->setActi($Acti);
+		$procedimiento->setEstado($Acti);
 		if ($procedimiento->Gestionar() == true) {
 			echo 1;
 			exit();
@@ -43,13 +43,13 @@ switch ($Accion) {
 		break;
 	case 'EDITAR':
 
-		$procedimiento = new Procedimientos();
+		$procedimiento = new Procedimiento();
 		$procedimiento->setAccion($Accion);
 		$procedimiento->setidProceso($idProceso);
 		$procedimiento->setidProcedimiento($idProcedimiento);
 		$procedimiento->setcodProcedimiento($codProcedimiento);
 		$procedimiento->setnomProcedimiento($nomProcedimientos);
-		$procedimiento->setActi($Acti);
+		$procedimiento->setEstado($Acti);
 		if ($procedimiento->Gestionar() == true) {
 			echo 1;
 			exit();
@@ -59,21 +59,37 @@ switch ($Accion) {
 		}
 		break;
 	case 'ELIMINAR':
-		if ($idProceso) {
-			$procedimiento = Proceso::Buscar(2, $idProceso, 0, "", "", "");
-			//$procedimiento->Eliminar();
+
+		if ($idProcedimiento) {
+			$procedimiento = new Procedimiento();
+			$procedimiento->setAccion($Accion);
+			$procedimiento->setidProcedimiento($idProcedimiento);
+			if ($procedimiento->Gestionar() == true) {
+				echo 1;
+				exit();
+			} else {
+				echo "No fue posible actualizar el proces";
+				exit();
+			}
 		} else {
 			echo "No hay registro para eliminar.";
 		}
 		break;
 	case 'ACTIVAR_INACTIVAR':
-		if ($idProceso) {
-			$procedimiento = Procedimientos::Buscar(2, $idProceso, 0, "", "", "");
-			$procedimiento->setidProceso($idProceso);
-			$procedimiento->setActi($Acti);
-			//$procedimiento->ActivarInactivar();
+		if ($idProcedimiento) {
+			$procedimiento = new Procedimiento();
+			$procedimiento->setAccion($Accion);
+			$procedimiento->setidProcedimiento($idProcedimiento);
+			$procedimiento->setEstado($Acti);
+			if ($procedimiento->Gestionar() == true) {
+				echo 1;
+				exit();
+			} else {
+				echo "No fue posible actualizar el proces";
+				exit();
+			}
 		} else {
-			echo "No hay registro para eliminar.";
+			echo "No hay registro para procesar.";
 		}
 		break;
 	default:

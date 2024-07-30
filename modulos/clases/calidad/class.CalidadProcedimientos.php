@@ -6,16 +6,16 @@ class Procedimiento
 	private $idProcedimiento;
 	private $codProcedimiento;
 	private $nomProcedimiento;
-	private $Acti;
+	private $Estado;
 
-	public function __construct($accion = null, $idProceso = null, $idProcedimiento = null, $codProcedimiento = null, $nomProcedimiento = null, $Acti = null)
+	public function __construct($accion = null,  $idProceso = null, $idProcedimiento = null, $codProcedimiento = null, $nomProcedimiento = null, $Estado = null)
 	{
 		$this->accion = $accion;
 		$this->idProceso = $idProceso;
 		$this->idProcedimiento = $idProcedimiento;
 		$this->codProcedimiento = $codProcedimiento;
 		$this->nomProcedimiento  = $nomProcedimiento;
-		$this->Acti = $Acti;
+		$this->Estado = $Estado;
 	}
 
 	public function getidProceso()
@@ -38,9 +38,9 @@ class Procedimiento
 		return $this->nomProcedimiento;
 	}
 
-	public function getActi()
+	public function getEstado()
 	{
-		return $this->Acti;
+		return $this->Estado;
 	}
 
 	public function setAccion($accion)
@@ -68,9 +68,9 @@ class Procedimiento
 		$this->nomProcedimiento = $nomProcedimiento;
 	}
 
-	public function setActi($acti)
+	public function setEstado($Estado)
 	{
-		$this->Acti = $acti;
+		$this->Estado = $Estado;
 	}
 
 	public function Gestionar()
@@ -80,29 +80,39 @@ class Procedimiento
 			if ($this->accion == 'INSERTAR') {
 
 				$sql = "INSERT INTO cali_procedimientos(procesos_id, cod_procedimiento, nom_procedimiento)
-					VALUES(:procesos_id, :cod_procedimiento, :nom_procedimiento)";
+						VALUES(:procesos_id, :cod_procedimiento, :nom_procedimiento)";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $this->idProcedimiento, PDO::PARAM_INT);
+				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
 				$Instruc->bindParam(':cod_procedimiento', $this->codProcedimiento, PDO::PARAM_INT);
 				$Instruc->bindParam(':nom_procedimiento', $this->nomProcedimiento, PDO::PARAM_INT);
 			} elseif ($this->accion == 'EDITAR') {
 
-				$sql = "UPDATE cali_procedimientos SET procesos_id = :procesos_id, cod_procedimiento = :cod_procedimiento, nom_procedimiento = :nom_procedimiento
-						WHERE procesos_id = :procesos_id";
+				$sql = "UPDATE cali_procedimientos
+						SET procesos_id = :procesos_id, cod_procedimiento = :cod_procedimiento, nom_procedimiento = :nom_procedimiento
+						WHERE procedimiento_id = :procedimiento_id";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $this->idProcedimiento, PDO::PARAM_INT);
+				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
 				$Instruc->bindParam(':cod_procedimiento', $this->codProcedimiento, PDO::PARAM_STR);
 				$Instruc->bindParam(':nom_procedimiento', $this->nomProcedimiento, PDO::PARAM_STR);
-				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
-			} elseif ($this->accion == 'DELETE') {
+				$Instruc->bindParam(':procedimiento_id', $this->idProcedimiento, PDO::PARAM_INT);
+			} elseif ($this->accion == 'ELIMINAR') {
 
 				$sql = "DELETE FROM cali_procedimientos
-						WHERE procesos_id = :procesos_id";
+						WHERE procedimiento_id = :procedimiento_id";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
+				$Instruc->bindParam(':procedimiento_id', $this->idProcedimiento, PDO::PARAM_INT);
+			} elseif ($this->accion == 'ACTIVAR_INACTIVAR') {
+
+				$sql = "UPDATE cali_procedimientos
+						SET estado = :estado
+						WHERE procedimiento_id = :procedimiento_id";
+
+				$Instruc = $conexion->prepare($sql);
+				$Instruc->bindParam(':estado', $this->Estado, PDO::PARAM_INT);
+				$Instruc->bindParam(':procedimiento_id', $this->idProcedimiento, PDO::PARAM_INT);
 			}
 
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
@@ -114,7 +124,7 @@ class Procedimiento
 				return false;
 			}
 		} catch (PDOException $e) {
-			echo "Ha surgido un error y no se puede ejecutar la consulta Calidad->Procesos, Accion: " . $this->accion . " - " . $Instruc->errorInfo() . " - " . $sql . $e->getMessage();
+			echo "Ha surgido un error y no se puede ejecutar la consulta Calidad->Procedimientos, Accion: " . $this->accion . " - " . $Instruc->errorInfo() . " - " . $sql . $e->getMessage();
 			exit;
 		}
 	}
@@ -147,24 +157,49 @@ class Procedimiento
 		}
 	}
 
-	public static function Buscar($accion, $idProce, $codProcedimiento, $nomProcedimiento)
+	public static function Buscar($accion, $idProce, $idProcedimiento, $codProcedimiento, $nomProcedimiento)
 	{
 		$conexion = new Conexion();
 
 		try {
 
 			if ($accion == 1) {
-				$sql = "SELECT * FROM cali_procedimientos WHERE cod_procedimiento = :cod_procedimiento";
+				// Buscar procedimientos por código
+				$sql = "SELECT *
+						FROM cali_procedimientos
+						WHERE procesos_id = :procesos_id AND cod_procedimiento = :cod_procedimiento";
+
 				$Instruc = $conexion->prepare($sql);
+				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
 				$Instruc->bindParam(':cod_procedimiento', $codProcedimiento, PDO::PARAM_STR);
 			} elseif ($accion == 2) {
-				$sql = "SELECT * FROM cali_procedimientos WHERE nom_procedimiento = :nom_procedimiento";
+				// Buscar procedimientos por nombre
+				$sql = "SELECT *
+						FROM cali_procedimientos
+						WHERE procesos_id = :procesos_id AND nom_procedimiento = :nom_procedimiento";
+
 				$Instruc = $conexion->prepare($sql);
+				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
 				$Instruc->bindParam(':nom_procedimiento', $nomProcedimiento, PDO::PARAM_STR);
 			} elseif ($accion == 3) {
-				$sql = "SELECT * FROM cali_procedimientos WHERE procedimiento_id = :procedimiento_id";
+				// Buscar procedimientos por id con su respectivo proceso y dependencia
+				$sql = "SELECT
+    `depn`.`id_depen`
+    , `proce`.`procesos_id`
+    , `procedi`.`procedimiento_id`
+    , `procedi`.`cod_procedimiento`
+    , `procedi`.`nom_procedimiento`
+    , `procedi`.`estado`
+FROM
+    `iwana_sinergia`.`cali_procesos` AS `proce`
+    INNER JOIN `iwana_sinergia`.`areas_dependencias` AS `depn`
+        ON (`proce`.`id_depen` = `depn`.`id_depen`)
+    INNER JOIN `iwana_sinergia`.`cali_procedimientos` AS `procedi`
+        ON (`procedi`.`procesos_id` = `proce`.`procesos_id`)
+						WHERE `procedi`.`procedimiento_id` = :procedimiento_id";
+
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procedimiento_id', $idProce, PDO::PARAM_STR);
+				$Instruc->bindParam(':procedimiento_id', $idProcedimiento, PDO::PARAM_STR);
 			}
 
 			$Instruc->execute() or die(print_r("Calidad->Procesos, Buscar, Accion: " . $accion . " - " . $Instruc->errorInfo() . " - " . $sql, true));
