@@ -138,7 +138,8 @@ class TipoDocumentoCalidad
 				 */
 				$Sql = "SELECT *
 						FROM `cali_tipos_documentos`
-						WHERE (`estado` = 1)";
+						WHERE (`estado` = 1)
+						ORDER BY 2";
 
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
