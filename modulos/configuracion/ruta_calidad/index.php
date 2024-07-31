@@ -89,7 +89,7 @@ require_once '../../clases/configuracion/class.ConfigServidor_Calidad.php';
                         <p>Tú estas</p>
                     </li>
                     <li>
-                        <a href="#" class="active">Configuración, Rutas Temporales.</a>
+                        <a href="#" class="active">Configuración, Rutas para archivos de calidad.</a>
                     </li>
                 </ul>
                 <div id="DivAlerta"></div>

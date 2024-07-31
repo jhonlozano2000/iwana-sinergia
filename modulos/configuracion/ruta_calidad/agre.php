@@ -112,6 +112,11 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
                                             </div>
                                             <div class="row form-row">
                                                 <div class="col-md-6">
+                                                    <input name="ip" type="text" class="form-control" id="ip" placeholder="Servidor">
+                                                </div>
+                                            </div>
+                                            <div class="row form-row">
+                                                <div class="col-md-6">
                                                     <input name="usua" type="text" class="form-control" id="usua" placeholder="Usuario">
                                                 </div>
                                                 <div class="col-md-6">

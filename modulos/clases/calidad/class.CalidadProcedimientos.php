@@ -142,9 +142,19 @@ class Procedimiento
 							`cali_procedimientos`.`cod_procedimiento`, `cali_procedimientos`.`nom_procedimiento`, `cali_procedimientos`.`estado` 
 						FROM `cali_procesos`
 						INNER JOIN `areas_dependencias` ON (`cali_procesos`.`id_depen` = `areas_dependencias`.`id_depen`)
-						INNER JOIN `cali_procedimientos` ON (`cali_procedimientos`.`procesos_id` = `cali_procesos`.`procesos_id`)";
+						INNER JOIN `cali_procedimientos` ON (`cali_procedimientos`.`procesos_id` = `cali_procesos`.`procesos_id`)
+						ORDER BY `cali_procedimientos`.`cod_procedimiento`, `cali_procesos`.`nom_procedimiento`";
 
 				$Instruc = $conexion->prepare($Sql);
+				$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			} elseif ($Accion == 2) {
+				$Sql = "SELECT *
+						FROM cali_procedimientos
+						WHERE procesos_id = :procesos_id
+						ORDER BY cod_procedimiento, nom_procedimiento";
+
+				$Instruc = $conexion->prepare($Sql);
+				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
 				$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
 			}
 
