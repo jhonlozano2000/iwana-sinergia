@@ -10,7 +10,6 @@ require_once '../../../clases/configuracion/class.ConfigServidor_Digitalizacion.
 require_once '../../../clases/areas/class.AreasDependencia.php';
 require_once "../../../clases/configuracion/class.ConfigOtras.php";
 
-
 $ConfiguracionOtras = ConfigOtras::Buscar(1, "");
 
 $Dependencia = Dependencia::Listar(6, "", "", "", "");
@@ -259,45 +258,45 @@ endforeach;
                                     <div class="row form-row">
                                         <div class="col-md-1">
                                             <div class="checkbox check-success">
-                                                <input id="ChkRadicado" type="checkbox" checked="checked">
+                                                <input name="ChkRadicado" id="ChkRadicado" type="checkbox" checked="checked">
                                                 <label for="ChkRadicado">Radicado</label>
                                             </div>
                                         </div>
 
                                         <div class="col-md-1">
                                             <div class="checkbox check-success">
-                                                <input id="ChkTercero" type="checkbox">
+                                                <input name="ChkTercero" id="ChkTercero" type="checkbox">
                                                 <label for="ChkTercero">Tercero</label>
                                             </div>
                                         </div>
 
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkFuncionario" type="checkbox">
+                                                <input name="ChkFuncionario" id="ChkFuncionario" type="checkbox">
                                                 <label for="ChkFuncionario">Responsable</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkFechaHoraRadica" type="checkbox">
+                                                <input name="ChkFechaHoraRadica" id="ChkFechaHoraRadica" type="checkbox">
                                                 <label for="ChkFechaHoraRadica">Fecha y Hora del Radicado</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkFechaDocumento" type="checkbox">
+                                                <input name="ChkFechaDocumento" id="ChkFechaDocumento" type="checkbox">
                                                 <label for="ChkFechaDocumento">Fecha del Documento</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkFechaVencimiento" type="checkbox">
+                                                <input name="ChkFechaVencimiento" id="ChkFechaVencimiento" type="checkbox">
                                                 <label for="ChkFechaVencimiento">Fecha de Vencimiento</label>
                                             </div>
                                         </div>
                                         <div class="col-md-1">
                                             <div class="checkbox check-success">
-                                                <input id="ChkAsunto" type="checkbox">
+                                                <input name="ChkAsunto" id="ChkAsunto" type="checkbox">
                                                 <label for="ChkAsunto">Asunto</label>
                                             </div>
                                         </div>
@@ -306,49 +305,49 @@ endforeach;
                                     <div class="row form-row">
                                         <div class="col-md-1">
                                             <div class="checkbox check-success">
-                                                <input id="ChkDependencia" type="checkbox">
+                                                <input name="ChkDependencia" id="ChkDependencia" type="checkbox">
                                                 <label for="ChkDependencia">Dependencia</label>
                                             </div>
                                         </div>
                                         <div class="col-md-1">
                                             <div class="checkbox check-success">
-                                                <input id="ChkOficina" type="checkbox">
+                                                <input name="ChkOficina" id="ChkOficina" type="checkbox">
                                                 <label for="ChkOficina">Oficina</label>
                                             </div>
                                         </div>
                                         <div class="col-md-1">
                                             <div class="checkbox check-success">
-                                                <input id="ChkSerie" type="checkbox">
+                                                <input name="ChkSerie" id="ChkSerie" type="checkbox">
                                                 <label for="ChkSerie">Serie</label>
                                             </div>
                                         </div>
                                         <div class="col-md-1">
                                             <div class="checkbox check-success">
-                                                <input id="ChkSubSerie" type="checkbox">
+                                                <input name="ChkSubSerie" id="ChkSubSerie" type="checkbox">
                                                 <label for="ChkSubSerie">Subserie</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkTipoDocumento" type="checkbox">
+                                                <input name="ChkTipoDocumento" id="ChkTipoDocumento" type="checkbox">
                                                 <label for="ChkTipoDocumento">Tipo de Documento</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkRadicadoRespuesta" type="checkbox">
+                                                <input name="ChkRadicadoRespuesta" id="ChkRadicadoRespuesta" type="checkbox">
                                                 <label for="ChkRadicadoRespuesta">Radicado de Respuesta</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkAsuntoRespuesta" type="checkbox">
+                                                <input name="ChkAsuntoRespuesta" id="ChkAsuntoRespuesta" type="checkbox">
                                                 <label for="ChkAsuntoRespuesta">Asunto de la Respuesta</label>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkFecHorRespuesta" type="checkbox">
+                                                <input name="ChkFecHorRespuesta" id="ChkFecHorRespuesta" type="checkbox">
                                                 <label for="ChkFecHorRespuesta">Fecha y Hora de respuesta</label>
                                             </div>
                                         </div>
@@ -357,21 +356,21 @@ endforeach;
                                     <div class="row form-row">
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkQuienRadico" type="checkbox">
+                                                <input name="ChkQuienRadico" id="ChkQuienRadico" type="checkbox">
                                                 <label for="ChkQuienRadico">Quien Radico</label>
                                             </div>
                                         </div>
 
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkRequiereDigital" type="checkbox">
+                                                <input name="ChkRequiereDigital" id="ChkRequiereDigital" type="checkbox">
                                                 <label for="ChkRequiereDigital">Digital</label>
                                             </div>
                                         </div>
 
                                         <div class="col-md-2">
                                             <div class="checkbox check-success">
-                                                <input id="ChkFormaRecepcion" type="checkbox">
+                                                <input name="ChkFormaRecepcion" id="ChkFormaRecepcion" type="checkbox">
                                                 <label for="ChkFormaRecepcion">Forma de recepción</label>
                                             </div>
                                         </div>
@@ -400,6 +399,14 @@ endforeach;
                                                 <a href="#" id="BtnFlujoPorFuncioEXCEL">
                                                     <p class="text-success">
                                                         <i class="fa fa-file-excel-o fa-lg" aria-hidden="true"></i> Excel
+                                                    </p>
+                                                </a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="#" id="BtnZipConDigitales">
+                                                    <p class="text-info">
+                                                        <i class="fa fa-file-zip-o fa-lg" aria-hidden="true"></i> .Zip con digitales
                                                     </p>
                                                 </a>
                                             </li>
