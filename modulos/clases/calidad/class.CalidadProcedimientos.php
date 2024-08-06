@@ -193,19 +193,10 @@ class Procedimiento
 				$Instruc->bindParam(':nom_procedimiento', $nomProcedimiento, PDO::PARAM_STR);
 			} elseif ($accion == 3) {
 				// Buscar procedimientos por id con su respectivo proceso y dependencia
-				$sql = "SELECT
-    `depn`.`id_depen`
-    , `proce`.`procesos_id`
-    , `procedi`.`procedimiento_id`
-    , `procedi`.`cod_procedimiento`
-    , `procedi`.`nom_procedimiento`
-    , `procedi`.`estado`
-FROM
-    `iwana_sinergia`.`cali_procesos` AS `proce`
-    INNER JOIN `iwana_sinergia`.`areas_dependencias` AS `depn`
-        ON (`proce`.`id_depen` = `depn`.`id_depen`)
-    INNER JOIN `iwana_sinergia`.`cali_procedimientos` AS `procedi`
-        ON (`procedi`.`procesos_id` = `proce`.`procesos_id`)
+				$sql = "SELECT `depn`.`id_depen`, `proce`.`procesos_id`, `procedi`.`procedimiento_id`, `procedi`.`cod_procedimiento`, `procedi`.`nom_procedimiento`, `procedi`.`estado`
+						FROM `cali_procesos` AS `proce`
+							INNER JOIN `areas_dependencias` AS `depn` ON (`proce`.`id_depen` = `depn`.`id_depen`)
+							INNER JOIN `cali_procedimientos` AS `procedi` ON (`procedi`.`procesos_id` = `proce`.`procesos_id`)
 						WHERE `procedi`.`procedimiento_id` = :procedimiento_id";
 
 				$Instruc = $conexion->prepare($sql);
