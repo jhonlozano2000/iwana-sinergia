@@ -168,7 +168,7 @@ require_once '../../clases/calidad/class.CalidadRepositorio.php';
                                                             <td><?php echo $item['cod_procedimiento'] . " - " . $item['nom_procedimiento']; ?></td>
                                                             <td><?php echo $item['nom_tipo_documento']; ?></td>
                                                             <td><?php echo $item['fechor_cargue']; ?></td>
-                                                            <td><?php echo $item['nom_archivo']; ?></td>
+                                                            <td><?php echo $item['nom_archivo_original']; ?></td>
                                                             <td>
                                                                 <a href="edit.php?id=<?php echo $item['tipo_docu_id']; ?>" class="btn btn-warning btn-circle">
                                                                     <i class="glyphicon glyphicon-pencil"></i>

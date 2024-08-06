@@ -379,3 +379,11 @@ function getRealIP()
         $ipaddress = 'UNKNOWN';
     return $ipaddress;
 }
+
+function nombreAleatorioArchivo($archivo)
+{
+    $extension = pathinfo($archivo, PATHINFO_EXTENSION);
+    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    return substr(md5(rand(0, PHP_INT_MAX)), 10) . substr(str_shuffle($permitted_chars), 0, 30) . "." . $extension;
+}

@@ -210,7 +210,7 @@ class ServidorCalidad
 		}
 	}
 
-	public static function Buscar($Accion, $IdRuta, $Ruta, $TipoCorrespon)
+	public static function Buscar($Accion, $IdRuta, $Ruta)
 	{
 		$conexion = new Conexion();
 
@@ -220,7 +220,9 @@ class ServidorCalidad
 				/******************************************************************************************/
 				/*  LISTO TODOS LOS REGISTROS
 		        /******************************************************************************************/
-				$Sql = "SELECT * FROM config_rutas_archi_calidad ORDER BY ruta ASC";
+				$Sql = "SELECT *
+						FROM config_rutas_archi_calidad
+						ORDER BY ruta ASC";
 
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
@@ -235,7 +237,7 @@ class ServidorCalidad
 				$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
 			} elseif ($Accion == 3) {
 				/******************************************************************************************/
-				/*  BUSCO LA RUTA QUE ESTE ACTIVA DE UNA DEPENDENCIA
+				/*  BUSCO LA RUTA QUE ESTE ACTIVA
 		        /******************************************************************************************/
 				$Sql = "SELECT * FROM config_rutas_archi_calidad WHERE acti = 1";
 				$Instruc = $conexion->prepare($Sql);

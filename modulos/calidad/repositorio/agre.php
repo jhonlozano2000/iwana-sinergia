@@ -99,7 +99,7 @@ $tiposDocumentos = TipoDocumentoCalidad::Listar(3, "");
                 </ul>
                 <div id="DivAlerta"></div>
                 <!-- BEGIN DASHBOARD TILES -->
-                <form role="form" name="FrmDatos" id="FrmDatos">
+                <form role="form" name="FrmDatos" id="FrmDatos" enctype="multipart/form-data">
 
                     <input name="accion" id="accion" type="hidden" value="INSERTAR">
 
@@ -148,7 +148,7 @@ $tiposDocumentos = TipoDocumentoCalidad::Listar(3, "");
 
                                             <div class="row form-row">
                                                 <div class="col-md-12">
-                                                    <input name="nom_oficina" type="text" class="form-control" id="nom_oficina" placeholder="Nombre de la oficina">
+                                                    <input type="file" name="archivo" class="form-control" id="archivo" placeholder="Archivo para cargar">
                                                 </div>
                                             </div>
 

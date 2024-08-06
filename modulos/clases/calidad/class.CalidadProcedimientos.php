@@ -137,6 +137,7 @@ class Procedimiento
 		try {
 
 			if ($Accion == 1) {
+				//Listo todos los procedimientos
 
 				$Sql = "SELECT `areas_dependencias`.`nom_depen`, `cali_procesos`.`procesos_id`, `cali_procesos`.`cod_proce`, `cali_procesos`.`nom_proce`, `cali_procedimientos`.`procedimiento_id`,
 							`cali_procedimientos`.`cod_procedimiento`, `cali_procedimientos`.`nom_procedimiento`, `cali_procedimientos`.`estado`
@@ -154,7 +155,7 @@ class Procedimiento
 						ORDER BY cod_procedimiento, nom_procedimiento";
 
 				$Instruc = $conexion->prepare($Sql);
-				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
+				$Instruc->bindParam(':procesos_id', $idProcedimiento, PDO::PARAM_INT);
 				$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
 			}
 

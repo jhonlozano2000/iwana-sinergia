@@ -1,48 +1,68 @@
 $(document).ready(function () {
-    $("#cod_oficina").focus();
+    $("#id_depen").focus();
 
     $("#BtnGuardar").click(function () {
-        if ($("#id_depen").val() == 0) {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta elegir la dependencia a la cual corresponde la oficina" }, function () {});
+        /* if ($("#id_depen").val() == 0) {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta elegir la dependencia" }, function () {});
             $("#id_depen").focus();
-        } else if ($("#cod_oficina").val() == "") {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el código de la oficina" }, function () {});
-            $("#cod_oficina").focus();
-        } else if ($("#cod_corres").val() == "") {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el código de correspondencia de la oficina" }, function () {});
-            $("#cod_corres").focus();
-        } else if ($("#nom_oficina").val() == "") {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el nombre de la oficina" }, function () {});
-            $("#nom_oficina").focus();
-        } else {
-            var acti = $("#acti").prop("checked") ? true : false;
+        } else if ($("#procesos_id").val() == "") {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el proceso" }, function () {});
+            $("#procesos_id").focus();
+        } else if ($("#procedimiento_id").val() == "") {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el procedimeiento" }, function () {});
+            $("#procedimiento_id").focus();
+        } else if ($("#tipo_docu_id").val() == "") {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta tipo de documento" }, function () {});
+            $("#tipo_docu_id").focus();
+        } else { */
+        //var acti = $("#acti").prop("checked") ? true : false;
+        var formData = new FormData($("#FrmDatos")[0]);
 
-            $.ajax({
-                url: "acciones.ajax.php",
-                type: "POST",
-                // Form data
-                //datos del formulario
-                data: "accion=Insertar&id_depen=" + $("#id_depen").val() + "&cod_oficina=" + $("#cod_oficina").val() + "&cod_corres=" + $("#cod_corres").val() + "&nom_oficina=" + $("#nom_oficina").val() + "&observa=" + $("#observa").val() + "&acti=" + acti,
-                beforeSend: function () {
-                    $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información...", Imagen: "../../../public/assets/img/loading.gif" }, function () {});
-                },
-                success: function (msj) {
-                    if (msj == 1) {
-                        $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 4, mensaje: "El registro se almaceno correctamente" }, function () {});
-                        $("#nom_tipodoc").val("");
-                        $("#nom_tipodoc").focus();
-                        $("#observa").val("");
-                        $("#acti").prop("checked", true);
-                    } else {
-                        $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: msj }, function () {});
-                    }
-                },
-                error: function () {
-                    $("#DivAlerta").load("../config/mensajes.php", { alerta: 1, mensaje: "Ha ocurrido un error durante la ejecución" }, function () {});
-                },
-            });
-        }
-        return false;
+        $.ajax({
+            url: "acciones.ajax.php",
+            type: "POST",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información...", Imagen: "../../../public/assets/img/loading.gif" }, function () {});
+            },
+            success: function (msj) {
+                var elmentos = msj.split("###");
+
+                if ((elmentos[0] = 1)) {
+                    $.ajax({
+                        url: "../../varios/ftp.acciones.php",
+                        type: "POST",
+                        data: "accion=CALIDAD_UPLOAD&id_radicado=" + elmentos[0] + "&archivo=" + $("#archivo").val(),
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function () {
+                            $("#DivAlerta").load("../../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información, por favor espere..." }, function () {});
+                        },
+                        success: function (msj) {
+                            console.log(msj);
+                        },
+                    });
+                }
+                /* if (msj == 1) {
+                    $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 4, mensaje: "El registro se almaceno correctamente" }, function () {});
+                    $("#nom_tipodoc").val("");
+                    $("#nom_tipodoc").focus();
+                    $("#observa").val("");
+                    $("#acti").prop("checked", true);
+                } else {
+                    $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: msj }, function () {});
+                } */
+            },
+            error: function () {
+                $("#DivAlerta").load("../config/mensajes.php", { alerta: 1, mensaje: "Ha ocurrido un error durante la ejecución" }, function () {});
+            },
+        });
+        /* }
+        return false; */
     });
 
     $("#BtnRegresar").click(function () {
@@ -205,7 +225,6 @@ $(document).ready(function () {
             var idDepen = $(this).val();
 
             $.post("../../varios/combo_Procesos.php", { idDepen: idDepen }, function (data) {
-                console.log(data);
                 $("#procesos_id").html(data);
             });
         });
@@ -213,9 +232,9 @@ $(document).ready(function () {
 
     $("#procesos_id").change(function () {
         $("#procesos_id option:selected").each(function () {
-            var idDepen = $(this).val();
+            var idProceso = $(this).val();
 
-            $.post("../../varios/combo_Procedimientos.php", { idDepen: idDepen }, function (data) {
+            $.post("../../varios/combo_Procedimientos.php", { idProceso: idProceso }, function (data) {
                 $("#procedimiento_id").html(data);
             });
         });

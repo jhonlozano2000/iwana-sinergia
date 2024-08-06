@@ -7,10 +7,11 @@ class CalidadRepositorio
 	private $tipoDocuId;
 	private $rutaId;
 	private $fecHorRegistro;
-	private $nomArchivo;
+	private $nomArchivoOriginal;
+	private $nomArchivoUnico;
 	private $estado;
 
-	public function __construct($accion = null,  $archivoId = null, $procesoId = null, $tipoDocuId = null, $rutaId = null, $fecHorRegistro = null, $nomArchivo = null, $estado = null)
+	public function __construct($accion = null,  $archivoId = null, $procesoId = null, $tipoDocuId = null, $rutaId = null, $fecHorRegistro = null, $nomArchivoOriginal = null, $nomArchivoUnico = null, $estado = null)
 	{
 		$this->accion = $accion;
 		$this->archivoId = $archivoId;
@@ -18,7 +19,8 @@ class CalidadRepositorio
 		$this->tipoDocuId = $tipoDocuId;
 		$this->rutaId = $rutaId;
 		$this->fecHorRegistro = $fecHorRegistro;
-		$this->nomArchivo = $nomArchivo;
+		$this->nomArchivoOriginal = $nomArchivoOriginal;
+		$this->nomArchivoUnico = $nomArchivoUnico;
 		$this->estado = $estado;
 	}
 
@@ -46,9 +48,14 @@ class CalidadRepositorio
 		return $this->fecHorRegistro;
 	}
 
-	public function getNomArchivo()
+	public function getNomArchivoOriginal()
 	{
-		return $this->nomArchivo;
+		return $this->nomArchivoOriginal;
+	}
+
+	public function getNomArchivoUnico()
+	{
+		return $this->nomArchivoUnico;
 	}
 
 	public function getEstado()
@@ -86,9 +93,14 @@ class CalidadRepositorio
 		return $this->fecHorRegistro = $fecHorRegistro;
 	}
 
-	public function setNomArchivo($nomArchivo)
+	public function setNomArchivoOriginal($nomArchivo)
 	{
-		return $this->nomArchivo = $nomArchivo;
+		return $this->nomArchivoOriginal = $nomArchivo;
+	}
+
+	public function setNomArchivoUnico($nomArchivoUnico)
+	{
+		return $this->nomArchivoUnico = $nomArchivoUnico;
 	}
 
 	public function setEstado($estado)
@@ -102,25 +114,28 @@ class CalidadRepositorio
 		try {
 			if ($this->accion == 'INSERTAR') {
 
-				$sql = "INSERT INTO cali_repositorio(procesos_id, tipo_docu_id, id_ruta, nom_archivo)
-						VALUES(:procesos_id, :tipo_docu_id, :id_ruta, :nom_archivo)";
+				$sql = "INSERT INTO cali_repositorio(procesos_id, tipo_docu_id, id_ruta, nom_archivo_original, nom_archivo_unico)
+						VALUES(:procesos_id, :tipo_docu_id, :id_ruta, :nom_archivo_original, :nom_archivo_unico)";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $this->archivoId, PDO::PARAM_INT);
+				$Instruc->bindParam(':procesos_id', $this->procesoId, PDO::PARAM_INT);
 				$Instruc->bindParam(':tipo_docu_id', $this->tipoDocuId, PDO::PARAM_INT);
 				$Instruc->bindParam(':id_ruta', $this->rutaId, PDO::PARAM_INT);
-				$Instruc->bindParam(':nom_archivo', $this->nomArchivo, PDO::PARAM_STR);
+				$Instruc->bindParam(':nom_archivo_original', $this->nomArchivoOriginal, PDO::PARAM_STR);
+				$Instruc->bindParam(':nom_archivo_unico', $this->nomArchivoUnico, PDO::PARAM_STR);
 			} elseif ($this->accion == 'EDITAR') {
 
 				$sql = "UPDATE cali_repositorio
-						SET procesos_id = :procesos_id, tipo_docu_id = :tipo_docu_id, id_ruta = :id_ruta, nom_archivo = :nom_archivo, estado = :estado
+						SET procesos_id = :procesos_id, tipo_docu_id = :tipo_docu_id, id_ruta = :id_ruta, nom_archivo_original = :nom_archivo_original, 
+							nom_archivo_unico = :nom_archivo_unico, estado = :estado
 						WHERE archivo_id = :archivo_id";
 
 				$Instruc = $conexion->prepare($sql);
 				$Instruc->bindParam(':procesos_id', $this->archivoId, PDO::PARAM_INT);
 				$Instruc->bindParam(':tipo_docu_id', $this->tipoDocuId, PDO::PARAM_INT);
 				$Instruc->bindParam(':id_ruta', $this->rutaId, PDO::PARAM_INT);
-				$Instruc->bindParam(':nom_archivo', $this->nomArchivo, PDO::PARAM_STR);
+				$Instruc->bindParam(':nom_archivo', $this->nomArchivoOriginal, PDO::PARAM_STR);
+				$Instruc->bindParam(':nom_archivo_unico', $this->nomArchivoUnico, PDO::PARAM_STR);
 				$Instruc->bindParam(':estado', $this->estado, PDO::PARAM_INT);
 			} elseif ($this->accion == 'ELIMINAR') {
 
@@ -131,7 +146,8 @@ class CalidadRepositorio
 				$Instruc->bindParam(':archivo_id', $this->procesoId, PDO::PARAM_INT);
 			}
 
-			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $sql, true));
+			$this->archivoId = $conexion->lastInsertId();
 			$conexion = null;
 
 			if ($Instruc) {
@@ -140,7 +156,7 @@ class CalidadRepositorio
 				return false;
 			}
 		} catch (PDOException $e) {
-			echo "Ha surgido un error y no se puede ejecutar la consulta Calidad->Procedimientos, Accion: " . $this->accion . " - " . $Instruc->errorInfo() . " - " . $sql . $e->getMessage();
+			echo "Ha surgido un error y no se puede ejecutar la consulta Calidad->Repositorio, Accion: " . $this->accion . " - " . $Instruc->errorInfo() . " - " . $sql . $e->getMessage();
 			exit;
 		}
 	}
@@ -154,8 +170,8 @@ class CalidadRepositorio
 
 			if ($Accion == 1) {
 				//Listo todo el repositorio
-				$Sql = "SELECT `depen`.`nom_depen`, `proce`.`cod_proce`, `proce`.`nom_proce`, `procedi`.`cod_procedimiento`, `procedi`.`nom_procedimiento`, `tipo`.`nom_tipo_documento`, 
-							`repo`.`tipo_docu_id`, `repo`.`fechor_cargue`, `repo`.`nom_archivo`, `repo`.`estado`
+				$Sql = "SELECT `depen`.`nom_depen`, `proce`.`cod_proce`, `proce`.`nom_proce`, `procedi`.`cod_procedimiento`, `procedi`.`nom_procedimiento`, `tipo`.`nom_tipo_documento`,
+							`repo`.`tipo_docu_id`, `repo`.`fechor_cargue`, `repo`.`nom_archivo_original`, `repo`.`nom_archivo_unico`
 						FROM `cali_procedimientos` AS `procedi`
 							INNER JOIN `cali_procesos` AS `proce` ON (`procedi`.`procesos_id` = `proce`.`procesos_id`)
 							INNER JOIN `areas_dependencias` AS `depen`ON (`proce`.`id_depen` = `depen`.`id_depen`)
@@ -170,62 +186,43 @@ class CalidadRepositorio
 			$conexion = null;
 			return $Result;
 		} catch (PDOException $e) {
-			echo 'Ha surgido un error y no se puede ejecutar la consulta. Calidad->Procedimientos, Listar, Accion: ' . $Accion . $e->getMessage();
+			echo 'Ha surgido un error y no se puede ejecutar la consulta. Calidad->Repositorios, Listar, Accion: ' . $Accion . " - " . $e->getMessage();
 			exit;
 		}
 	}
 
-	public static function Buscar($accion, $idProce, $procesoId, $tipoDocuId, $rutaId)
+	public static function Buscar($accion, $archivoId)
 	{
 		$conexion = new Conexion();
 
 		try {
 
 			if ($accion == 1) {
-				// Buscar procedimientos por código
+				// Buscar un archivo por id
 				$sql = "SELECT *
-						FROM cali_procedimientos
-						WHERE procesos_id = :procesos_id AND tipo_docu_id = :tipo_docu_id";
+						FROM cali_repositorio
+						WHERE archivo_id = :archivo_id";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
-				$Instruc->bindParam(':tipo_docu_id', $tipoDocuId, PDO::PARAM_STR);
-			} elseif ($accion == 2) {
-				// Buscar procedimientos por nombre
-				$sql = "SELECT *
-						FROM cali_procedimientos
-						WHERE procesos_id = :procesos_id AND nom_procedimiento = :nom_procedimiento";
-
-				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
-				$Instruc->bindParam(':nom_procedimiento', $rutaId, PDO::PARAM_STR);
-			} elseif ($accion == 3) {
-				// Buscar procedimientos por id con su respectivo proceso y dependencia
-				$sql = "SELECT
-    `depn`.`id_depen`
-    , `proce`.`procesos_id`
-    , `procedi`.`archivo_id`
-    , `procedi`.`cod_procedimiento`
-    , `procedi`.`nom_procedimiento`
-    , `procedi`.`estado`
-FROM
-    `iwana_sinergia`.`cali_procesos` AS `proce`
-    INNER JOIN `iwana_sinergia`.`areas_dependencias` AS `depn`
-        ON (`proce`.`id_depen` = `depn`.`id_depen`)
-    INNER JOIN `iwana_sinergia`.`cali_procedimientos` AS `procedi`
-        ON (`procedi`.`procesos_id` = `proce`.`procesos_id`)
-						WHERE `procedi`.`archivo_id` = :archivo_id";
-
-				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':archivo_id', $procesoId, PDO::PARAM_STR);
+				$Instruc->bindParam(':archivo_id', $archivoId, PDO::PARAM_INT);
 			}
 
-			$Instruc->execute() or die(print_r("Calidad->Procesos, Buscar, Accion: " . $accion . " - " . $Instruc->errorInfo() . " - " . $sql, true));
+			$Instruc->execute() or die(print_r("Calidad->Repositorio, Buscar, Accion: " . $accion . " - " . $Instruc->errorInfo() . " - " . $sql, true));
 			$Result = $Instruc->fetch();
 			$conexion = null;
 
 			if ($Result) {
-				return new self("", $Result['archivo_id'], $Result['procesos_id'], $Result['tipo_docu_id'], $Result['id_ruta']);
+				return new self(
+					"",
+					$Result['archivo_id'],
+					$Result['procesos_id'],
+					$Result['tipo_docu_id'],
+					$Result['id_ruta'],
+					$Result['fechor_cargue'],
+					$Result['nom_archivo_original'],
+					$Result['nom_archivo_unico'],
+					$Result['estado']
+				);
 			} else {
 				return false;
 			}

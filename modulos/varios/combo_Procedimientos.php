@@ -2,7 +2,7 @@
 require_once "../../config/class.Conexion.php";
 require_once "../clases/calidad/class.CalidadProcedimientos.php";
 
-$procesos = Procedimiento::Listar(2, $_POST['idDepen'], "", "");
+$procesos = Procedimiento::Listar(2, $_POST['idProceso'], "", "");
 
 $Combo_Procedimientos = "";
 $Combo_Procedimientos .= "<option value='0'>...::: Elije el Procedimiento :::...</option>";

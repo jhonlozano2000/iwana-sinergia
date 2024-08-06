@@ -80,15 +80,16 @@ class Proceso
 			if ($this->accion == 'INSERTAR') {
 
 				$sql = "INSERT INTO cali_procesos(id_depen, cod_proce, nom_proce)
-					VALUES(:id_depen, :cod_proce, :nom_proce)";
+						VALUES(:id_depen, :cod_proce, :nom_proce)";
 
 				$Instruc = $conexion->prepare($sql);
 				$Instruc->bindParam(':id_depen', $this->idDepen, PDO::PARAM_INT);
-				$Instruc->bindParam(':cod_proce', $this->codProceso, PDO::PARAM_INT);
-				$Instruc->bindParam(':nom_proce', $this->nomProceso, PDO::PARAM_INT);
+				$Instruc->bindParam(':cod_proce', $this->codProceso, PDO::PARAM_STR);
+				$Instruc->bindParam(':nom_proce', $this->nomProceso, PDO::PARAM_STR);
 			} elseif ($this->accion == 'EDITAR') {
 
-				$sql = "UPDATE cali_procesos SET id_depen = :id_depen, cod_proce = :cod_proce, nom_proce = :nom_proce
+				$sql = "UPDATE cali_procesos 
+						SET id_depen = :id_depen, cod_proce = :cod_proce, nom_proce = :nom_proce
 						WHERE procesos_id = :procesos_id";
 
 				$Instruc = $conexion->prepare($sql);
