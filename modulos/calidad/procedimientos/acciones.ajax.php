@@ -13,13 +13,13 @@ switch ($Accion) {
 	case 'INSERTAR':
 
 		//Busco el procedimiento para saber si ya se registró
-		$busProcedimiento = Procedimiento::Buscar(1, $idProceso, $codProcedimiento, '', '');
+		$busProcedimiento = Procedimiento::Buscar(1, $idProceso, '', $codProcedimiento, '');
 		if ($busProcedimiento) {
 			echo "El código del procedimiento ya se encuentra registrado.";
 			exit();
 		}
 
-		$busProcedimiento = Procedimiento::Buscar(2, $idProceso, '', $nomProcedimientos, '');
+		$busProcedimiento = Procedimiento::Buscar(2, $idProceso, '', '', $nomProcedimientos);
 		if ($busProcedimiento) {
 			echo "El nombre del procedimiento ya se encuentra registrado.";
 			exit();

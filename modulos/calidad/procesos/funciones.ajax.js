@@ -17,8 +17,6 @@ $(document).ready(function () {
             $.ajax({
                 url: "acciones.ajax.php",
                 type: "POST",
-                // Form data
-                //datos del formulario
                 data: "accion=INSERTAR&id_depen=" + $("#id_depen").val() + "&cod_proce=" + $("#cod_proce").val() + "&nom_proce=" + $("#nom_proce").val() + "&acti=" + acti,
                 beforeSend: function () {
                     $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información...", Imagen: "../../../public/assets/img/loading.gif" }, function () {});
@@ -26,15 +24,10 @@ $(document).ready(function () {
                 success: function (msj) {
                     if (msj == 1) {
                         $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 4, mensaje: "El registro se almaceno correctamente" }, function () {});
-                        $("#nom_proce").val("");
                         $("#cod_proce").focus();
+                        $("#cod_proce").val("");
+                        $("#nom_proce").val("");
                         $("#acti").prop("checked", true);
-
-                        /*
-						setTimeout(function(){
-							window.location.href = "index.php";
-						}, 100);
-						*/
                     } else {
                         $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: msj }, function () {});
                     }

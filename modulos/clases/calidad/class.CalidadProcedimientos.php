@@ -138,12 +138,12 @@ class Procedimiento
 
 			if ($Accion == 1) {
 
-				$Sql = "SELECT `areas_dependencias`.`nom_depen`, `cali_procesos`.`procesos_id`, `cali_procesos`.`cod_proce`, `cali_procesos`.`nom_proce`, `cali_procedimientos`.`procedimiento_id`, 
-							`cali_procedimientos`.`cod_procedimiento`, `cali_procedimientos`.`nom_procedimiento`, `cali_procedimientos`.`estado` 
+				$Sql = "SELECT `areas_dependencias`.`nom_depen`, `cali_procesos`.`procesos_id`, `cali_procesos`.`cod_proce`, `cali_procesos`.`nom_proce`, `cali_procedimientos`.`procedimiento_id`,
+							`cali_procedimientos`.`cod_procedimiento`, `cali_procedimientos`.`nom_procedimiento`, `cali_procedimientos`.`estado`
 						FROM `cali_procesos`
 						INNER JOIN `areas_dependencias` ON (`cali_procesos`.`id_depen` = `areas_dependencias`.`id_depen`)
 						INNER JOIN `cali_procedimientos` ON (`cali_procedimientos`.`procesos_id` = `cali_procesos`.`procesos_id`)
-						ORDER BY `cali_procedimientos`.`cod_procedimiento`, `cali_procesos`.`nom_procedimiento`";
+						ORDER BY `areas_dependencias`.`nom_depen`, `cali_procedimientos`.`cod_procedimiento`, `cali_procesos`.`nom_proce`";
 
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
@@ -162,7 +162,7 @@ class Procedimiento
 			$conexion = null;
 			return $Result;
 		} catch (PDOException $e) {
-			echo 'Ha surgido un error y no se puede ejecutar la consulta. Calidad->Procedimientos, Listar, Accion: ' . $Accion . $e->getMessage();
+			echo 'Ha surgido un error y no se puede ejecutar la consulta. Calidad->Procedimientos, Listar, Accion: ' . $Accion . " - " . $e->getMessage();
 			exit;
 		}
 	}
