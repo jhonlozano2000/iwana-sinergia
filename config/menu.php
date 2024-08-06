@@ -256,8 +256,8 @@ $permisos = Usuario::Listar(8, $_SESSION['SesionUsuaId'], "", "", "", "", "", ""
                     </li>
                 <?php }
 
-                if (in_array('Men_Caldiad_Repositorio', $permisos)) {  ?>
-                    <li id="Men_Caldiad_Repositorio">
+                if (in_array('Men_Caldiad_Gestionar_Repositorio', $permisos)) {  ?>
+                    <li id="Men_Caldiad_Gestionar_Repositorio">
                         <a href="<?php echo MI_ROOT; ?>/modulos/calidad/repositorio/"> Repositorio </a>
                     </li>
                 <?php }
