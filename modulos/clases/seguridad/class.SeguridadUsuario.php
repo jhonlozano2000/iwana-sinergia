@@ -218,6 +218,7 @@ class Usuario
 			$Instruc = $conexion->prepare($Sql);
 			$Instruc->bindParam(':id_usua', $IdUsua, PDO::PARAM_INT);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Result = $Instruc->fetchAll();
 		} elseif ($Accion == 2) {
 			/******************************************************************************************/
 			/*	LISTO UN REGISTROS POR ID FUNCIONARIO
@@ -231,6 +232,7 @@ class Usuario
 			$Instruc = $conexion->prepare($Sql);
 			$Instruc->bindParam(':id_funcio', $IdUsua, PDO::PARAM_INT);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Result = $Instruc->fetchAll();
 		} elseif ($Accion == 3) {
 			/******************************************************************************************/
 			/*	LISTO POR LOGIN
@@ -244,6 +246,7 @@ class Usuario
 			$Instruc = $conexion->prepare($Sql);
 			$Instruc->bindParam(':login', $Login, PDO::PARAM_STR);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Result = $Instruc->fetchAll();
 		} elseif ($Accion == 4) {
 			/******************************************************************************************/
 			/*	FILTRO PARA TODOS LOS USUARIOS
@@ -256,36 +259,32 @@ class Usuario
 
 			$Instruc = $conexion->prepare($Sql);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Result = $Instruc->fetchAll();
 		} elseif ($Accion == 6) {
 			/******************************************************************************************/
 			/*	LISTO POR LOGIN Y CONTRASEÑA
 			/******************************************************************************************/
-			$Sql = "SELECT Usua.id_usua, Usua.login, Usua.contra, Usua.acti AS usua_acti, Usua.cambio_contra, FuncioDeta.id_funcio_deta, Funcio.id_funcio, 
-						Funcio.cod_funcio, Funcio.nom_funcio, Funcio.ape_funcio, Funcio.jefe_dependencia, Funcio.jefe_oficina, Funcio.propie_princi, 
-						Funcio.crea_expedien, Funcio.puede_firmar, Funcio.genero, Depen.id_depen, Depen.cod_depen, Depen.cod_corres, Depen.nom_depen, 
+			$Sql = "SELECT Usua.id_usua, Usua.login, Usua.contra, Usua.acti AS usua_acti, Usua.cambio_contra, FuncioDeta.id_funcio_deta, Funcio.id_funcio,
+						Funcio.cod_funcio, Funcio.nom_funcio, Funcio.ape_funcio, Funcio.jefe_dependencia, Funcio.jefe_oficina, Funcio.propie_princi,
+						Funcio.crea_expedien, Funcio.puede_firmar, Funcio.genero, Depen.id_depen, Depen.cod_depen, Depen.cod_corres, Depen.nom_depen,
 						ofi.id_oficina, ofi.cod_corres, ofi.cod_oficina, ofi.nom_oficina, Cargos.id_cargo, Cargos.nom_cargo, Funcio.firma, Funcio.foto
-					FROM segu_usua AS Usua 
-						LEFT JOIN gene_funcionarios AS Funcio ON (Usua.id_funcio = Funcio.id_funcio) 
-						LEFT JOIN gene_funcionarios_deta AS FuncioDeta ON (FuncioDeta.id_funcio = Funcio.id_funcio) 
-						LEFT JOIN areas_oficinas AS ofi ON (FuncioDeta.id_oficina = ofi.id_oficina) 
-						LEFT JOIN areas_cargos AS Cargos ON (FuncioDeta.id_cargo = Cargos.id_cargo) 
+					FROM segu_usua AS Usua
+						LEFT JOIN gene_funcionarios AS Funcio ON (Usua.id_funcio = Funcio.id_funcio)
+						LEFT JOIN gene_funcionarios_deta AS FuncioDeta ON (FuncioDeta.id_funcio = Funcio.id_funcio)
+						LEFT JOIN areas_oficinas AS ofi ON (FuncioDeta.id_oficina = ofi.id_oficina)
+						LEFT JOIN areas_cargos AS Cargos ON (FuncioDeta.id_cargo = Cargos.id_cargo)
 						LEFT JOIN areas_dependencias AS Depen ON (ofi.id_depen = Depen.id_depen)
 					WHERE Usua.login = :login AND FuncioDeta.acti = 1";
 
 			$Instruc = $conexion->prepare($Sql);
 			$Instruc->bindParam(':login', $Login, PDO::PARAM_STR);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Result = $Instruc->fetchAll();
 		} elseif ($Accion == 8) {
 			/******************************************************************************************/
 			/*	LISTO LOS PERFILES DE UN USUARIO
 			/******************************************************************************************/
-			$Sql = "SELECT Usua.id_usua, Usua.login, Usua.contra, Usua.acti AS usua_acti, Usua.cambio_contra, FuncioDeta.id_funcio_deta, 
-						Funcio.id_funcio, Funcio.cod_funcio, Funcio.nom_funcio, Funcio.ape_funcio, Funcio.jefe_dependencia, Funcio.jefe_oficina, 
-						Funcio.propie_princi, Funcio.crea_expedien, Funcio.puede_firmar, Funcio.genero, Depen.id_depen, Depen.cod_depen, 
-						Depen.cod_corres, Depen.nom_depen, ofi.id_oficina, ofi.cod_corres, ofi.cod_oficina, ofi.nom_oficina, Cargos.id_cargo, 
-						Cargos.nom_cargo, segu_perfiles.id_perfil, segu_perfiles.nom_perfil, segu_perfiles.acti AS perfil_acti, 
-						segu_perfiles_deta.acti AS acti_perfil, segu_modu.id_modu, segu_modu.modu_padre, segu_modu.nom_modu, segu_modu.menu, 
-						segu_modu.boton, segu_modu.acti AS acti_menu
+			$Sql = "SELECT DISTINCT segu_modu.menu
 					FROM segu_usuadeta
 					    INNER JOIN segu_usua AS Usua ON (segu_usuadeta.id_usua = Usua.id_usua)
 					    LEFT JOIN gene_funcionarios AS Funcio ON (Usua.id_funcio = Funcio.id_funcio)
@@ -295,13 +294,13 @@ class Usuario
 					    LEFT JOIN gene_funcionarios_deta AS FuncioDeta ON (FuncioDeta.id_funcio = Funcio.id_funcio)
 					    LEFT JOIN areas_oficinas AS ofi ON (FuncioDeta.id_oficina = ofi.id_oficina)
 					    LEFT JOIN areas_cargos AS Cargos ON (FuncioDeta.id_cargo = Cargos.id_cargo)
-					    LEFT JOIN areas_dependencias AS Depen ON (ofi.id_depen = Depen.id_depen) 
-					WHERE Usua.id_usua = :id_usua AND segu_modu.modu_padre = :modu_padre AND segu_modu.acti = 1";
+					    LEFT JOIN areas_dependencias AS Depen ON (ofi.id_depen = Depen.id_depen)
+					WHERE Usua.id_usua = :id_usua AND segu_modu.acti = 1";
 
 			$Instruc = $conexion->prepare($Sql);
 			$Instruc->bindParam(':id_usua', $IdUsua, PDO::PARAM_INT);
-			$Instruc->bindParam(':modu_padre', $IdModuPadre, PDO::PARAM_INT);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Result = $Instruc->fetchAll(PDO::FETCH_COLUMN, 0);
 		} elseif ($Accion == 9) {
 			/******************************************************************************************/
 			/*	LISTO LOS PERFILES DE UN USUARIO
@@ -329,6 +328,7 @@ class Usuario
 			$Instruc->bindParam(':id_usua', $IdUsua, PDO::PARAM_INT);
 			$Instruc->bindParam(':id_perfil', $IdPerfil, PDO::PARAM_INT);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Result = $Instruc->fetchAll();
 		} elseif ($Accion == 10) {
 			/******************************************************************************************/
 			/*	LISTO TODOS LOS USUARIOS DEL SISTEMA ESPECIFICADO SI INICIARON SESION
@@ -343,10 +343,11 @@ class Usuario
 			$Instruc = $conexion->prepare($Sql);
 			$Instruc->bindParam(':id_usua', $IdUsua, PDO::PARAM_INT);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$Result = $Instruc->fetchAll();
 		}
 
 
-		$Result = $Instruc->fetchAll();
+
 		$conexion = null;
 		return $Result;
 	}

@@ -7,10 +7,13 @@ require_once '../../../config/funciones.php';
 require_once '../../../config/funciones_seguridad.php';
 require_once '../../../config/class.Conexion.php';
 require_once '../../clases/seguridad/class.SeguridadUsuario.php';
+require_once "../../clases/seguridad/class.Modulo.php";
 
+$permisosModulos = Modulo::Listar(1, "");
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
@@ -23,28 +26,29 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/shape-hover/css/component.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.carousel.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.theme.css" />
-    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen" >
-    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen" >
+    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen">
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
 
     <!-- BEGIN CSS TEMPLATE -->
-    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
-    <script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>    
+    <script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body class="">
     <!-- BEGIN HEADER -->
     <?php require_once '../../../config/cabeza.php'; ?>
@@ -98,17 +102,15 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
                                 <div class="grid-body no-border">
                                     <div class="row column-seperation">
                                         <div class="col-md-6">
-                                            <h4><span class="text-success">Nuevo</span>, Información básica del perfil</h4>   
+                                            <h4><span class="text-success">Nuevo</span>, Información básica del perfil</h4>
                                             <div class="row form-row">
                                                 <div class="col-md-12">
-                                                    <input name="nom_perfil" type="text" class="form-control" id="nom_perfil"
-                                                    placeholder="Nombre del perfil">
+                                                    <input name="nom_perfil" type="text" class="form-control" id="nom_perfil" placeholder="Nombre del perfil">
                                                 </div>
                                             </div>
                                             <div class="row form-row">
                                                 <div class="col-md-12">
-                                                    <textarea name="observa" rows="3" class="form-control" id="observa"
-                                                    placeholder="Observaciones si las hay..."></textarea>
+                                                    <textarea name="observa" rows="3" class="form-control" id="observa" placeholder="Observaciones si las hay..."></textarea>
                                                 </div>
                                             </div>
                                             <div class="row form-row">
@@ -123,17 +125,24 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
                                         <div class="col-md-6">
                                             <div class="grid-body no-border">
                                                 <h4><span class="text-success">Perfiles</span> Para acceso del usuario</h4>
-                                                <div class="col-md-12" style="height: 450px; overflow-y: scroll;">
-                                                    <div class="checkbox check-success">
-                                                        <?php
-                                                        require_once "../../varios/arbol_modulos_check.php";
-                                                        ?>
+
+                                                <?php
+                                                foreach ($permisosModulos as $permiso) {
+                                                ?>
+                                                    <div class="col-md-6">
+                                                        <div class="checkbox check-success">
+                                                            <input type="checkbox" name="permisos[]" value="<?php echo $permiso['id_modu']; ?>" id="<?php echo $permiso['id_modu']; ?>">
+                                                            <label for="<?php echo $permiso['id_modu']; ?>"><?php echo $permiso['nom_modu']; ?></label>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                <?php
+                                                }
+                                                ?>
+
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-actions">
                                         <div class="pull-left">
                                             <button class="btn btn-primary btn-cons" type="button" id="BtnGuardarPerfil" name="BtnGuardarPerfil">
@@ -152,14 +161,14 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
                 <!-- END DASHBOARD TILES -->
             </div>
         </div>
-        <!-- BEGIN CHAT --> 
+        <!-- BEGIN CHAT -->
         <div class="chat-window-wrapper">
             <?php require_once '../../chat/chat.php'; ?>
         </div>
-        <!-- END CHAT -->		  
+        <!-- END CHAT -->
     </div>
     <!-- END CONTAINER -->
-    
+
 
     <!-- BEGIN CORE JS FRAMEWORK-->
     <script src="funcionesPerfiles.ajax.js"></script>
@@ -185,7 +194,7 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
 
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.resize.min.js" type="text/javascript"></script>
-    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript" ></script>
+    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="../../../public/assets/js/core.js" type="text/javascript"></script>
@@ -193,7 +202,7 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
     <script src="../../../public/assets/js/demo.js" type="text/javascript"></script>
     <script src="../../../public/assets/js/dashboard_v2.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".live-tile,.flip-list").liveTile();
         });
     </script>
@@ -202,16 +211,17 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
     <?php
 
     $ModulosPerfil = Perfiles::Listar(7, $_REQUEST['id'], "", "");
-    foreach($ModulosPerfil as $Item) {
-        ?>
+    foreach ($ModulosPerfil as $Item) {
+    ?>
         <script type="text/javascript">
             var IdModulo = <?php echo $Item['id_modu']; ?>;
-            
-            $("#"+IdModulo).attr("checked", true);
+
+            $("#" + IdModulo).attr("checked", true);
         </script>
-        <?php
+    <?php
     }
     ?>
     <!-- END CORE TEMPLATE JS -->
 </body>
+
 </html>

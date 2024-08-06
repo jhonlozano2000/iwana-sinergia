@@ -11,6 +11,8 @@ require_once "../../clases/seguridad/class.SeguridadPerfiles.php";
 require_once "../../clases/seguridad/class.Modulo.php";
 
 $Perfiles = Perfiles::Buscar(1, $_REQUEST['id'], "", "");
+$permisosModulos = Modulo::Listar(1, "");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -103,7 +105,7 @@ $Perfiles = Perfiles::Buscar(1, $_REQUEST['id'], "", "");
                             <div class="grid simple">
                                 <div class="grid-body no-border">
                                     <div class="row column-seperation">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <h4><span class="text-warning">Editar</span>, Información básica del perfil</h4>
                                             <div class="row form-row">
                                                 <div class="col-md-12">
@@ -131,15 +133,22 @@ $Perfiles = Perfiles::Buscar(1, $_REQUEST['id'], "", "");
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
                                             <div class="grid-body no-border">
                                                 <h4><span class="text-success">Perfiles</span> Para acceso del usuario</h4>
                                                 <div class="col-md-12" style="height: 450px; overflow-y: scroll;">
-                                                    <div class="checkbox check-success">
-                                                        <?php
-                                                        require_once "../../varios/arbol_modulos_check.php";
-                                                        ?>
-                                                    </div>
+                                                    <?php
+                                                    foreach ($permisosModulos as $permiso) {
+                                                    ?>
+                                                        <div class="col-md-4">
+                                                            <div class="checkbox check-success">
+                                                                <input type="checkbox" name="permisos[]" value="<?php echo $permiso['id_modu']; ?>" id="<?php echo $permiso['id_modu']; ?>">
+                                                                <label for="<?php echo $permiso['id_modu']; ?>"><?php echo $permiso['nom_modu']; ?></label>
+                                                            </div>
+                                                        </div>
+                                                    <?php
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>

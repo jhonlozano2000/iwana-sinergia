@@ -131,21 +131,21 @@ class Perfiles
 				$Instruc->bindParam(':id_modu', $IdModulo, PDO::PARAM_INT);
 				$Instruc->bindParam(':acti', $Acti, PDO::PARAM_INT);
 			} elseif ($Accion == 2) {
-				$Sql = "UPDATE segu_perfiles_deta 
-						SET acti = :acti 
+				$Sql = "UPDATE segu_perfiles_deta
+						SET acti = :acti
 						WHERE id_perfil = :id_perfil AND id_modu = :id_modu";
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':acti', $Acti, PDO::PARAM_INT);
 				$Instruc->bindParam(':id_perfil', $IdPerfil, PDO::PARAM_INT);
 				$Instruc->bindParam(':id_modu', $IdModulo, PDO::PARAM_INT);
 			} elseif ($Accion == 3) {
-				$Sql = "UPDATE segu_perfiles_deta 
+				$Sql = "UPDATE segu_perfiles_deta
 						SET acti = 0 WHERE id_perfil = " . $IdPerfil;
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':id_perfil', $IdPerfil, PDO::PARAM_INT);
 			} elseif ($Accion == 4) {
-				$Sql = "DELETE 
-						FROM segu_perfiles_deta 
+				$Sql = "DELETE
+						FROM segu_perfiles_deta
 						WHERE id_perfil = :id_perfil";
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':id_perfil', $IdPerfil, PDO::PARAM_INT);
