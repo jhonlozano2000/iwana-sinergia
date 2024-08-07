@@ -39,7 +39,7 @@ $(document).ready(function () {
                 divTab += `</div>`;
 
                 $("#divTab").html(divTab); */
-                /* let datos = `<table id="tablaArchivos${item.tipo_docu_id}">`;
+                let datos = `<table id="tablaArchivos${item.tipo_docu_id}">`;
                 datos += `<tbody>`;
                 for (let item of arcivos) {
                     datos += `<tr id="tr${item.archivo_id}">
@@ -52,7 +52,7 @@ $(document).ready(function () {
                     //$(`#tablaArchivos${item.tipo_docu_id} tbody`).append(newRow);
                 }
                 datos += `</tbody></table>`;
-                $("#tblArchivos").html(divTab); */
+                $("#tblArchivos").html(divTab);
             },
         });
     }

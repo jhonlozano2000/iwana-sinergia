@@ -166,29 +166,29 @@ endforeach;
                                                                 <div id="tblArchivos"></div>
                                                             </div>
                                                         </div>
-                                                    <?php
-                                                }
-                                                    ?>
                                                     </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-actions">
-
-                                            <div class="pull-left">
-                                                <button class="btn btn-primary btn-cons" type="button" id="BtnGuardar" name="BtnGuardar">
-                                                    <span class="glyphicon glyphicon-check"></span> Guardar
-                                                </button>
-                                                <button class="btn btn-white btn-cons" type="button" id="BtnRegresar" name="BtnRegresar">
-                                                    <span class="fa fa-mail-reply-all"></span> Regresar
-                                                </button>
+                                                <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
-
                                     </div>
+                                    <div class="form-actions">
+
+                                        <div class="pull-left">
+                                            <button class="btn btn-primary btn-cons" type="button" id="BtnGuardar" name="BtnGuardar">
+                                                <span class="glyphicon glyphicon-check"></span> Guardar
+                                            </button>
+                                            <button class="btn btn-white btn-cons" type="button" id="BtnRegresar" name="BtnRegresar">
+                                                <span class="fa fa-mail-reply-all"></span> Regresar
+                                            </button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
