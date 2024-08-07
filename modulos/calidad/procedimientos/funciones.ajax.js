@@ -5,9 +5,9 @@ $(document).ready(function () {
         if ($("#id_depen").val() == 0) {
             $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta elegir la dependencia a la cual corresponde el procedimiento" }, function () {});
             $("#id_depen").focus();
-        } else if ($("#procesos_id").val() == 0) {
+        } else if ($("#proceso_id").val() == 0) {
             $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta elegir el proceso a la cual corresponde el procedimiento" }, function () {});
-            $("#procesos_id").focus();
+            $("#proceso_id").focus();
         } else if ($("#cod_procedimiento").val() == "") {
             $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el código del procedimiento" }, function () {});
             $("#cod_procedimiento").focus();
@@ -22,7 +22,7 @@ $(document).ready(function () {
                 type: "POST",
                 // Form data
                 //datos del formulario
-                data: "accion=INSERTAR&id_depen=" + $("#id_depen").val() + "&procesos_id=" + $("#procesos_id").val() + "&cod_procedimiento=" + $("#cod_procedimiento").val() + "&nom_procedimiento=" + $("#nom_procedimiento").val() + "&acti=" + acti,
+                data: "accion=INSERTAR&id_depen=" + $("#id_depen").val() + "&proceso_id=" + $("#proceso_id").val() + "&cod_procedimiento=" + $("#cod_procedimiento").val() + "&nom_procedimiento=" + $("#nom_procedimiento").val() + "&acti=" + acti,
                 beforeSend: function () {
                     $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información...", Imagen: "../../../public/assets/img/loading.gif" }, function () {});
                 },
@@ -194,7 +194,7 @@ $(document).ready(function () {
             var idDepen = $(this).val();
 
             $.post("../../varios/combo_Procesos.php", { idDepen: idDepen }, function (data) {
-                $("#procesos_id").html(data);
+                $("#proceso_id").html(data);
             });
         });
     });

@@ -184,7 +184,7 @@ class CalidadRepositorio
 				$Sql = "SELECT `depen`.`nom_depen`, `proce`.`cod_proce`, `proce`.`nom_proce`, `procedi`.`cod_procedimiento`, `procedi`.`nom_procedimiento`, `tipo`.`nom_tipo_documento`,
 							`repo`.`tipo_docu_id`, `repo`.`fechor_cargue`, `repo`.`nom_archivo_original`, `repo`.`nom_archivo_unico`, `repo`.`estado`
 						FROM `cali_procedimientos` AS `procedi`
-							INNER JOIN `cali_procesos` AS `proce` ON (`procedi`.`procedimiento_id` = `proce`.`procedimiento_id`)
+							INNER JOIN `cali_procesos` AS `proce` ON (`procedi`.`proceso_id` = `proce`.`proceso_id`)
 							INNER JOIN `areas_dependencias` AS `depen`ON (`proce`.`id_depen` = `depen`.`id_depen`)
 							INNER JOIN `cali_repositorio` AS `repo` ON (`repo`.`procedimiento_id` = `procedi`.`procedimiento_id`)
 							INNER JOIN `cali_tipos_documentos` AS `tipo`ON (`repo`.`tipo_docu_id` = `tipo`.`tipo_docu_id`)";

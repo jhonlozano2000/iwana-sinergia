@@ -79,21 +79,21 @@ class Procedimiento
 		try {
 			if ($this->accion == 'INSERTAR') {
 
-				$sql = "INSERT INTO cali_procedimientos(procesos_id, cod_procedimiento, nom_procedimiento)
-						VALUES(:procesos_id, :cod_procedimiento, :nom_procedimiento)";
+				$sql = "INSERT INTO cali_procedimientos(proceso_id, cod_procedimiento, nom_procedimiento)
+						VALUES(:proceso_id, :cod_procedimiento, :nom_procedimiento)";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $this->idProceso, PDO::PARAM_INT);
 				$Instruc->bindParam(':cod_procedimiento', $this->codProcedimiento, PDO::PARAM_INT);
 				$Instruc->bindParam(':nom_procedimiento', $this->nomProcedimiento, PDO::PARAM_INT);
 			} elseif ($this->accion == 'EDITAR') {
 
 				$sql = "UPDATE cali_procedimientos
-						SET procesos_id = :procesos_id, cod_procedimiento = :cod_procedimiento, nom_procedimiento = :nom_procedimiento
+						SET proceso_id = :proceso_id, cod_procedimiento = :cod_procedimiento, nom_procedimiento = :nom_procedimiento
 						WHERE procedimiento_id = :procedimiento_id";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $this->idProceso, PDO::PARAM_INT);
 				$Instruc->bindParam(':cod_procedimiento', $this->codProcedimiento, PDO::PARAM_STR);
 				$Instruc->bindParam(':nom_procedimiento', $this->nomProcedimiento, PDO::PARAM_STR);
 				$Instruc->bindParam(':procedimiento_id', $this->idProcedimiento, PDO::PARAM_INT);
@@ -139,11 +139,11 @@ class Procedimiento
 			if ($Accion == 1) {
 				//Listo todos los procedimientos
 
-				$Sql = "SELECT `areas_dependencias`.`nom_depen`, `cali_procesos`.`procesos_id`, `cali_procesos`.`cod_proce`, `cali_procesos`.`nom_proce`, `cali_procedimientos`.`procedimiento_id`,
+				$Sql = "SELECT `areas_dependencias`.`nom_depen`, `cali_procesos`.`proceso_id`, `cali_procesos`.`cod_proce`, `cali_procesos`.`nom_proce`, `cali_procedimientos`.`procedimiento_id`,
 							`cali_procedimientos`.`cod_procedimiento`, `cali_procedimientos`.`nom_procedimiento`, `cali_procedimientos`.`estado`
 						FROM `cali_procesos`
 						INNER JOIN `areas_dependencias` ON (`cali_procesos`.`id_depen` = `areas_dependencias`.`id_depen`)
-						INNER JOIN `cali_procedimientos` ON (`cali_procedimientos`.`procesos_id` = `cali_procesos`.`procesos_id`)
+						INNER JOIN `cali_procedimientos` ON (`cali_procedimientos`.`proceso_id` = `cali_procesos`.`proceso_id`)
 						ORDER BY `areas_dependencias`.`nom_depen`, `cali_procedimientos`.`cod_procedimiento`, `cali_procesos`.`nom_proce`";
 
 				$Instruc = $conexion->prepare($Sql);
@@ -151,11 +151,11 @@ class Procedimiento
 			} elseif ($Accion == 2) {
 				$Sql = "SELECT *
 						FROM cali_procedimientos
-						WHERE procesos_id = :procesos_id
+						WHERE proceso_id = :proceso_id
 						ORDER BY cod_procedimiento, nom_procedimiento";
 
 				$Instruc = $conexion->prepare($Sql);
-				$Instruc->bindParam(':procesos_id', $idProcedimiento, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $idProcedimiento, PDO::PARAM_INT);
 				$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
 			}
 
@@ -178,26 +178,26 @@ class Procedimiento
 				// Buscar procedimientos por código
 				$sql = "SELECT *
 						FROM cali_procedimientos
-						WHERE procesos_id = :procesos_id AND cod_procedimiento = :cod_procedimiento";
+						WHERE proceso_id = :proceso_id AND cod_procedimiento = :cod_procedimiento";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $idProce, PDO::PARAM_INT);
 				$Instruc->bindParam(':cod_procedimiento', $codProcedimiento, PDO::PARAM_STR);
 			} elseif ($accion == 2) {
 				// Buscar procedimientos por nombre
 				$sql = "SELECT *
 						FROM cali_procedimientos
-						WHERE procesos_id = :procesos_id AND nom_procedimiento = :nom_procedimiento";
+						WHERE proceso_id = :proceso_id AND nom_procedimiento = :nom_procedimiento";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $idProce, PDO::PARAM_INT);
 				$Instruc->bindParam(':nom_procedimiento', $nomProcedimiento, PDO::PARAM_STR);
 			} elseif ($accion == 3) {
 				// Buscar procedimientos por id con su respectivo proceso y dependencia
-				$sql = "SELECT `depn`.`id_depen`, `proce`.`procesos_id`, `procedi`.`procedimiento_id`, `procedi`.`cod_procedimiento`, `procedi`.`nom_procedimiento`, `procedi`.`estado`
+				$sql = "SELECT `depn`.`id_depen`, `proce`.`proceso_id`, `procedi`.`procedimiento_id`, `procedi`.`cod_procedimiento`, `procedi`.`nom_procedimiento`, `procedi`.`estado`
 						FROM `cali_procesos` AS `proce`
 							INNER JOIN `areas_dependencias` AS `depn` ON (`proce`.`id_depen` = `depn`.`id_depen`)
-							INNER JOIN `cali_procedimientos` AS `procedi` ON (`procedi`.`procesos_id` = `proce`.`procesos_id`)
+							INNER JOIN `cali_procedimientos` AS `procedi` ON (`procedi`.`proceso_id` = `proce`.`proceso_id`)
 						WHERE `procedi`.`procedimiento_id` = :procedimiento_id";
 
 				$Instruc = $conexion->prepare($sql);
@@ -209,7 +209,7 @@ class Procedimiento
 			$conexion = null;
 
 			if ($Result) {
-				return new self("", $Result['procesos_id'], $Result['procedimiento_id'], $Result['cod_procedimiento'], $Result['nom_procedimiento'], $Result['estado']);
+				return new self("", $Result['proceso_id'], $Result['procedimiento_id'], $Result['cod_procedimiento'], $Result['nom_procedimiento'], $Result['estado']);
 			} else {
 				return false;
 			}

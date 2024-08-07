@@ -107,7 +107,7 @@ endforeach;
                     <div class="grid simple">
                         <div class="grid-body no-border">
 
-                            <input name="procesos_id" id="procesos_id" type="hidden" value="<?php echo $proceso->getidProceso(); ?>">
+                            <input name="proceso_id" id="proceso_id" type="hidden" value="<?php echo $proceso->getidProceso(); ?>">
                             <input name="accion" id="accion" type="hidden" value="EDITAR">
 
                             <div class="row column-seperation">

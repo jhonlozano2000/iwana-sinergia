@@ -116,7 +116,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: "acciones.ajax.php",
                     type: "POST",
-                    data: "accion=ELIMINAR&procesos_id=" + Id,
+                    data: "accion=ELIMINAR&proceso_id=" + Id,
                     success: function (msj) {
                         if (msj == 1) {
                             $("#TrDatos" + Id).remove();

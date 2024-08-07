@@ -108,7 +108,7 @@ endforeach;
                     <input name="accion" id="accion" type="hidden" value="INSERTAR">
                     <input name="archivo_id" id="archivo_id" type="hidden">
 
-                    <div class="row">
+                    <div class="row" style="height: 300px;">
                         <div class="col-md-12">
                             <div class="grid simple">
                                 <div class="grid-title no-border">
@@ -146,12 +146,13 @@ endforeach;
                                         </div>
                                         <div class="col-md-8">
                                             <ul class="nav nav-tabs" id="tab-01">
-                                                <?php
-                                                foreach ($tiposDocumentos as $item) {
-                                                ?>
-                                                    <li class=""><a href="#tab<?php echo $item['tipo_docu_id'] ?>"><?php echo $item['nom_tipo_documento'] ?></a></li>
+                                                <?php foreach ($tiposDocumentos as $item) { ?>
+                                                    <li class="">
+                                                        <a href="#tab<?php echo $item['tipo_docu_id'] ?>"><?php echo $item['nom_tipo_documento'] ?></a>
+                                                    </li>
                                                 <?php } ?>
                                             </ul>
+
                                             <div class="tab-content">
                                                 <?php
                                                 foreach ($tiposDocumentos as $item) {
@@ -159,33 +160,35 @@ endforeach;
                                                     <div class="tab-pane" id="tab<?php echo $item['tipo_docu_id'] ?>">
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <table id="tablaArchivos<?php echo $item['tipo_docu_id'] ?>">
+                                                                <!-- <table id="tablaArchivos<?php echo $item['tipo_docu_id'] ?>">
                                                                     <tbody></tbody>
-                                                                </table>
+                                                                </table> -->
+                                                                <div id="tblArchivos"></div>
                                                             </div>
                                                         </div>
+                                                    <?php
+                                                }
+                                                    ?>
                                                     </div>
-                                                <?php } ?>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-actions">
+
+                                            <div class="pull-left">
+                                                <button class="btn btn-primary btn-cons" type="button" id="BtnGuardar" name="BtnGuardar">
+                                                    <span class="glyphicon glyphicon-check"></span> Guardar
+                                                </button>
+                                                <button class="btn btn-white btn-cons" type="button" id="BtnRegresar" name="BtnRegresar">
+                                                    <span class="fa fa-mail-reply-all"></span> Regresar
+                                                </button>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div class="form-actions">
-
-                                        <div class="pull-left">
-                                            <button class="btn btn-primary btn-cons" type="button" id="BtnGuardar" name="BtnGuardar">
-                                                <span class="glyphicon glyphicon-check"></span> Guardar
-                                            </button>
-                                            <button class="btn btn-white btn-cons" type="button" id="BtnRegresar" name="BtnRegresar">
-                                                <span class="fa fa-mail-reply-all"></span> Regresar
-                                            </button>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </form>
             </div>
         </div>

@@ -90,29 +90,29 @@ class Proceso
 
 				$sql = "UPDATE cali_procesos 
 						SET id_depen = :id_depen, cod_proce = :cod_proce, nom_proce = :nom_proce
-						WHERE procesos_id = :procesos_id";
+						WHERE proceso_id = :proceso_id";
 
 				$Instruc = $conexion->prepare($sql);
 				$Instruc->bindParam(':id_depen', $this->idDepen, PDO::PARAM_INT);
 				$Instruc->bindParam(':cod_proce', $this->codProceso, PDO::PARAM_STR);
 				$Instruc->bindParam(':nom_proce', $this->nomProceso, PDO::PARAM_STR);
-				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $this->idProceso, PDO::PARAM_INT);
 			} elseif ($this->accion == 'ELIMINAR') {
 
 				$sql = "DELETE FROM cali_procesos
-						WHERE procesos_id = :procesos_id";
+						WHERE proceso_id = :proceso_id";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $this->idProceso, PDO::PARAM_INT);
 			} elseif ($this->accion == 'ACTIVAR_INACTIVAR') {
 
 				$sql = "UPDATE cali_procesos
 						SET estado = :estado
-						WHERE procesos_id = :procesos_id";
+						WHERE proceso_id = :proceso_id";
 
 				$Instruc = $conexion->prepare($sql);
 				$Instruc->bindParam(':estado', $this->Acti, PDO::PARAM_INT);
-				$Instruc->bindParam(':procesos_id', $this->idProceso, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $this->idProceso, PDO::PARAM_INT);
 			}
 
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
@@ -140,7 +140,7 @@ class Proceso
 				/**
 				 * Listo los procesos con la dependencia respectiva
 				 */
-				$Sql = "SELECT `cali_procesos`.`procesos_id`, `areas_dependencias`.`cod_depen`, `areas_dependencias`.`nom_depen`, `cali_procesos`.`cod_proce`,
+				$Sql = "SELECT `cali_procesos`.`proceso_id`, `areas_dependencias`.`cod_depen`, `areas_dependencias`.`nom_depen`, `cali_procesos`.`cod_proce`,
 							`cali_procesos`.`nom_proce`, `cali_procesos`.`estado`
 						FROM `cali_procesos`
 							INNER JOIN `areas_dependencias` ON (`cali_procesos`.`id_depen` = `areas_dependencias`.`id_depen`)";
@@ -195,10 +195,10 @@ class Proceso
 				// Buscar procedimientos por id
 				$sql = "SELECT *
 						FROM cali_procesos
-						WHERE procesos_id = :procesos_id";
+						WHERE proceso_id = :proceso_id";
 
 				$Instruc = $conexion->prepare($sql);
-				$Instruc->bindParam(':procesos_id', $idProce, PDO::PARAM_INT);
+				$Instruc->bindParam(':proceso_id', $idProce, PDO::PARAM_INT);
 			}
 
 			$Instruc->execute() or die(print_r("Calidad->Procesos, Buscar, Accion: " . $accion . " - " . $Instruc->errorInfo() . " - " . $sql, true));
@@ -206,7 +206,7 @@ class Proceso
 			$conexion = null;
 
 			if ($Result) {
-				return new self("", $Result['procesos_id'], $Result['id_depen'], $Result['cod_proce'], $Result['nom_proce'], $Result['estado']);
+				return new self("", $Result['proceso_id'], $Result['id_depen'], $Result['cod_proce'], $Result['nom_proce'], $Result['estado']);
 			} else {
 				return false;
 			}

@@ -147,7 +147,7 @@ require_once '../../clases/calidad/class.CalidadProceso.php';
                                                     $procesos = Proceso::Listar(1, 0, 0, "");
                                                     foreach ($procesos as $item) :
                                                     ?>
-                                                        <tr id="TrDatos<?php echo $item['procesos_id']; ?>">
+                                                        <tr id="TrDatos<?php echo $item['proceso_id']; ?>">
                                                             <td>
                                                                 <div class="checkbox check-success">
                                                                     <?php
@@ -157,18 +157,18 @@ require_once '../../clases/calidad/class.CalidadProceso.php';
                                                                         $checked = "";
                                                                     }
                                                                     ?>
-                                                                    <input id="acti<?php echo $item['procesos_id']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['procesos_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
-                                                                    <label for="acti<?php echo $item['procesos_id']; ?>"></label>
+                                                                    <input id="acti<?php echo $item['proceso_id']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['proceso_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
+                                                                    <label for="acti<?php echo $item['proceso_id']; ?>"></label>
                                                                 </div>
                                                             </td>
                                                             <td><?php echo $item['nom_depen']; ?></td>
                                                             <td><?php echo $item['cod_proce']; ?></td>
                                                             <td><?php echo $item['nom_proce']; ?></td>
                                                             <td>
-                                                                <a href="edit.php?id=<?php echo $item['procesos_id']; ?>" class="btn btn-warning btn-circle">
+                                                                <a href="edit.php?id=<?php echo $item['proceso_id']; ?>" class="btn btn-warning btn-circle">
                                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                                 </a>
-                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['procesos_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
+                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['proceso_id']; ?>" data-nom="<?php echo $item['nom_proce']; ?>">
                                                                     <i class="glyphicon glyphicon-trash"></i>
                                                                 </button>
                                                             </td>

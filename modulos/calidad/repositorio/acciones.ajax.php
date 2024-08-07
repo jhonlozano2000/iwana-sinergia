@@ -58,7 +58,7 @@ switch ($Accion) {
 		}
 
 		// Devuelve los resultados en formato JSON
-		echo json_encode($archivosProcesos);
+		echo json_encode(['tiposArchivos' => $tiposArchivos, 'archivosProcesos' => $archivosProcesos]);
 		break;
 	default:
 		echo 'No hay accion para realizar.';

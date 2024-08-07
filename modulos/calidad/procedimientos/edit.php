@@ -29,10 +29,10 @@ endforeach;
 $Procesos = Proceso::Listar(2, $proceso->getidDepen(), "", "", "");;
 $Combo_Procesos = "";
 foreach ($Procesos as $Item) :
-    if ($Item['procesos_id'] == $proceso->getidProceso()) {
-        $Combo_Procesos .= "<option value='" . $Item['procesos_id'] . "' selected>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
+    if ($Item['proceso_id'] == $proceso->getidProceso()) {
+        $Combo_Procesos .= "<option value='" . $Item['proceso_id'] . "' selected>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
     } else {
-        $Combo_Procesos .= "<option value='" . $Item['procesos_id'] . "'>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
+        $Combo_Procesos .= "<option value='" . $Item['proceso_id'] . "'>" . $Item['cod_proce'] . "." . $Item['nom_proce'] . "</option>";
     }
 endforeach;
 ?>
@@ -137,7 +137,7 @@ endforeach;
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-5">
-                                            <select name="procesos_id" id="procesos_id" class="select2 form-control">
+                                            <select name="proceso_id" id="proceso_id" class="select2 form-control">
                                                 <option value="0">...::: Elije el proceso :::...</option>
                                                 <?php echo $Combo_Procesos; ?>
                                             </select>

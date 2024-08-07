@@ -3,7 +3,7 @@ require_once '../../../config/class.Conexion.php';
 require_once '../../clases/calidad/class.CalidadProceso.php';
 
 $Accion = isset($_POST['accion']) ? $_POST['accion'] : null;
-$idProceso = isset($_POST['procesos_id']) ? $_POST['procesos_id'] : null;
+$idProceso = isset($_POST['proceso_id']) ? $_POST['proceso_id'] : null;
 $idDepen = isset($_POST['id_depen']) ? $_POST['id_depen'] : null;
 $codProce = isset($_POST['cod_proce']) ? $_POST['cod_proce'] : null;
 $nomProce = isset($_POST['nom_proce']) ? $_POST['nom_proce'] : null;

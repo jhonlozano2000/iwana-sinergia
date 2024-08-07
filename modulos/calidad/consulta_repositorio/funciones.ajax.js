@@ -2,26 +2,57 @@ $(document).ready(function () {
     $("#id_depen").focus();
 
     function listarArchivos(procedimientoId) {
-        //Listo los tipos de documentos
-        var tiposDocumentos;
-
         $.ajax({
-            url: "acciones.ajax.php",
+            url: "../repositorio/acciones.ajax.php",
             type: "POST",
             data: "accion=LISTAR_ARCHIVOS&procedimiento_id=" + procedimientoId,
             success: function (response) {
-                let arcivos = JSON.parse(response);
+                let data = JSON.parse(response);
+                let tiposArchivos = data.tiposArchivos;
+                let archivosProcesos = data.archivosProcesos;
+                console.log(tiposArchivos);
+                console.log(archivosProcesos);
 
+                /* let tab = `<ul class="nav nav-tabs" id="tab-01">`;
+                for (let item of tiposArchivos) {
+                    tab += `<li class="">
+                        <a href="#tab${item.tipo_docu_id}">${item.nom_tipo_documento}</a>
+                    </li>`;
+                }
+                tab += `</ul>`;
+
+                $("#divTab").html(tab); */
+
+                /* let divTab = `<div class="tab-content">`;
+                let i;
+                for (let item of tiposArchivos) {
+                    divTab += `<div class="tab-pane" id="tab${item.tipo_docu_id}">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <table id="tablaArchivos<?php echo $item['tipo_docu_id'] ?>">
+                    <tbody>0000</tbody>
+                    </table>
+                    </div>
+                    </div>
+                    </div>`;
+                }
+                divTab += `</div>`;
+
+                $("#divTab").html(divTab); */
+                /* let datos = `<table id="tablaArchivos${item.tipo_docu_id}">`;
+                datos += `<tbody>`;
                 for (let item of arcivos) {
-                    let newRow = `<tr id="tr${item.archivo_id}">
+                    datos += `<tr id="tr${item.archivo_id}">
                                     <td>${item.nom_archivo_original}</td>
                                     <td>
                                         <button type="button" class="download-btn btn btn-success btn-sm btn-circle" data-id="${item.archivo_id}" data-ruta_id="${item.id_ruta}" data-nom_archivo_original="${item.nom_archivo_original}" data-nom_archivo_unico="${item.nom_archivo_unico}"><i class="glyphicon glyphicon-cloud-download"></i></button>
                                     </td>
                                 </tr>`;
 
-                    $(`#tablaArchivos${item.tipo_docu_id} tbody`).append(newRow);
+                    //$(`#tablaArchivos${item.tipo_docu_id} tbody`).append(newRow);
                 }
+                datos += `</tbody></table>`;
+                $("#tblArchivos").html(divTab); */
             },
         });
     }
