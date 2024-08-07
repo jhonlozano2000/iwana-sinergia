@@ -14,9 +14,11 @@ require_once '../clases/radicar/class.RadicaRecibidoPQRSFAdjunto.php';
 require_once '../clases/varias/class.GestionAdjunto.php';
 require_once '../clases/configuracion/class.ConfigServidor_Temp.php';
 require_once '../clases/configuracion/class.ConfigServidor_Calidad.php';
+require_once '../clases/calidad/class.CalidadRepositorio.php';
 require_once '../clases/varias/class.ftp.php';
 
 $Accion              = isset($_POST['accion']) ? $_POST['accion'] : null;
+$archivoId           = isset($_POST['archivo_id']) ? $_POST['archivo_id'] : null;
 $IdDepen             = isset($_POST['id_depen']) ? $_POST['id_depen'] : null;
 $IdRadica            = isset($_POST['id_radicado']) ? $_POST['id_radicado'] : null;
 $IdTemp              = isset($_POST['id_temp']) ? $_POST['id_temp'] : null;
@@ -26,8 +28,7 @@ $ArchivoSubirTMP     = isset($_FILES['archivo']['tmp_name']) ? $_FILES['archivo'
 $ArchivoSubirNOMBRE  = isset($_FILES['archivo']['name']) ? $_FILES['archivo']['name'] : null;
 $NombrePlantilla     = isset($_POST['NombrePlantilla']) ? $_POST['NombrePlantilla'] : null;
 $TipoCorrespondencia = isset($_POST['tipo_correspon']) ? $_POST['tipo_correspon'] : null;
-echo $Accion,
-exit();
+
 //VARIABLES PARA DESCARGAR ARCHIVOS DIGITALES
 $IdDigital          = isset($_POST['id_digital']) ? $_POST['id_digital'] : null;
 $IdTomo             = isset($_POST['id_tomo']) ? $_POST['id_tomo'] : null;
@@ -836,7 +837,7 @@ switch ($Accion) {
 		$Contra        = $Servidor->get_Contra();
 		$RutaFtp       = $Servidor->get_Ruta();
 
-		if ($$RutaFtp) {
+		if (!$RutaFtp) {
 			echo "No se encontro la ruta para almacenar los archivos el servidor para el proceso de calidad, por favor consulte con el administador del sistema.";
 			exit();
 		}
@@ -845,32 +846,30 @@ switch ($Accion) {
 		$ftpObj->connect($Ip, $Usuario, $Contra);
 		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
 
+			$ftpObj->makeDir($RutaFtp);
+
 			//Validamos que el archivo exista
-			if ($_FILES["archivo"]["name"][$key]) {
-				$filename = $_FILES["archivo"]["name"][$key]; //Obtenemos el nombre original del archivo
-				$ArchivoSubirTMP = $_FILES["archivo"]["tmp_name"][$key];
+			if ($_FILES["archivo"]["name"]) {
+				$filename = $_FILES["archivo"]["name"]; //Obtenemos el nombre original del archivo
+				$ArchivoSubirTMP = $_FILES["archivo"]["tmp_name"];
 
-				$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-				$nomArchivoAleatorio = substr(str_shuffle($permitted_chars), 0, 45);
-
-				$Extencion = Extencion_Archivo($filename);
-				$Archivo = $Ruta . "/" . $nomArchivoAleatorio . " ." . $Extencion;
+				$nomArchivo = nombreAleatorioArchivo($filename);
+				$Archivo = $RutaFtp . "/" . $nomArchivo;
 
 				$ftpObj->uploadFile($ArchivoSubirTMP, $Archivo);
 				if ($ftpObj->pr($ftpObj->getMessages()[1]) == 'true') {
 
-					/* //ESTABLEZCO EL NUMERO DE PAGINAS DEL ARCHIVO DIGITAL
-					//$NumPaginas = NumeroPaginasPdf($ArchivoSubirTMP);
-					//ESTABLEZCO QUE EL RADICADO YA FUE CARGADO
-					$archivoPQR = new RadicadoRecibidoPQRSFAdjunto();
-					$archivoPQR->set_Accion('INSERTAR');
-					$archivoPQR->set_idPqr($IdPqr);
-					$archivoPQR->set_nomArchivo($filename);
-					$archivoPQR->set_nomTempArchivo($nomArchivoAleatorio . "." . $Extencion);
-					if ($archivoPQR->Gestionar() == "true") {
-						echo 1;
-						exit();
-					} */
+					//Actualizo el nombre origianl del archivo y el nombre unico
+					$repositorio = new CalidadRepositorio();
+					$repositorio->setAccion('ACTUALIZAR_NOMBRES_ARCHIVOS');
+					$repositorio->setRutaId($IdRuta);
+					$repositorio->setArchivoId($archivoId);
+					$repositorio->setNomArchivoOriginal($_FILES["archivo"]["name"]);
+					$repositorio->setNomArchivoUnico($nomArchivo);
+					$repositorio->Gestionar();
+
+					echo 1;
+					exit();
 				} else {
 					echo "No fue posible enviar el archivo al servidor, por favor consulte con el administrador del sistema";
 					exit();
@@ -878,6 +877,37 @@ switch ($Accion) {
 			}
 		} else {
 			echo "No fue posible conectarme con el servidor de archivo...\nPor favor consulte con el administrador del sistema.";
+			exit();
+		}
+		break;
+	case 'CALIDAD_DESCARGAR':
+
+		$Servidor = ServidorCalidad::Buscar(2, $IdRuta, "");
+		$Ip            = $Servidor->get_Ip();
+		$Usuario       = $Servidor->get_Usua();
+		$Contra        = $Servidor->get_Contra();
+		$RutaFtp       = $Servidor->get_Ruta();
+
+		if (!is_dir(MI_ROOT_TEMP_RELATIVA . "/calidad/"))
+			mkdir(MI_ROOT_TEMP_RELATIVA . "/calidad/", 0777);
+
+		$ftpObj = new FTPClient();
+
+		//Connect
+		$ftpObj->connect($Ip, $Usuario, $Contra);
+		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
+			$archivoParaDescargar = MI_ROOT_TEMP_RELATIVA . "/calidad/" . $_POST['nomArchivoOrigina'];
+			$ftpObj->downloadFile($archivoParaDescargar,  $RutaFtp . "/" . $_POST['nomArchivoUnico']);
+			if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
+
+				echo '1###' . $_POST['nomArchivoOrigina'];
+				exit();
+			} else {
+				echo "No fue posible descargar el archivo o el arhivo no existe";
+				exit();
+			}
+		} else {
+			echo "No fue posible conectarme con el servidor de archivo….\nPor favor consulte con el administrador del sistema.";
 			exit();
 		}
 		break;

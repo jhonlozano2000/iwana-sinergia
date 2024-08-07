@@ -153,13 +153,13 @@ require_once '../../clases/calidad/class.CalidadRepositorio.php';
                                                             <td>
                                                                 <div class="checkbox check-success">
                                                                     <?php
-                                                                    if ($item['acti'] == 1) {
+                                                                    if ($item['estado'] == 1) {
                                                                         $checked = "checked";
                                                                     } else {
                                                                         $checked = "";
                                                                     }
                                                                     ?>
-                                                                    <input id="acti<?php echo $item['tipo_docu_id']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['tipo_docu_id']; ?>" data-nom="<?php echo $item['nom_oficina']; ?>">
+                                                                    <input id="acti<?php echo $item['tipo_docu_id']; ?>" class="acti" type="checkbox" <?php echo $checked; ?> data-id="<?php echo $item['tipo_docu_id']; ?>" data-nom="<?php echo $item['nom_archivo_original']; ?>">
                                                                     <label for="acti<?php echo $item['tipo_docu_id']; ?>"></label>
                                                                 </div>
                                                             </td>
@@ -173,7 +173,7 @@ require_once '../../clases/calidad/class.CalidadRepositorio.php';
                                                                 <a href="edit.php?id=<?php echo $item['tipo_docu_id']; ?>" class="btn btn-warning btn-circle">
                                                                     <i class="glyphicon glyphicon-pencil"></i>
                                                                 </a>
-                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['tipo_docu_id']; ?>" data-nom="<?php echo $item['nom_oficina']; ?>">
+                                                                <button type="button" class="btn btn-danger btn-circle" id="BtnEliminar" data-id="<?php echo $item['tipo_docu_id']; ?>" data-nom="<?php echo $item['nom_archivo_original']; ?>">
                                                                     <i class="glyphicon glyphicon-trash"></i>
                                                                 </button>
                                                             </td>

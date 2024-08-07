@@ -16,6 +16,10 @@ foreach ($Dependencia as $Item) :
 endforeach;
 
 $tiposDocumentos = TipoDocumentoCalidad::Listar(3, "");
+$Combo_tiposDocumentos = "";
+foreach ($tiposDocumentos as $Item) :
+    $Combo_tiposDocumentos .= "<option value='" . $Item['tipo_docu_id'] . "'>" . $Item['nom_tipo_documento'] . "</option>";
+endforeach;
 ?>
 <!DOCTYPE html>
 <html>
@@ -102,6 +106,7 @@ $tiposDocumentos = TipoDocumentoCalidad::Listar(3, "");
                 <form role="form" name="FrmDatos" id="FrmDatos" enctype="multipart/form-data">
 
                     <input name="accion" id="accion" type="hidden" value="INSERTAR">
+                    <input name="archivo_id" id="archivo_id" type="hidden">
 
                     <div class="row">
                         <div class="col-md-12">
@@ -141,7 +146,7 @@ $tiposDocumentos = TipoDocumentoCalidad::Listar(3, "");
                                                 <div class="col-md-12">
                                                     <select name="tipo_docu_id" id="tipo_docu_id" class="select2 form-control">
                                                         <option value="0">...::: Elije el tipo de documento :::...</option>
-                                                        <?php echo $Combo_Dependencias; ?>
+                                                        <?php echo $Combo_tiposDocumentos; ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -161,7 +166,7 @@ $tiposDocumentos = TipoDocumentoCalidad::Listar(3, "");
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-8">
                                             <ul class="nav nav-tabs" id="tab-01">
                                                 <?php
                                                 foreach ($tiposDocumentos as $item) {
@@ -176,7 +181,9 @@ $tiposDocumentos = TipoDocumentoCalidad::Listar(3, "");
                                                     <div class="tab-pane" id="tab<?php echo $item['tipo_docu_id'] ?>">
                                                         <div class="row">
                                                             <div class="col-md-12">
-
+                                                                <table id="tablaArchivos<?php echo $item['tipo_docu_id'] ?>">
+                                                                    <tbody></tbody>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
