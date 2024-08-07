@@ -233,7 +233,7 @@ $permisos = Usuario::Listar(8, $_SESSION['SesionUsuaId'], "", "", "", "", "", ""
     <?php }
     if (
         in_array('Men_Calidad_Procesos', $permisos) || in_array('Men_Calidad_Procedimientos', $permisos) || in_array('Men_Caldiad_Repositorio', $permisos)
-        || in_array('Men_Calidad_Tipos_Documentos', $permisos)
+        || in_array('Men_Calidad_Tipos_Documentos', $permisos) || in_array('Men_Calidad_Consulta_Repositorio', $permisos)
     ) {
     ?>
         <li class="" id="Men_Calidad">
@@ -265,6 +265,12 @@ $permisos = Usuario::Listar(8, $_SESSION['SesionUsuaId'], "", "", "", "", "", ""
                 if (in_array('Men_Calidad_Tipos_Documentos', $permisos)) {  ?>
                     <li id="Men_Calidad_Tipos_Documentos">
                         <a href="<?php echo MI_ROOT; ?>/modulos/calidad/tipos_documentos/"> Tipos de documentos </a>
+                    </li>
+                <?php }
+
+                if (in_array('Men_Calidad_Consulta_Repositorio', $permisos)) {  ?>
+                    <li id="Men_Calidad_Consulta_Repositorio">
+                        <a href="<?php echo MI_ROOT; ?>/modulos/calidad/consulta_repositorio/"> Consultar Repositorio </a>
                     </li>
                 <?php } ?>
             </ul>
