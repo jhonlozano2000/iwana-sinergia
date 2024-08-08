@@ -7,17 +7,22 @@ require_once '../../../../config/class.Conexion.php';
 require_once("../../../clases/seguridad/class.SeguridadUsuario.php");
 require_once("../../../clases/seguridad/class.SeguridadModulo.php");
 require_once "../../../clases/areas/class.AreasDependencia.php";
+require_once "../../../clases/configuracion/class.ConfigOtras.php";
 
 $Dependencia = new Dependencia();
 $Dependencia = Dependencia::Listar(6, "", "", "", "");
 $Combo_Dependencias = "";
 
-foreach($Dependencia as $Item):
-    $Combo_Dependencias.= "<option value='".$Item['id_depen']."'>".$Item['cod_corres'].".".$Item['nom_depen']."</option>";
+foreach ($Dependencia as $Item):
+    $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "'>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
 endforeach;
+
+$ConfiguracionOtras = ConfigOtras::Buscar();
 ?>
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
@@ -31,32 +36,33 @@ endforeach;
     <link rel="stylesheet" type="text/css" href="../../../../public/assets/plugins/shape-hover/css/component.css" />
     <link rel="stylesheet" type="text/css" href="../../../../public/assets/plugins/owl-carousel/owl.carousel.css" />
     <link rel="stylesheet" type="text/css" href="../../../../public/assets/plugins/owl-carousel/owl.theme.css" />
-    <link href="../../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen" >
-    <link rel="stylesheet" href="../../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen" >
+    <link href="../../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen">
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="../../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
 
     <!-- BEGIN CSS TEMPLATE -->
-    <link href="../../../../public/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../public/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
     <script src="../../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <link href="../../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../../public/assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="../../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../../public/assets/plugins/jquery-datatable/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/plugins/datatables-responsive/css/datatables.responsive.css" rel="stylesheet" type="text/css" media="screen" />
     <!-- END CSS TEMPLATE -->
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body class="">
     <!-- BEGIN HEADER -->
     <?php require_once '../../../../config/cabeza.php'; ?>
@@ -101,6 +107,9 @@ endforeach;
                 <div class="row">
                     <div id="DivAlertas"></div>
                     <form role="form" name="FrmDatos" id="FrmDatos">
+
+                        <input name="incluir_oficina_trd" type="hidden" id="incluir_oficina_trd" value="<?php echo $ConfiguracionOtras->get_Incluir_Oficina_TRD(); ?>">
+
                         <div class="col-md-12">
                             <div class="grid simple">
                                 <div class="grid-title no-border">
@@ -136,27 +145,27 @@ endforeach;
                                             <div class="col-md-4">
                                                 <input name="criterio3" type="text" class="form-control" id="criterio3" placeholder="Detalle 3">
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="row form-row">
                                         <div class="col-md-3">
-                                            <select name="id_depen" id="id_depen" class="select2 form-control"  >
+                                            <select name="id_depen" id="id_depen" class="select2 form-control">
                                                 <option value="0">...::: Todas Las Dependencias :::...</option>
                                                 <?php echo $Combo_Dependencias; ?>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <select name="id_serie" id="id_serie" class="select2 form-control"  >
+                                            <select name="id_serie" id="id_serie" class="select2 form-control">
                                                 <option value="0">...::: Todas Las Series :::...</option>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <select name="id_subserie" id="id_subserie" class="select2 form-control"  >
+                                            <select name="id_subserie" id="id_subserie" class="select2 form-control">
                                                 <option value="0">...::: Todas Las Subseries :::...</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-actions">  
+                                    <div class="form-actions">
                                         <div class="pull-left">
                                             <button class="btn btn-success btn-cons" type="button" id="BtnBuscarExpedienteGestion" name="BtnBuscarExpedienteGestion">
                                                 <span class="fa fa-search"></span> Buscar
@@ -176,8 +185,8 @@ endforeach;
                         <div class="grid simple">
                             <div class="grid-title no-border">
                                 <div id="DivListarExpedientes">
-                                
-                            </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -189,7 +198,7 @@ endforeach;
         <div class="chat-window-wrapper">
             <?php require_once '../../../chat/chat.php'; ?>
         </div>
-        <!-- END CHAT -->		  
+        <!-- END CHAT -->
     </div>
     <!-- END CONTAINER -->
 
@@ -214,7 +223,7 @@ endforeach;
                                         <div id="DivAlertasExpedientes"></div>
                                         <div class="col-md-12">
                                             <input name="TxtBusExpediente" type="text" class="form-control" id="TxtBusExpediente"
-                                            placeholder="Ingrese aqui el criterio de búsqueda para el expediente.">
+                                                placeholder="Ingrese aqui el criterio de búsqueda para el expediente.">
                                         </div>
                                     </div>
                                     <div class="row form-row">
@@ -238,7 +247,7 @@ endforeach;
 
     <!-- BEGIN CORE JS FRAMEWORK-->
 
-    <script src="../digitalizar/funciones.ajax.js"></script>
+    <script src="funciones.ajax.js"></script>
     <script src="../../../../public/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="../../../../public/assets/plugins/boostrapv3/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../../../../public/assets/plugins/breakpoints.js" type="text/javascript"></script>
@@ -261,7 +270,7 @@ endforeach;
 
     <script src="../../../../public/assets/plugins/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="../../../../public/assets/plugins/jquery-flot/jquery.flot.resize.min.js" type="text/javascript"></script>
-    <script src="../../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript" ></script>
+    <script src="../../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="../../../../public/assets/js/core.js" type="text/javascript"></script>
@@ -269,7 +278,7 @@ endforeach;
     <script src="../../../../public/assets/js/demo.js" type="text/javascript"></script>
     <script src="../../../../public/assets/js/dashboard_v2.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".live-tile,.flip-list").liveTile();
         });
     </script>
@@ -289,15 +298,16 @@ endforeach;
     <script src="../../../../public/assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
     <script src="../../../../public/assets/plugins/jquery-numberAnimate/jquery.animateNumbers.js" type="text/javascript"></script>
     <script src="../../../../public/assets/plugins/bootstrap-select2/select2.min.js" type="text/javascript"></script>
-    <script src="../../../../public/assets/plugins/jquery-datatable/js/jquery.dataTables.min.js" type="text/javascript" ></script>
-    <script src="../../../../public/assets/plugins/jquery-datatable/extra/js/dataTables.tableTools.min.js" type="text/javascript" ></script>
+    <script src="../../../../public/assets/plugins/jquery-datatable/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="../../../../public/assets/plugins/jquery-datatable/extra/js/dataTables.tableTools.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="../../../../public/assets/plugins/datatables-responsive/js/datatables.responsive.js"></script>
     <script type="text/javascript" src="../../../../public/assets/plugins/datatables-responsive/js/lodash.min.js"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <script src="../../../../public/assets/js/datatables.js" type="text/javascript"></script>
     <!-- END JAVASCRIPTS -->
-    
+
 
     <!-- END CORE TEMPLATE JS -->
 </body>
+
 </html>

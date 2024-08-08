@@ -230,16 +230,16 @@ class ServidorDigitalizacion
 				/******************************************************************************************/
 				/*  LISTO TODOS LOS REGISTROS
 		        /******************************************************************************************/
-				$Sql = "SELECT * 
-						FROM config_rutas_archi_digitalizados 
+				$Sql = "SELECT *
+						FROM config_rutas_archi_digitalizados
 						ORDER BY ruta ASC";
 				$Instruc = $conexion->prepare($Sql);
 			} elseif ($Accion == 2) {
 				/******************************************************************************************/
 				/*  LISTO EL SERVIDOR PARA LOS ARCHIVOS DIGITALIZADOS CON TRD
 		        /******************************************************************************************/
-				$Sql = "SELECT * 
-		        		FROM config_rutas_archi_digitalizados 
+				$Sql = "SELECT *
+		        		FROM config_rutas_archi_digitalizados
 		        		WHERE id_ruta = :id_ruta AND tipo = 'TRD'";
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':id_ruta', $IdRuta, PDO::PARAM_INT);
@@ -247,16 +247,16 @@ class ServidorDigitalizacion
 				/******************************************************************************************/
 				/*  BUSCO LA RUTA QUE ESTE ACTIVA PARA LOS ARCHIVOS DIGITALIZADOS CON TRD
 		        /******************************************************************************************/
-				$Sql = "SELECT * 
-		        		FROM config_rutas_archi_digitalizados 
+				$Sql = "SELECT *
+		        		FROM config_rutas_archi_digitalizados
 		        		WHERE acti = 1 AND tipo = 'TRD'";
 				$Instruc = $conexion->prepare($Sql);
 			} elseif ($Accion == 4) {
 				/******************************************************************************************/
 				/*  LISTO EL SERVIDOR PARA LOS ARCHIVOS DIGITALIZADOS CON TvD
 		        /******************************************************************************************/
-				$Sql = "SELECT * 
-		        		FROM config_rutas_archi_digitalizados 
+				$Sql = "SELECT *
+		        		FROM config_rutas_archi_digitalizados
 		        		WHERE id_ruta = :id_ruta AND tipo = 'TVD'";
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':id_ruta', $IdRuta, PDO::PARAM_INT);
@@ -264,8 +264,8 @@ class ServidorDigitalizacion
 				/******************************************************************************************/
 				/*  BUSCO LA RUTA QUE ESTE ACTIVA PARA LOS ARCHIVOS DIGITALIZADOS CON TvD
 		        /******************************************************************************************/
-				$Sql = "SELECT * 
-		        		FROM config_rutas_archi_digitalizados 
+				$Sql = "SELECT *
+		        		FROM config_rutas_archi_digitalizados
 		        		WHERE acti = 1 AND tipo = 'TVD'";
 				$Instruc = $conexion->prepare($Sql);
 			}

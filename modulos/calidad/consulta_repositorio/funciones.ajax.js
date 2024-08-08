@@ -39,20 +39,17 @@ $(document).ready(function () {
                 divTab += `</div>`;
 
                 $("#divTab").html(divTab); */
-                let datos = `<table id="tablaArchivos${item.tipo_docu_id}">`;
-                datos += `<tbody>`;
-                for (let item of arcivos) {
-                    datos += `<tr id="tr${item.archivo_id}">
+
+                for (let item of archivosProcesos) {
+                    let newRow = `<tr id="tr${item.archivo_id}">
                                     <td>${item.nom_archivo_original}</td>
                                     <td>
                                         <button type="button" class="download-btn btn btn-success btn-sm btn-circle" data-id="${item.archivo_id}" data-ruta_id="${item.id_ruta}" data-nom_archivo_original="${item.nom_archivo_original}" data-nom_archivo_unico="${item.nom_archivo_unico}"><i class="glyphicon glyphicon-cloud-download"></i></button>
                                     </td>
                                 </tr>`;
 
-                    //$(`#tablaArchivos${item.tipo_docu_id} tbody`).append(newRow);
+                    $(`#tablaArchivos${item.tipo_docu_id} tbody`).append(newRow);
                 }
-                datos += `</tbody></table>`;
-                $("#tblArchivos").html(divTab);
             },
         });
     }

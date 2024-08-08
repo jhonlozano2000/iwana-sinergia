@@ -160,10 +160,9 @@ endforeach;
                                                     <div class="tab-pane" id="tab<?php echo $item['tipo_docu_id'] ?>">
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <!-- <table id="tablaArchivos<?php echo $item['tipo_docu_id'] ?>">
+                                                                <table id="tablaArchivos<?php echo $item['tipo_docu_id'] ?>">
                                                                     <tbody></tbody>
-                                                                </table> -->
-                                                                <div id="tblArchivos"></div>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
