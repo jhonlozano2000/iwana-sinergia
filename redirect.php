@@ -44,7 +44,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 					$encryptedUserId = encrypt($ItemUsuario['id_usua'], $key);
 
 					// Configurar la cookie con el ID cifrado
-					$cookie_expiration = time() + (86400 * 30); // La cookie durará 30 días
+					$cookie_expiration = time() + (86400 * 1); // La cookie durará 30 días
 					setcookie($cookie_name, $encryptedUserId, $cookie_expiration, "/", "", false, true); // `HttpOnly` bandera habilitada
 
 					$_SESSION['SesionUsuaId']                = $ItemUsuario['id_usua'];
@@ -60,7 +60,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 					$_SESSION['SesionFuncioJefeOficina']     = $ItemUsuario['jefe_oficina'];
 					$_SESSION['SesionFuncioFirma']           = $ItemUsuario['puede_firmar'];
 					$_SESSION['SesionFuncioImagenPerfil']    = $ItemUsuario['foto'];
-					$_SESSION['SesionFuncioImagenFirma']    = $ItemUsuario['firma'];
+					$_SESSION['SesionFuncioImagenFirma']     = $ItemUsuario['firma'];
 
 					$_SESSION['SesionFuncioDepenId']         = $ItemUsuario['id_depen'];
 					$_SESSION['SesionFuncioDepenCod']        = $ItemUsuario['cod_depen'];
