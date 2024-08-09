@@ -294,11 +294,22 @@ function Dias_Habiles($from, $to)
 
 function DiasParaRespuesta($FecRadica, $FecVenci)
 {
+    // Verifica si las fechas están definidas y no son nulas
+    /* if (empty($FecRadica) || empty($FecVenci)) {
+        throw new InvalidArgumentException("Ambas fechas deben ser proporcionadas y no pueden ser nulas.");
+    } */
+
     $workingDays = [1, 2, 3, 4, 5];
     $interval = new DateInterval('P1D');
 
-    $FecRadica = new DateTime($FecRadica);
-    $FecVenci = new DateTime($FecVenci);
+    // Intenta crear objetos DateTime
+    try {
+        $FecRadica = new DateTime($FecRadica);
+        $FecVenci = new DateTime($FecVenci);
+    } catch (Exception $e) {
+        throw new InvalidArgumentException("Formato de fecha inválido: " . $e->getMessage());
+    }
+
     $FecVenci->modify('+1 day');
     $DodosLosDias = new DatePeriod($FecRadica, $interval, $FecVenci);
 

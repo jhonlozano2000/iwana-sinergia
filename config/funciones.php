@@ -387,3 +387,17 @@ function nombreAleatorioArchivo($archivo)
 
     return substr(md5(rand(0, PHP_INT_MAX)), 10) . substr(str_shuffle($permitted_chars), 0, 30) . "." . $extension;
 }
+
+
+// Función para cifrar el ID de usuario
+$key = 'a3f89b12c4d56e7f90a1b234c56d78e9a1b2c34d5e67f8a9b0c1234d5e67f890'; // Clave segura para el cifrado
+function encrypt($dato, $key)
+{
+    return base64_encode(openssl_encrypt($dato, 'aes-256-cbc', $key, 0, substr(hash('sha256', $key), 0, 16)));
+}
+
+// Función para descifrar el ID de usuario
+function decrypt($dato, $key)
+{
+    return openssl_decrypt(base64_decode($dato), 'aes-256-cbc', $key, 0, substr(hash('sha256', $key), 0, 16));
+}

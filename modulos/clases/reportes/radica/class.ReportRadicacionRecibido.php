@@ -268,7 +268,8 @@ class ReportRadicacionRecibido
                             INNER JOIN `gene_terceros_contac` AS `terce_contac` ON (`radi`.`id_remite` = `terce_contac`.`id_tercero`) 
                             LEFT JOIN `gene_terceros_empresas` AS `terce_empre` ON (`terce_contac`.`id_empre` = `terce_empre`.`id_empre`) 
                         WHERE (`radi`.`requie_respues` = 1 AND `radi`.`respondido` = 0 AND `ra_respon`.`respon` = 1)
-                        ORDER BY `radi`.`fechor_radica` DESC";
+                        ORDER BY `radi`.`fechor_radica` DESC
+                        LIMIT 0, 10";
 
                 $Instruc = $conexion->prepare($Sql);
                 $Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
