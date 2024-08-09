@@ -214,6 +214,22 @@ $(document).ready(function () {
         }
     });
 
+    $("#BtnBuscarExpedienteGestion").click(function () {
+        var formData = new FormData($("#FrmDatos")[0]);
+        $.ajax({
+            url: "listar_expedientes_gestion.php",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                $("#DivAlertasExpedientesGestion").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Por favor espera!!!...</a><br><img src="../../../../public/assets/img/loading.gif" width="30" height="30" />Enviando información...</div>');
+            },
+            success: function (msj) {
+                console.log(msj);
+            },
+        });
+    });
     $("#id_depen").change(function () {
         var IdDepen = $("#id_depen").val();
         var IdOficina = $("#id_oficina").val();
@@ -318,110 +334,46 @@ $(document).ready(function () {
         $('#id_depen > option[value="' + IdDepen + '"]').attr("selected", true);
 
         if ($("#incluir_oficina_trd").val() == 1) {
-            $.post(
-                "../../../varios/combo_series.php",
-                {
-                    id_depen: IdDepen,
-                    id_oficina: IdOficina,
-                    IncluirOficinaTRD: IncluirOficinaTRD,
-                },
-                function (data) {
-                    $("#id_serie").html(data);
-                    $('#id_serie > option[value="' + IdSerie + '"]').attr("selected", true);
-                }
-            );
+            $.post("../../../varios/combo_series.php", { id_depen: IdDepen, id_oficina: IdOficina, IncluirOficinaTRD: IncluirOficinaTRD }, function (data) {
+                $("#id_serie").html(data);
+                $('#id_serie > option[value="' + IdSerie + '"]').attr("selected", true);
+            });
 
-            $.post(
-                "../../../varios/combo_sub_series.php",
-                {
-                    id_serie: IdSerie,
-                    id_depen: IdDepen,
-                },
-                function (data) {
-                    $("#id_subserie").html(data);
-                    $('#id_subserie > option[value="' + IdSubSerie + '"]').attr("selected", true);
-                }
-            );
+            $.post("../../../varios/combo_sub_series.php", { id_serie: IdSerie, id_depen: IdDepen }, function (data) {
+                $("#id_subserie").html(data);
+                $('#id_subserie > option[value="' + IdSubSerie + '"]').attr("selected", true);
+            });
 
-            $.post(
-                "listar_tipos_documentos.php",
-                {
-                    id_digital: $("#id_digital").val(),
-                    id_depen: IdDepen,
-                    id_serie: IdSerie,
-                    id_sub_serie: IdSubSerie,
-                },
-                function (data) {
-                    $("#DivTiposDocumentales").html(data);
-                }
-            );
+            /* $.post("../../../varios/combo_tipos_documentos.php", { accion: "", id_depen: IdDepen, id_serie: IdSerie, id_sub_serie: IdSubSerie }, function (data) {
+                $("#DivTiposDocumentales").html(data);
+                console.log(data);
+            }); */
         } else if ($("#incluir_oficina_trd").val() == 2) {
-            $.post(
-                "../../../varios/combo_oficinas.php",
-                {
-                    idDepen: IdDepen,
-                    id_oficina: IdOficina,
-                    IncluirOficinaTRD: IncluirOficinaTRD,
-                },
-                function (data) {
-                    $("#id_oficina").html(data);
-                    $('#id_oficina > option[value="' + IdOficina + '"]').attr("selected", true);
-                }
-            );
+            $.post("../../../varios/combo_oficinas.php", { idDepen: IdDepen, id_oficina: IdOficina, IncluirOficinaTRD: IncluirOficinaTRD }, function (data) {
+                $("#id_oficina").html(data);
+                $('#id_oficina > option[value="' + IdOficina + '"]').attr("selected", true);
+            });
 
-            $.post(
-                "../../../varios/combo_series.php",
-                {
-                    id_depen: IdDepen,
-                    id_oficina: IdOficina,
-                    IncluirOficinaTRD: IncluirOficinaTRD,
-                },
-                function (data) {
-                    $("#id_serie").html(data);
-                    $('#id_serie > option[value="' + IdSerie + '"]').attr("selected", true);
-                }
-            );
+            $.post("../../../varios/combo_series.php", { id_depen: IdDepen, id_oficina: IdOficina, IncluirOficinaTRD: IncluirOficinaTRD }, function (data) {
+                $("#id_serie").html(data);
+                $('#id_serie > option[value="' + IdSerie + '"]').attr("selected", true);
+            });
 
-            $.post(
-                "../../../varios/combo_sub_series.php",
-                {
-                    id_depen: IdDepen,
-                    id_oficina: IdOficina,
-                    id_serie: IdSerie,
-                    IncluirOficinaTRD: IncluirOficinaTRD,
-                },
-                function (data) {
-                    $("#id_subserie").html(data);
-                    $('#id_subserie > option[value="' + IdSubSerie + '"]').attr("selected", true);
-                }
-            );
+            $.post("../../../varios/combo_sub_series.php", { id_depen: IdDepen, id_oficina: IdOficina, id_serie: IdSerie, IncluirOficinaTRD: IncluirOficinaTRD }, function (data) {
+                $("#id_subserie").html(data);
+                $('#id_subserie > option[value="' + IdSubSerie + '"]').attr("selected", true);
+            });
 
-            $.post(
-                "listar_tipos_documentos.php",
-                {
-                    id_digital: $("#id_digital").val(),
-                    id_depen: IdDepen,
-                    id_oficina: IdOficina,
-                    id_serie: IdSerie,
-                    id_sub_serie: IdSubSerie,
-                },
-                function (data) {
-                    $("#DivTiposDocumentales").html(data);
-                }
-            );
+            /* $.post("../../../varios/combo_tipos_documentos.php", { accion: "", id_digital: $("#id_digital").val(), id_depen: IdDepen, id_oficina: IdOficina, id_serie: IdSerie, id_sub_serie: IdSubSerie }, function (data) {
+                $("#DivTiposDocumentales").html(data);
+            }); */
         }
 
-        $.post(
-            "combo_tomos.php",
-            {
-                id_digital: IdDigital,
-            },
-            function (data) {
-                $("#id_tomo").html(data);
-                $("#id_tomo_ver_tipo_documento").html(data);
-                $("#id_tomo_ver_archivos_ComoUnTodo").html(data);
-            }
-        );
+        $.post("combo_tomos.php", { id_digital: IdDigital }, function (data) {
+            $("#id_tomo").html(data);
+            $("#id_tomo_ver_tipo_documento").html(data);
+            $("#id_tomo_ver_archivos_ComoUnTodo").html(data);
+        });
 
         $("#id_digital").val($(this).data("id_digital"));
         $("#codigo").val($(this).data("codigo"));
@@ -448,6 +400,8 @@ $(document).ready(function () {
         var IdDigital = $("#id_digital").val();
         var id_serie = $("#id_serie").val();
         var id_sub_serie = $("#id_subserie").val();
+
+        //console.log(`${IdDigital} - ${id_serie} - ${id_sub_serie}`);
 
         $("#LabelExpedientes").html("Código: " + $("#codigo").val() + ", Titulo: " + $("#titulo").val() + ".");
 

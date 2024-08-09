@@ -256,15 +256,15 @@ $permisos = Usuario::Listar(8, $_SESSION['SesionUsuaId'], "", "", "", "", "", ""
                     </li>
                 <?php }
 
-                if (in_array('Men_Caldiad_Gestionar_Repositorio', $permisos)) {  ?>
-                    <li id="Men_Caldiad_Gestionar_Repositorio">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/calidad/repositorio/"> Repositorio </a>
-                    </li>
-                <?php }
-
                 if (in_array('Men_Calidad_Tipos_Documentos', $permisos)) {  ?>
                     <li id="Men_Calidad_Tipos_Documentos">
                         <a href="<?php echo MI_ROOT; ?>/modulos/calidad/tipos_documentos/"> Tipos de documentos </a>
+                    </li>
+                <?php }
+
+                if (in_array('Men_Caldiad_Gestionar_Repositorio', $permisos)) {  ?>
+                    <li id="Men_Caldiad_Gestionar_Repositorio">
+                        <a href="<?php echo MI_ROOT; ?>/modulos/calidad/repositorio/"> Gestión de Repositorio </a>
                     </li>
                 <?php }
 

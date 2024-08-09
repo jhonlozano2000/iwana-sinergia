@@ -42,9 +42,10 @@ $(document).ready(function () {
 
                 for (let item of archivosProcesos) {
                     let newRow = `<tr id="tr${item.archivo_id}">
-                                    <td>${item.nom_archivo_original}</td>
-                                    <td>
-                                        <button type="button" class="download-btn btn btn-success btn-sm btn-circle" data-id="${item.archivo_id}" data-ruta_id="${item.id_ruta}" data-nom_archivo_original="${item.nom_archivo_original}" data-nom_archivo_unico="${item.nom_archivo_unico}"><i class="glyphicon glyphicon-cloud-download"></i></button>
+                                    <td style="width:80%">${item.nom_archivo_original}</td>
+                                    <td style="width:20%">
+                                        <button type="button" class="download-btn btn btn-success  btn-xs btn-mini" data-id="${item.archivo_id}" data-ruta_id="${item.id_ruta}" data-nom_archivo_original="${item.nom_archivo_original}" data-nom_archivo_unico="${item.nom_archivo_unico}"><i class="glyphicon glyphicon-cloud-download"></i></button>
+                                        <button type="button" class="delete-btn btn btn-danger  btn-xs btn-mini" data-id="${item.archivo_id}"><i class="glyphicon glyphicon-trash"></i></button>
                                     </td>
                                 </tr>`;
 

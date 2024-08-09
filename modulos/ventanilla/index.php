@@ -11,6 +11,7 @@ require_once '../clases/radicar/class.RadicaEnviadoIndicadores.php';
 require_once '../clases/radicar/class.RadicaInternoIndicadores.php';
 require_once("../clases/seguridad/class.SeguridadMostrarBuscar.php");
 require_once '../clases/seguridad/class.SeguridadPermiso.php';
+
 ?>
 <!DOCTYPE html>
 <html>

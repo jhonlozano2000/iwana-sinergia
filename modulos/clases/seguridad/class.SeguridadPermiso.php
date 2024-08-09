@@ -5,17 +5,15 @@ class Permiso
     private $idUsua;
     private $idPerfil;
     private $nomPerfil;
-    private $moduPadre;
     private $nomModu;
     private $menu;
 
-    public function __construct($Accion = null, $idUsua = null, $idPerfil = null, $nomPerfil = null, $moduPadre = null, $nomModu = null, $menu = null)
+    public function __construct($Accion = null, $idUsua = null, $idPerfil = null, $nomPerfil = null, $nomModu = null, $menu = null)
     {
         $this->Accion = $Accion;
         $this->idUsua = $idUsua;
         $this->idPerfil = $idPerfil;
         $this->nomPerfil = $nomPerfil;
-        $this->moduPadre = $moduPadre;
         $this->nomModu = $nomModu;
         $this->menu = $menu;
     }
@@ -38,11 +36,6 @@ class Permiso
     public function get_nomPerfil()
     {
         return $this->nomPerfil;
-    }
-
-    public function get_moduPadre()
-    {
-        return $this->moduPadre;
     }
 
     public function get_nomModu()
@@ -77,11 +70,6 @@ class Permiso
         $this->nomPerfil = $nomPerfil;
     }
 
-    public function set_moduPadre($moduPadre)
-    {
-        $this->moduPadre = $moduPadre;
-    }
-
     public function set_nomModu($nomModu)
     {
         $this->nomModu = $nomModu;
@@ -91,10 +79,6 @@ class Permiso
     {
         $this->menu = $menu;
     }
-
-
-
-
 
 
     public static function Listar($Accion, $idUsua, $idPerfil, $nomPerfil, $nomModu, $menu)
@@ -135,7 +119,7 @@ class Permiso
                 /*	LISTO PERMISOS DE UN USUARIO
 				/******************************************************************************************/
                 $Sql = "SELECT `segu_usuadeta`.`id_usua`, `segu_perfiles`.`id_perfil`, `segu_perfiles`.`nom_perfil`, 
-                            `segu_modu`.`modu_padre`, `segu_modu`.`nom_modu`, `segu_modu`.`menu`
+                             `segu_modu`.`nom_modu`, `segu_modu`.`menu`
                         FROM `segu_usuadeta`
                             INNER JOIN `segu_perfiles` ON (`segu_usuadeta`.`id_perfil` = `segu_perfiles`.`id_perfil`)
                             INNER JOIN `segu_perfiles_deta` ON (`segu_perfiles_deta`.`id_perfil` = `segu_perfiles`.`id_perfil`)
@@ -154,7 +138,7 @@ class Permiso
                 /*	BUSCO UN PERMISOS DE UN USUARIO
 				/******************************************************************************************/
                 $Sql = "SELECT `segu_usuadeta`.`id_usua`, `segu_perfiles`.`id_perfil`, `segu_perfiles`.`nom_perfil`, 
-                            `segu_modu`.`modu_padre`, `segu_modu`.`nom_modu`, `segu_modu`.`menu`
+                             `segu_modu`.`nom_modu`, `segu_modu`.`menu`
                         FROM `segu_usuadeta`
                             INNER JOIN `segu_perfiles` ON (`segu_usuadeta`.`id_perfil` = `segu_perfiles`.`id_perfil`)
                             INNER JOIN `segu_perfiles_deta` ON (`segu_perfiles_deta`.`id_perfil` = `segu_perfiles`.`id_perfil`)
@@ -169,7 +153,7 @@ class Permiso
                 $Result = $Instruc->fetch();
                 $conexion = null;
                 if ($Result) {
-                    return new self("", $Result['id_usua'], $Result['id_perfil'], $Result['nom_perfil'], $Result['modu_padre'], $Result['nom_modu'], $Result['menu']);
+                    return new self("", $Result['id_usua'], $Result['id_perfil'], $Result['nom_perfil'], $Result['nom_modu'], $Result['menu']);
                 } else {
                     return false;
                 }

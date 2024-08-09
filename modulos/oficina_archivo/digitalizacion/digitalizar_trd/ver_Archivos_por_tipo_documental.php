@@ -1,5 +1,5 @@
 <?php
-if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 
     include "../../../../config/class.Conexion.php";
     require_once '../../../clases/oficina_archivo/class.OficinaArchivoDigitalizacionTRDArchivos.php';
@@ -9,13 +9,13 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     $IdTipoDocumento = isset($_POST['id_tipodoc']) ? $_POST['id_tipodoc'] : null;
     $IdTomo          = isset($_POST['id_tomo_ver_tipo_documento']) ? $_POST['id_tomo_ver_tipo_documento'] : null;
     $VerTipo         = isset($_POST['ver_tipo']) ? $_POST['ver_tipo'] : null;
-    
-    if($VerTipo == 0){
+
+    if ($VerTipo == 0) {
         $Artchivos = DigitalizacionTRDArchivos::Listar(5, 0, $IdDigital, $IdTomo, "", "");
-    }else{
+    } else {
         $Artchivos = DigitalizacionTRDArchivos::Listar(3, 0, $IdDigital, $IdTomo, "", $IdTipoDocumento);
     }
-    ?>
+?>
     <div class="row form-row" style="height:450px; overflow-y: scroll;">
         <table width="100%" class="table table-bordered no-more-tables">
             <thead>
@@ -26,8 +26,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             </thead>
             <tbody>
                 <?php
-                foreach($Artchivos as $Item):
-                    ?>
+                foreach ($Artchivos as $Item) :
+                ?>
                     <tr>
                         <td><?php echo $Item['archivo']; ?></td>
                         <td>
@@ -36,12 +36,12 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
                             </button>
                         </td>
                     </tr>
-                    <?php
+                <?php
                 endforeach;
                 ?>
             </tbody>
         </table>
     </div>
-    <?php
+<?php
 }
 ?>

@@ -13,22 +13,23 @@ $Dependencia = new Dependencia();
 $Dependencia = Dependencia::Listar(6, "", "", "", "");
 $Combo_Dependencias = "";
 
-foreach($Dependencia as $Item):
-    $Combo_Dependencias.= "<option value='".$Item['id_depen']."'>".$Item['cod_corres'].".".$Item['nom_depen']."</option>";
+foreach ($Dependencia as $Item) :
+    $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "'>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
 endforeach;
 
 $ConfiguracionOtras = ConfigOtras::Buscar();
-if($ConfiguracionOtras->get_Incluir_TRD() == 0){
+if ($ConfiguracionOtras->get_Incluir_TRD() == 0) {
     $Combo_TipoDocumentos = "";
     require_once '../../../clases/retencion/class.TRDTipoDocumento.php';
     $Documentos = TipoDocumento::Listar(1, "", "");
-    foreach($Documentos as $Item):
-        $Combo_TipoDocumentos.= "<option value='".$Item['id_tipodoc']."'>".$Item['nom_tipodoc']."</option>";
+    foreach ($Documentos as $Item) :
+        $Combo_TipoDocumentos .= "<option value='" . $Item['id_tipodoc'] . "'>" . $Item['nom_tipodoc'] . "</option>";
     endforeach;
 }
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
@@ -38,34 +39,35 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
     <meta content="" name="author" />
 
     <!-- BEGIN PLUGIN CSS -->
-    <link href="../../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../../public/assets/plugins/bootstrap-tag/bootstrap-tagsinput.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../../public/assets/plugins/bootstrap-tag/bootstrap-tagsinput.css" rel="stylesheet" type="text/css" />
     <link href="../../../../public/assets/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" type="text/css" />
-    <link href="../../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../../public/assets/plugins/boostrap-clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../../public/assets/plugins/boostrap-checkbox/css/bootstrap-checkbox.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="../../../../public/assets/plugins/bootstrap-select2/select2.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../../public/assets/plugins/boostrap-clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../../public/assets/plugins/boostrap-checkbox/css/bootstrap-checkbox.css" rel="stylesheet" type="text/css" media="screen" />
     <link rel="stylesheet" href="../../../../public/assets/plugins/ios-switch/ios7-switch.css" type="text/css" media="screen">
     <!-- END PLUGIN CSS -->
 
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="../../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
 
     <!-- BEGIN CSS TEMPLATE -->
-    <link href="../../../../public/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../public/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
-    <link href="../../../../public/assets/plugins/boostrap-slider/css/slider.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../../public/assets/plugins/boostrap-slider/css/slider.css" rel="stylesheet" type="text/css" />
 
     <script src="../../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body class="">
     <!-- BEGIN HEADER -->
     <?php require_once '../../../../config/cabeza.php'; ?>
@@ -128,7 +130,7 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
                                             <div id="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <select name="id_depen" id="id_depen"  class="select2 form-control">
+                                                        <select name="id_depen" id="id_depen" class="select2 form-control">
                                                             <option value="0">...::: Elije la Dependencia :::...</option>
                                                             <?php echo $Combo_Dependencias; ?>
                                                         </select>
@@ -136,27 +138,27 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
                                                 </div>
 
                                                 <?php
-                                                if($ConfiguracionOtras->get_Incluir_Oficina_TRD() == 2){
-                                                    ?>
+                                                if ($ConfiguracionOtras->get_Incluir_Oficina_TRD() == 2) {
+                                                ?>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <div class="input-with-icon  right">                                       
+                                                            <div class="input-with-icon  right">
                                                                 <i class=""></i>
-                                                                <select name="id_oficina" id="id_oficina" class="select2 form-control"  >
+                                                                <select name="id_oficina" id="id_oficina" class="select2 form-control">
                                                                     <option value="0">...::: Elije la Oficina :::...</option>
-                                                                    <?php  echo $Combo_Oficinas; ?>
+                                                                    <?php echo $Combo_Oficinas; ?>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php
+                                                <?php
                                                 }
                                                 ?>
                                             </div>
                                             <div id="row">
                                                 <div class="form-group">
                                                     <div class="col-md-6">
-                                                        <div class="input-with-icon  right">                                       
+                                                        <div class="input-with-icon  right">
                                                             <i class=""></i>
                                                             <select name="id_serie" id="id_serie" class="select2 form-control">
                                                                 <option value="0">...::: Elije la Serie :::...</option>
@@ -166,9 +168,9 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-md-6">
-                                                        <div class="input-with-icon  right">                                       
+                                                        <div class="input-with-icon  right">
                                                             <i class=""></i>
-                                                            <select name="id_subserie" id="id_subserie" class="select2 form-control"  >
+                                                            <select name="id_subserie" id="id_subserie" class="select2 form-control">
                                                                 <option value="0">...::: Elije la SubSerie :::...</option>
                                                             </select>
                                                         </div>
@@ -331,8 +333,7 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
                                     <div class="row form-row">
                                         <div id="DivAlertasExpedientes"></div>
                                         <div class="col-md-12">
-                                            <input name="TxtBusExpediente" type="text" class="form-control" id="TxtBusExpediente"
-                                            placeholder="Ingrese aqui el criterio de búsqueda para el expediente.">
+                                            <input name="TxtBusExpediente" type="text" class="form-control" id="TxtBusExpediente" placeholder="Ingrese aqui el criterio de búsqueda para el expediente.">
                                         </div>
                                     </div>
                                     <div class="row form-row">
@@ -402,7 +403,7 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
                                                     </div>
 
                                                     <div class="col-md-12">
-                                                        <div id="DivListarArchivosDigitales_Expediente"></div>    
+                                                        <div id="DivListarArchivosDigitales_Expediente"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -456,7 +457,7 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
 
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <script src="../../../../public/assets/plugins/pace/pace.min.js" type="text/javascript"></script>
-    <script src="../../../../public/assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script> 
+    <script src="../../../../public/assets/plugins/jquery-block-ui/jqueryblockui.js" type="text/javascript"></script>
     <script src="../../../../public/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
     <script src="../../../../public/assets/plugins/ios-switch/ios7-switch.js" type="text/javascript"></script>
     <script srrc="../../../../public/assets/plugins/bootstrap-tag/bootstrap-tagsinput.min.js" type="text/javascript"></script>
@@ -467,7 +468,7 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="../../../../public/assets/js/core.js" type="text/javascript"></script>
-    <script src="../../../../public/assets/js/chat.js" type="text/javascript"></script> 
+    <script src="../../../../public/assets/js/chat.js" type="text/javascript"></script>
     <script src="../../../../public/assets/js/demo.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
     <!-- END JAVASCRIPTS -->
@@ -476,15 +477,16 @@ if($ConfiguracionOtras->get_Incluir_TRD() == 0){
     <script src="../../../../public/assets/sweetalert2/sweetalert-dev.js"></script>
     <link href="../../../../public/assets/sweetalert2/sweetalert.css" rel="stylesheet" type="text/css">
     <script type="text/javascript">
-       $('.input-append.date').datepicker({
-        autoclose: true,
-        todayHighlight: true
-    });
+        $('.input-append.date').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        });
 
-       $(".select2").select2();
-   </script>
+        $(".select2").select2();
+    </script>
 
 
-   <!-- END CORE TEMPLATE JS -->
+    <!-- END CORE TEMPLATE JS -->
 </body>
+
 </html>
