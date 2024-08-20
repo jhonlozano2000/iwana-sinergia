@@ -25,7 +25,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 			}
 
 			if (!$Usuario) {
-				echo "No se encontro el usuario.";
+				echo "No se encontró el usuario.";
 				session_destroy();
 				exit();
 			} elseif ($Usuario->getCambioContra() == 0) {
@@ -76,7 +76,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 					exit(0);
 				endforeach;
 
-				echo "No se encontro el usuario.";
+				echo "No se encontró el usuario.";
 				exit();
 			}
 			break;
