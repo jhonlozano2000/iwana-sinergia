@@ -71,7 +71,11 @@ endforeach;
 				<div class="row">
 					<div class="col-md-12">
 						<div class="grid simple transparent">
+							<div class="grid-title">
+								<h4>Configuraciones <span class="semi-bold">Varias</span></h4>
+							</div>
 							<div class="grid-body ">
+								<div id="DivAlerta"></div>
 								<div class="row">
 									<form id="commentForm">
 										<div id="rootwizard" class="col-md-12">
@@ -99,7 +103,6 @@ endforeach;
 												<div class="clearfix"></div>
 											</div>
 											<div class="tab-content transparent">
-
 												<div class="tab-pane" id="tab1"> <br>
 													<h4 class="semi-bold">Paso 1 -
 														<span class="light">Datos de Mi Empresa</span>
@@ -129,17 +132,19 @@ endforeach;
 															href="javascript:;"
 															class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a></li>
 													<li class="previous"><a href="javascript:;"
-															class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
+															class="btn">&nbsp;&nbsp;Anteriro&nbsp;&nbsp;</a></li>
 													<li class="next last" style="display:none;"><a href="javascript:;"
 															class="btn btn-primary">&nbsp;&nbsp;Last&nbsp;&nbsp;</a>
 													</li>
 													<li class="next"><a href="javascript:;"
-															class="btn btn-primary">&nbsp;&nbsp;Next&nbsp;&nbsp;</a>
+															class="btn btn-primary">&nbsp;&nbsp;Siguiente&nbsp;&nbsp;</a>
 													</li>
+													<div class="pull-right">
+														<li class="next">
 
-													<li class="next">
-														<a href="javascript:;" class="btn btn-success" id="btnGuardarConfiguracion">&nbsp;&nbsp;Next&nbsp;&nbsp;</a>
-													</li>
+															<button type="button" class="btn btn-success" id="btnGuardarConfiguracion">Terminar</button>
+														</li>
+													</div>
 												</ul>
 											</div>
 										</div>

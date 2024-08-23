@@ -2769,6 +2769,7 @@ insert  into `segu_perfiles`(`id_perfil`,`nom_perfil`,`observa`,`acti`) values
 (4,'REPORTES','',1),
 (5,'Digitalizador','',1);
 
+INSERT INTO `config_otras` (`id`) VALUES ('1');
 --
 -- Índices para tablas volcadas
 --

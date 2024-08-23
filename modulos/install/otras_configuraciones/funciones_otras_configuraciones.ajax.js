@@ -14,7 +14,8 @@ $(document).ready(function () {
             $("#DivAlerta").html('<div class="alert alert-warning alert-dismissable""><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><b>Alerta!</b> Te hizo falta elegir el municipio de recidencia del funcionario.</div>');
             $("#id_muni").focus();
         } else {
-            var formData = new FormData($("#FrmDatos")[0]);
+            var formData = new FormData($("#commentForm")[0]);
+            formData.append("accion_empresa", 1);
 
             $.ajax({
                 url: "../../configuracion/otras/acciones.ajax.php",
@@ -26,6 +27,7 @@ $(document).ready(function () {
                     $("#DivAlerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Por favor espera!!!...</a><br><img src="../../../public/assets/img/loading.gif" width="50" height="50" />Enviando información...</div>');
                 },
                 success: function (msj) {
+                    console.log(msj);
                     if (msj == 1) {
                         $("#DivAlerta").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="icon fa fa-check"></i> Muy bien!!!...</a> El registro se almaceno correctamente. </div>');
                     } else {
