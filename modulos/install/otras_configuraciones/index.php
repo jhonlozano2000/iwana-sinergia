@@ -1,6 +1,15 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
+
+require_once '../../../config/class.Conexion.php';
+require_once "../../clases/configuracion/class.ConfigDepartamento.php";
+
+$Departamentos = Departamento::Listar();
+$Combo_Departamentos = "";
+foreach ($Departamentos as $Item) :
+	$Combo_Departamentos .= "<option value='" . $Item['id_depar'] . "'>" . $Item['nom_depar'] . "</option>";
+endforeach;
 ?>
 <!DOCTYPE html>
 <html>
@@ -71,63 +80,51 @@ ini_set('display_errors', '1');
 													<li class="" data-target="#step1">
 														<a href="#tab1" data-toggle="tab">
 															<span class="step">1</span>
-															<span class="title">Dependencias</span>
+															<span class="title">Datos de Mi Empresa</span>
 														</a>
 													</li>
 													<li data-target="#step2" class="">
 														<a href="#tab2" data-toggle="tab">
 															<span class="step">2</span>
-															<span class="title">Oficinas</span>
+															<span class="title">Tipos de radicados</span>
 														</a>
 													</li>
 													<li data-target="#step3" class="">
 														<a href="#tab3" data-toggle="tab">
 															<span class="step">3</span>
-															<span class="title">Cargos</span>
-														</a>
-													</li>
-													<li data-target="#step4" class="">
-														<a href="#tab4" data-toggle="tab">
-															<span class="step">4</span>
-															<span class="title">Funcionarios
-															</span>
+															<span class="title">Como imprimir el rotulo</span>
 														</a>
 													</li>
 												</ul>
 												<div class="clearfix"></div>
 											</div>
 											<div class="tab-content transparent">
+
 												<div class="tab-pane" id="tab1"> <br>
 													<h4 class="semi-bold">Paso 1 -
-														<span class="light">Configuración basica de dependencias</span>
+														<span class="light">Datos de Mi Empresa</span>
 													</h4>
 													<br>
-													<?php require_once 'config_areas_dependencias.php'; ?>
+													<?php require_once 'datos_mi_empresa.php'; ?>
 												</div>
 												<div class="tab-pane" id="tab2"> <br>
 													<h4 class="semi-bold">Paso 2 -
-														<span class="light">Configuración basica de oficinas</span>
+														<span class="light">Seleccione el tipo de radicado</span>
 													</h4>
 													<br>
-													<?php require_once 'config_areas_oficinas.php'; ?>
+													<?php require_once 'tipos_radicados.php'; ?>
 												</div>
 												<div class="tab-pane" id="tab3"> <br>
 													<h4 class="semi-bold">Paso 3 -
-														<span class="light">Configuración basica de cargos</span>
+														<span class="light">Seleccione cómo imprimir el rotulo</span>
 													</h4>
 													<br>
-													<?php require_once 'config_areas_cargos.php'; ?>
+													<?php require_once 'como_imprimir_rotulo.php'; ?>
 												</div>
-												<div class="tab-pane" id="tab4"> <br>
-													<h4 class="semi-bold">Paso 4 -
-														<span class="light">Configuración basica de funcionarios</span>
-													</h4>
-													<br>
-													<?php require_once 'config_areas_funcionarios.php'; ?>
-												</div>
+
 												<br />
 												<br />
-												<ul class=" wizard wizard-actions">
+												<ul class="wizard wizard-actions">
 													<li class="previous first" style="display:none;"><a
 															href="javascript:;"
 															class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a></li>
@@ -138,6 +135,10 @@ ini_set('display_errors', '1');
 													</li>
 													<li class="next"><a href="javascript:;"
 															class="btn btn-primary">&nbsp;&nbsp;Next&nbsp;&nbsp;</a>
+													</li>
+
+													<li class="next">
+														<a href="javascript:;" class="btn btn-success" id="btnGuardarConfiguracion">&nbsp;&nbsp;Next&nbsp;&nbsp;</a>
 													</li>
 												</ul>
 											</div>
@@ -155,7 +156,9 @@ ini_set('display_errors', '1');
 	<!-- END PAGE -->
 	<!-- END CONTAINER -->
 	<!-- BEGIN CORE JS FRAMEWORK-->
+
 	<script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script src="funciones_otras_configuraciones.ajax.js"></script>
 	<script src="../../../public/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
 	<script src="../../../public/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="../../../public/assets/plugins/breakpoints.js" type="text/javascript"></script>

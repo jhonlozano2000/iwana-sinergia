@@ -7,6 +7,12 @@ class Conexion extends PDO
 	private $usuario        = 'iwana_user';
 	private $contrasena     = 'iwana_password';
 
+	private $tipo_de_base   = 'mysql';
+	private $host           = 'localhost';
+	private $nombre_de_base = 'iwana_sinergia';
+	private $usuario        = 'root';
+	private $contrasena     = '';
+
 	public function __construct()
 	{
 		try {

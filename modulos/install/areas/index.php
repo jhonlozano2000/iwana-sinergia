@@ -102,6 +102,7 @@ ini_set('display_errors', '1');
 														<span class="light">Configuración basica de dependencias</span>
 													</h4>
 													<br>
+
 													<?php require_once 'config_areas_dependencias.php'; ?>
 												</div>
 												<div class="tab-pane" id="tab2"> <br>
