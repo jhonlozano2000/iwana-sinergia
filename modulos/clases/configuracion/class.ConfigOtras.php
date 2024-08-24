@@ -429,7 +429,7 @@ class ConfigOtras
 				return false;
 			}
 		} catch (PDOException $e) {
-			echo 'Ha surgido un error y no se puede ejecutar la consulta.' . $e->getMessage();
+			echo 'Ha surgido un error y no se puede ejecutar la consulta, Otras configuraciones, Gestionar, Acciones ' . $this->Accion . " - "  . $e->getMessage();
 			exit;
 		}
 	}

@@ -141,7 +141,6 @@ endforeach;
 													</li>
 													<div class="pull-right">
 														<li class="next">
-
 															<button type="button" class="btn btn-success" id="btnGuardarConfiguracion">Terminar</button>
 														</li>
 													</div>

@@ -1,8 +1,0 @@
-Alexandra favor responder a Cafesalud de acuerdo a la informacion solicitada enviar al correo relacionado en el oficio y adjuntar base de datos sdfsdfdsfdsfsdfsdfsdfsdfsdfds antes del lunes
-
-* verificar notas de un radicado pendiente por getionar
-* agregar observaciones cuando se delegue quien va a crear el grupo colaborativo
-* agregar la opcion de porver ver el historial de pase
-* revisar el modulo Compartidos conmigo
-* en correspondencia enviada->pendientes por radicar, agregar un boton para que se pueda ver la platilla cargada desde las oficinas
-* agregar el tercero al q se la enviar la correspondencia en el listado de los radicados.

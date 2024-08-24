@@ -62,6 +62,9 @@ ini_set('display_errors', '1');
 				<div class="row">
 					<div class="col-md-12">
 						<div class="grid simple transparent">
+							<div class="grid-title">
+								<h4>Áreas y <span class="semi-bold">Dependencias</span></h4>
+							</div>
 							<div class="grid-body ">
 								<div class="row">
 									<form id="commentForm">
@@ -131,15 +134,20 @@ ini_set('display_errors', '1');
 												<ul class=" wizard wizard-actions">
 													<li class="previous first" style="display:none;"><a
 															href="javascript:;"
-															class="btn">&nbsp;&nbsp;First&nbsp;&nbsp;</a></li>
+															class="btn">&nbsp;&nbsp;Primero&nbsp;&nbsp;</a></li>
 													<li class="previous"><a href="javascript:;"
-															class="btn">&nbsp;&nbsp;Previous&nbsp;&nbsp;</a></li>
+															class="btn">&nbsp;&nbsp;Anterior&nbsp;&nbsp;</a></li>
 													<li class="next last" style="display:none;"><a href="javascript:;"
-															class="btn btn-primary">&nbsp;&nbsp;Last&nbsp;&nbsp;</a>
+															class="btn btn-primary">&nbsp;&nbsp;Ultimo&nbsp;&nbsp;</a>
 													</li>
 													<li class="next"><a href="javascript:;"
-															class="btn btn-primary">&nbsp;&nbsp;Next&nbsp;&nbsp;</a>
+															class="btn btn-primary">&nbsp;&nbsp;Siguiente&nbsp;&nbsp;</a>
 													</li>
+													<div class="pull-right">
+														<li class="next">
+															<button type="button" class="btn btn-success" id="btnGuardarConfiguracion">Terminar</button>
+														</li>
+													</div>
 												</ul>
 											</div>
 										</div>
@@ -157,6 +165,7 @@ ini_set('display_errors', '1');
 	<!-- END CONTAINER -->
 	<!-- BEGIN CORE JS FRAMEWORK-->
 	<script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script src="funciones_dependencias.ajax.js"></script>
 	<script src="../../../public/assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
 	<script src="../../../public/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="../../../public/assets/plugins/breakpoints.js" type="text/javascript"></script>
@@ -182,6 +191,9 @@ ini_set('display_errors', '1');
 	<script src="../../../public/assets/js/demo.js" type="text/javascript"></script>
 	<!-- END CORE TEMPLATE JS -->
 	<!-- END JAVASCRIPTS -->
+
+	<script src="../../../public/assets/sweetalert2/sweetalert-dev.js"></script>
+	<link href="../../../public/assets/sweetalert2/sweetalert.css" rel="stylesheet" type="text/css">
 </body>
 
 </html>

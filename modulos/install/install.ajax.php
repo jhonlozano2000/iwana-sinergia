@@ -3,7 +3,6 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
     $accion = isset($_POST['accion']) ? $_POST['accion'] : '';
 
-
     switch ($accion) {
         case 'create_db':
             // Datos de conexión
@@ -37,7 +36,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $sql .= "GRANT ALL PRIVILEGES ON $databaseName.* TO '$newUser'@'localhost';";
             $sql .= "FLUSH PRIVILEGES;";
             if (!$conn->multi_query($sql)) {
-                //echo "Usuario creado y privilegios otorgados exitosamente.\n";
+                // echo "Usuario creado y privilegios otorgados exitosamente.\n";
                 // Limpiar los resultados pendientes del multi_query
                 die("Error al crear el usuario o asignar permisos: " . $conn->error);
                 exit();

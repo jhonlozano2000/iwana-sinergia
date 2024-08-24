@@ -161,33 +161,59 @@ class MiEmpresa
 
 	public function Gestionar()
 	{
+		try {
+			$conexion = new Conexion();
 
-		if ($this->Accion == 0) {
-			$Sql = "INSERT INTO config_empresa(id_depar, id_muni, nit, razo_soci, slogan, dir, tel, cel, email, web)
-			VALUES(" . $this->IdDepartamento . ", " . $this->IdMunicipio . ", '" . $this->Nit . "', '" . $this->RazonSocial . "', '" . $this->Slogan . "',
-			'" . $this->Dir . "', '" . $this->Tel . "', '" . $this->Cel . "', '" . $this->Email . "', '" . $this->Web . "')";
-		}
-		if ($this->Accion == 1) {
+			if ($this->Accion == 0) {
 
-			$Sql = "UPDATE config_empresa SET nit = '" . $this->Nit . "', razo_soci = '" . $this->RazonSocial . "', slogan = '" . $this->Slogan . "',
-							dir = '" . $this->Dir . "', tel = '" . $this->Tel . "', web = '" . $this->Web . "', id_depar = " . $this->IdDepartamento . ",
-							id_muni = " . $this->IdMunicipio;
-		}
-		if ($this->Accion == 2) {
-			$Sql = "UPDATE config_empresa SET logo = '" . $this->Logo . "'";
-		}
+				$Sql = "INSERT INTO config_empresa(id_depar, id_muni, nit, razo_soci, slogan, dir, tel, cel, email, web)
+						VALUES(:id_depar, :id_muni, :nit, :razo_soci, :slogan, :dir, :tel, :cel, :email, :web)";
 
-		$conexion = new Conexion();
-		$Instruc = $conexion->prepare($Sql);
-		$Instruc->execute() or die('Accion: ' . $this->Accion . " - " . print_r($Instruc->errorInfo() . " - " . $Sql, true));
-		$conexion = null;
+				$Instruc = $conexion->prepare($Sql);
+				$Instruc->bindParam(':id_depar', $this->IdDepartamento, PDO::PARAM_INT);
+				$Instruc->bindParam(':id_muni', $this->IdMunicipio, PDO::PARAM_INT);
+				$Instruc->bindParam(':nit', $this->Nit, PDO::PARAM_STR);
+				$Instruc->bindParam(':razo_soci', $this->RazonSocial, PDO::PARAM_STR);
+				$Instruc->bindParam(':slogan', $this->Slogan, PDO::PARAM_STR);
+				$Instruc->bindParam(':dir', $this->Dir, PDO::PARAM_STR);
+				$Instruc->bindParam(':tel', $this->Tel, PDO::PARAM_STR);
+				$Instruc->bindParam(':cel', $this->Cel, PDO::PARAM_STR);
+				$Instruc->bindParam(':email', $this->Email, PDO::PARAM_STR);
+				$Instruc->bindParam(':web', $this->Web, PDO::PARAM_STR);
+			} elseif ($this->Accion == 1) {
 
-		if ($Instruc) {
-			return true;
-		} else {
-			return false;
+				$Sql = "UPDATE config_empresa
+						SET nit=:nit, razo_soci = :razo_soci, slogan = :slogan, dir = :dir, tel = :tel, cel = :cel, email = :email, web = :web, id_depar = :id_depar, id_muni = :id_muni";
+
+				$Instruc = $conexion->prepare($Sql);
+				$Instruc->bindParam(':nit', $this->Nit, PDO::PARAM_STR);
+				$Instruc->bindParam(':razo_soci', $this->RazonSocial, PDO::PARAM_STR);
+				$Instruc->bindParam(':slogan', $this->Slogan, PDO::PARAM_STR);
+				$Instruc->bindParam(':dir', $this->Dir, PDO::PARAM_STR);
+				$Instruc->bindParam(':tel', $this->Tel, PDO::PARAM_STR);
+				$Instruc->bindParam(':cel', $this->Cel, PDO::PARAM_STR);
+				$Instruc->bindParam(':email', $this->Email, PDO::PARAM_STR);
+				$Instruc->bindParam(':web', $this->Web, PDO::PARAM_STR);
+				$Instruc->bindParam(':id_depar', $this->IdDepartamento, PDO::PARAM_INT);
+				$Instruc->bindParam(':id_muni',  $this->IdMunicipio, PDO::PARAM_INT);
+			} elseif ($this->Accion === 2) {
+				$Sql = "UPDATE config_empresa SET logo = '" . $this->Logo . "'";
+
+				$Instruc = $conexion->prepare($Sql);
+			}
+
+			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
+			$conexion = null;
+
+			if ($Instruc) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (PDOException $e) {
+			echo 'Ha surgido un error y no se puede ejecutar la consulta. Configuración Mi Empresa, Gestionar, Accion ' . $this->Accion . " - " . $Sql . " - " . $e->getMessage();
+			exit;
 		}
-		//$this-> IdFuncio = $conexion -> lastInsertId();
 	}
 
 	public static function Listar()

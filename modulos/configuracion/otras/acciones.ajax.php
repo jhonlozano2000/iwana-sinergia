@@ -5,6 +5,7 @@ require_once "../../clases/configuracion/class.ConfigMiEmpresa.php";
 require_once "../../clases/configuracion/class.ConfigOtras.php";
 
 $AccionEmpresa = isset($_POST['accion_empresa']) ? $_POST['accion_empresa'] : null;
+
 $nit           = isset($_POST['nit']) ? $_POST['nit'] : null;
 $id_depar      = isset($_POST['id_depar']) ? $_POST['id_depar'] : null;
 $id_muni       = isset($_POST['id_muni']) ? $_POST['id_muni'] : null;

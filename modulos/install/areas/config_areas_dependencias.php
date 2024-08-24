@@ -24,11 +24,12 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <div id="divDependencias" style="overflow-y: scroll; height: 20em;"></div>
                     </div>
                 </div>
 
                 <div class="pull-left">
-                    <button class="btn btn-primary btn-cons" type="button" id="BtnGuardar" name="BtnGuardar">
+                    <button class="btn btn-primary btn-cons" type="button" id="btnGuardarDependencia" name="btnGuardarDependencia">
                         <span class="glyphicon glyphicon-check"></span> Guardar
                     </button>
                 </div>
