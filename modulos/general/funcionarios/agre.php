@@ -10,23 +10,24 @@ require_once "../../clases/areas/class.AreasOficina.php";
 require_once "../../clases/areas/class.AreasCargo.php";
 require_once "../../clases/configuracion/class.ConfigDepartamento.php";
 require_once "../../clases/configuracion/class.ConfigMunicipio.php";
-require_once "../../clases/retencion/calss.TRD.php"; 
+require_once "../../clases/retencion/calss.TRD.php";
 
 $Dependencia = Dependencia::Listar(6, "", "", "", "");
 
 $Combo_Dependencias = "";
-foreach($Dependencia as $Item):
-    $Combo_Dependencias.= "<option value='".$Item['id_depen']."'>".$Item['cod_corres'].".".$Item['nom_depen']."</option>";
+foreach ($Dependencia as $Item):
+    $Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "'>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
 endforeach;
 
 $Departamento = Departamento::Listar();
 $Combo_Departamentos = "";
-foreach($Departamento as $Item):
-    $Combo_Departamentos.= "<option value='".$Item['id_depar']."'>".$Item['nom_depar']."</option>";
+foreach ($Departamento as $Item):
+    $Combo_Departamentos .= "<option value='" . $Item['id_depar'] . "'>" . $Item['nom_depar'] . "</option>";
 endforeach;
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
@@ -39,23 +40,23 @@ endforeach;
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/shape-hover/css/component.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.carousel.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.theme.css" />
-    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen" >
-    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen" >
+    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen">
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
 
     <!-- BEGIN CSS TEMPLATE -->
-    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
     <script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <link href="../../mi_archivo/archivo_digitalizado/menuarbolaccesible.css" rel="stylesheet" type="text/css" />
@@ -63,6 +64,7 @@ endforeach;
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body class="">
     <!-- BEGIN HEADER -->
     <?php require_once '../../../config/cabeza.php'; ?>
@@ -125,7 +127,7 @@ endforeach;
                                                     <input name="cod_funcio" type="text" class="form-control" id="cod_funcio" placeholder="# De Documento">
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <select name="genero" id="genero" class="select2 form-control"  >
+                                                    <select name="genero" id="genero" class="select2 form-control">
                                                         <option value="0">...::: Elije el Sexo :::...</option>
                                                         <option value="M" selected="">M</option>
                                                         <option value="F">F</option>
@@ -144,11 +146,11 @@ endforeach;
                                                 <div class="col-md-6">
                                                     <select name="id_depar" id="id_depar" class="select2 form-control">
                                                         <option value="0">...::: Elije el Departamento :::...</option>
-                                                        <?php echo $Combo_Departamentos;?>
+                                                        <?php echo $Combo_Departamentos; ?>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <select name="id_muni" id="id_muni" class="select2 form-control"  >
+                                                    <select name="id_muni" id="id_muni" class="select2 form-control">
                                                         <option value="0">...::: Elije el Municipio :::...</option>
                                                         <?php echo $Combo_Municipios; ?>
                                                     </select>
@@ -184,21 +186,21 @@ endforeach;
                                         <div class="col-md-3">
                                             <h4><span class="text-success">Ubicación</span> Dentro De La Institución</h4>
                                             <div class="col-md-12">
-                                                <select name="id_depen" id="id_depen" class="select2 form-control"  >
+                                                <select name="id_depen" id="id_depen" class="select2 form-control">
                                                     <option value="0">...::: Elije la Dependencia :::...</option>
-                                                    <?php  echo $Combo_Dependencias; ?>
+                                                    <?php echo $Combo_Dependencias; ?>
                                                 </select>
                                             </div>
                                             <div class="col-md-12">
-                                                <select name="id_oficina" id="id_oficina" class="select2 form-control"  >
+                                                <select name="id_oficina" id="id_oficina" class="select2 form-control">
                                                     <option value="0">...::: Elije la Oficina :::...</option>
-                                                    <?php  echo $Combo_Oficinas; ?>
+                                                    <?php echo $Combo_Oficinas; ?>
                                                 </select>
                                             </div>
                                             <div class="col-md-12">
-                                                <select name="id_cargo" id="id_cargo" class="select2 form-control"  >
+                                                <select name="id_cargo" id="id_cargo" class="select2 form-control">
                                                     <option value="0">...::: Elije la Cargo :::...</option>
-                                                    <?php  echo $Combo_Cargos; ?>
+                                                    <?php echo $Combo_Cargos; ?>
                                                 </select>
                                             </div>
                                             <h4><span class="text-success">Permisos</span></h4>
@@ -240,14 +242,14 @@ endforeach;
                                                     <div class="col-md-12" style="height: 350px; overflow-y: scroll;">
                                                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                                             <?php
-                                                            foreach($Dependencia as $ItemDepen):
-                                                                ?>
+                                                            foreach ($Dependencia as $ItemDepen):
+                                                            ?>
                                                                 <div class="panel panel-default">
                                                                     <div class="panel-heading" role="tab" id="headingOne">
                                                                         <h4 class="panel-title">
                                                                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseDepen<?php echo $ItemDepen['id_depen']; ?>" aria-expanded="true" aria-controls="collapseDepen<?php echo $ItemDepen['id_depen']; ?>">
                                                                                 <?php
-                                                                                echo "Depen: ".$ItemDepen['nom_depen'];
+                                                                                echo "Depen: " . $ItemDepen['nom_depen'];
                                                                                 ?>
                                                                             </a>
                                                                         </h4>
@@ -257,44 +259,44 @@ endforeach;
                                                                             <div class="panel-group" id="sub-accordion" role="tablist" aria-multiselectable="true">
                                                                                 <?php
                                                                                 $Serie = TRD::Listar(6, "", $ItemDepen['id_depen'], "", "", "");
-                                                                                foreach($Serie as $ItemSerie):
-                                                                                    ?>
+                                                                                foreach ($Serie as $ItemSerie):
+                                                                                ?>
                                                                                     <div class="panel panel-default">
                                                                                         <div class="panel-heading" role="tab" id="subHeadingOne">
                                                                                             <h4 class="panel-title">
-                                                                                                <a role="button" data-toggle="collapse" data-parent="#sub-accordion" href="#collapseSerie<?php echo $ItemDepen['id_depen'].$ItemSerie['id_serie']; ?>" aria-expanded="true" aria-controls="collapseSerie<?php echo $ItemDepen['id_depen'].$ItemSerie['id_serie']; ?>">
-                                                                                                    <?php echo $ItemSerie['cod_serie'].".".$ItemSerie['nom_serie']; ?>
+                                                                                                <a role="button" data-toggle="collapse" data-parent="#sub-accordion" href="#collapseSerie<?php echo $ItemDepen['id_depen'] . $ItemSerie['id_serie']; ?>" aria-expanded="true" aria-controls="collapseSerie<?php echo $ItemDepen['id_depen'] . $ItemSerie['id_serie']; ?>">
+                                                                                                    <?php echo $ItemSerie['cod_serie'] . "." . $ItemSerie['nom_serie']; ?>
                                                                                                 </a>
                                                                                             </h4>
                                                                                         </div>
-                                                                                        <div id="collapseSerie<?php echo $ItemDepen['id_depen'].$ItemSerie['id_serie']; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subHeadingOne">
+                                                                                        <div id="collapseSerie<?php echo $ItemDepen['id_depen'] . $ItemSerie['id_serie']; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="subHeadingOne">
                                                                                             <div class="panel-body">
                                                                                                 <?php
-                                                                                                $SubSerie = TRD::Listar(9, "", $ItemDepen['id_depen'], $ItemSerie['id_serie'] , "","");
-                                                                                                foreach($SubSerie as $ItemSubSerie):
-                                                                                                    ?>
+                                                                                                $SubSerie = TRD::Listar(9, "", $ItemDepen['id_depen'], $ItemSerie['id_serie'], "", "");
+                                                                                                foreach ($SubSerie as $ItemSubSerie):
+                                                                                                ?>
                                                                                                     <div class="row-fluid">
                                                                                                         <div class="checkbox check-success">
-                                                                                                            <input id="checkbox<?php echo $ItemSubSerie['id_subserie']; ?>" name="ChkTRD[]" type="checkbox" value="<?php echo $ItemDepen['id_depen']."-".$ItemSerie['id_serie']."-".$ItemSubSerie['id_subserie']; ?>">
+                                                                                                            <input id="checkbox<?php echo $ItemSubSerie['id_subserie']; ?>" name="ChkTRD[]" type="checkbox" value="<?php echo $ItemDepen['id_depen'] . "-" . $ItemSerie['id_serie'] . "-" . $ItemSubSerie['id_subserie']; ?>">
                                                                                                             <label for="checkbox<?php echo $ItemSubSerie['id_subserie']; ?>">
-                                                                                                                <?php echo $ItemSubSerie['cod_subserie'].".".$ItemSubSerie['nom_subserie']; ?>
+                                                                                                                <?php echo $ItemSubSerie['cod_subserie'] . "." . $ItemSubSerie['nom_subserie']; ?>
                                                                                                             </label>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <?php
+                                                                                                <?php
                                                                                                 endforeach;
                                                                                                 ?>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <?php
+                                                                                <?php
                                                                                 endforeach;
                                                                                 ?>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <?php
+                                                            <?php
                                                             endforeach;
                                                             ?>
                                                         </div>
@@ -322,11 +324,11 @@ endforeach;
                 </form>
             </div>
         </div>
-        <!-- BEGIN CHAT --> 
+        <!-- BEGIN CHAT -->
         <div class="chat-window-wrapper">
             <?php require_once '../../chat/chat.php'; ?>
         </div>
-        <!-- END CHAT -->		  
+        <!-- END CHAT -->
     </div>
     <!-- END CONTAINER -->
 
@@ -354,7 +356,7 @@ endforeach;
 
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.resize.min.js" type="text/javascript"></script>
-    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript" ></script>
+    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="../../../public/assets/js/core.js" type="text/javascript"></script>
@@ -362,7 +364,7 @@ endforeach;
     <script src="../../../public/assets/js/demo.js" type="text/javascript"></script>
     <script src="../../../public/assets/js/dashboard_v2.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".live-tile,.flip-list").liveTile();
         });
     </script>
@@ -370,4 +372,5 @@ endforeach;
 
     <!-- END CORE TEMPLATE JS -->
 </body>
+
 </html>

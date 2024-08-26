@@ -109,19 +109,22 @@ class Oficina
 	{
 		$conexion = new Conexion();
 
-		$sqlBuscarCodOfi = "SELECT cod_oficina FROM areas_oficinas
+		$sqlBuscarCodOfi = "SELECT cod_oficina
+							FROM areas_oficinas
 							WHERE cod_oficina = '" . $this->CodOficina . "'";
 		$InstrucBuscarCodOfi = $conexion->prepare($sqlBuscarCodOfi);
 		$InstrucBuscarCodOfi->execute() or die(print_r($InstrucBuscarCodOfi->errorInfo() . " - " . $sqlBuscarCodOfi, true));
 		$NumeroRegisCodOfi = $InstrucBuscarCodOfi->rowCount();
 
-		$sqlBuscarCodCorres = "SELECT cod_corres FROM areas_oficinas
+		$sqlBuscarCodCorres = "SELECT cod_corres
+								FROM areas_oficinas
 								WHERE cod_corres = '" . $this->CodCorres . "'";
 		$InstrucBuscarCodCorres = $conexion->prepare($sqlBuscarCodCorres);
 		$InstrucBuscarCodCorres->execute() or die(print_r($InstrucBuscarCodCorres->errorInfo() . " - " . $sqlBuscarCodCorres, true));
 		$NumeroRegisCodCorres = $InstrucBuscarCodCorres->rowCount();
 
-		$sqlBuscarNom = "SELECT nom_oficina FROM areas_oficinas
+		$sqlBuscarNom = "SELECT nom_oficina
+						FROM areas_oficinas
 						WHERE nom_oficina = '" . $this->NomOficina . "'";
 		$InstrucBuscarNom = $conexion->prepare($sqlBuscarNom);
 		$InstrucBuscarNom->execute() or die(print_r($InstrucBuscarNom->errorInfo() . " - " . $sqlBuscarNom, true));
@@ -134,15 +137,14 @@ class Oficina
 		} elseif ($NumeroRegisNom == 1) {
 			echo "Ya existe una oficina con el nombre '" . $this->NomOficina . "'";
 		} else {
-			$Instruc = $conexion->prepare("SET NAMES utf8");
-			$Instruc->execute();
+
 			$Sql = "INSERT INTO areas_oficinas (id_depen, cod_oficina, cod_corres, nom_oficina, observa, acti)
-							VALUES('" . $this->IdDepen . "',
-									'" . $this->CodOficina . "',
-									'" . $this->CodCorres . "',
-									'" . $this->NomOficina . "',
-									'" . $this->Observa . "',
-									" . $this->Acti . ")";
+						VALUES('" . $this->IdDepen . "',
+								'" . $this->CodOficina . "',
+								'" . $this->CodCorres . "',
+								'" . $this->NomOficina . "',
+								'" . $this->Observa . "',
+								1)";
 
 			$Instruc = $conexion->prepare($Sql);
 			$Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));

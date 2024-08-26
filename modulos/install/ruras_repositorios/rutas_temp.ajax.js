@@ -1,7 +1,5 @@
 $(document).ready(function () {
-    listarDependencias();
-
-    $("#btnGuardarDependencia").click(function () {
+    $("#btnGuardarRutas").click(function () {
         if ($("#cod_depen").val() == "") {
             $("#DivAlertaDependencias").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> Te hizo falta el código de la dependencia.</div>');
             $("#cod_depen").focus();
@@ -28,13 +26,6 @@ $(document).ready(function () {
                 success: function (msj) {
                     if (msj == 1) {
                         $("#DivAlertaDependencias").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> El registro se actualizo correctamente. </div>');
-                        $("#cod_depen").focus();
-                        $("#cod_depen").val("");
-                        $("#cod_corres").val("");
-                        $("#nom_depen").val("");
-                        $("#observa").val("");
-
-                        listarDependencias();
                     } else {
                         $("#DivAlertaDependencias").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> ' + msj + ".</div>");
                     }
@@ -45,55 +36,4 @@ $(document).ready(function () {
             });
         }
     });
-
-    /**=============================================================================
-     *
-     *	función para eliminar
-     *
-     *===========================================================================**/
-    $(document).on("click", "#BtnEliminarDependencia", function (event) {
-        var Id = $(this).data("id_dependencia");
-        var Nom = $(this).data("nom_dependencia");
-
-        swal(
-            {
-                title: "¿Desea eliminar el registro con el nombre " + Nom + "?",
-                type: "error",
-                showCancelButton: true,
-                cancelButtonText: "No",
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "¡si, eliminar!",
-                closeOnConfirm: false,
-            },
-
-            function () {
-                $.ajax({
-                    url: "../../areas/dependencias/acciones.ajax.php",
-                    type: "POST",
-                    data: "accion=ELIMINAR&id_depen=" + Id,
-                    success: function (msj) {
-                        if (msj == 1) {
-                            $("#TrDatosDependencia" + Id).remove();
-                            swal("¡Eliminado!", "El registro " + Nom + " se elimino correctamente!.", "success");
-                        } else {
-                            swal("Error", msj, "error");
-                        }
-                    },
-                    error: function (msj) {
-                        $("#DivAlertas").html('<div class="alert alert-danger alert-dismissable""><i class="fa fa-ban"></i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><b>Alerta!</b> Ha ocurrido un error durante la ejecución, ' + msj + ".</div>");
-                    },
-                });
-            }
-        );
-    });
-
-    function listarDependencias() {
-        $.ajax({
-            url: "listar_dependencias.php",
-            success: function (data) {
-                $("#tblDependencias").remove();
-                $("#divDependencias").append(data);
-            },
-        });
-    }
 });

@@ -8,6 +8,7 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
@@ -20,23 +21,23 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/shape-hover/css/component.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.carousel.css" />
     <link rel="stylesheet" type="text/css" href="../../../public/assets/plugins/owl-carousel/owl.theme.css" />
-    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen" >
-    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen" >
+    <link href="../../../public/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="../../../public/assets/plugins/jquery-slider/css/jquery.sidr.light.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../../public/assets/plugins/jquery-ricksaw-chart/css/rickshaw.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="../../../public/assets/plugins/Mapplic/mapplic/mapplic.css" type="text/css" media="screen">
     <!-- BEGIN CORE CSS FRAMEWORK -->
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/boostrapv3/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/plugins/jquery-scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css" />
     <!-- END CORE CSS FRAMEWORK -->
 
     <!-- BEGIN CSS TEMPLATE -->
-    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css"/>
-    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css"/>
+    <link href="../../../public/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
+    <link href="../../../public/assets/css/magic_space.css" rel="stylesheet" type="text/css" />
     <!-- END CSS TEMPLATE -->
     <script src="../../../public/assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <link href="../../mi_archivo/archivo_digitalizado/menuarbolaccesible.css" rel="stylesheet" type="text/css" />
@@ -44,6 +45,7 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
+
 <body class="">
     <!-- BEGIN HEADER -->
     <?php require_once '../../../config/cabeza.php'; ?>
@@ -99,28 +101,28 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
                                         <div class="col-md-6">
                                             <h4>
                                                 <span class="text-success">
-                                                    <i class="glyphicon glyphicon-check"></i>Nueva, 
+                                                    <i class="glyphicon glyphicon-check"></i>Nueva,
                                                 </span>Información básica de la ruta para digitalización
-                                            </h4>   
+                                            </h4>
                                             <div class="row form-row">
                                                 <div class="col-md-6">
                                                     <input name="servidor" type="text" class="form-control" id="servidor" placeholder="Servidor">
                                                 </div>
-                                            </div>   
+                                            </div>
                                             <div class="row form-row">
                                                 <div class="col-md-12">
                                                     <input name="ruta" type="text" class="form-control" id="ruta"
-                                                    placeholder="Ruta">
+                                                        placeholder="Ruta">
                                                 </div>
                                             </div>
                                             <div class="row form-row">
                                                 <div class="col-md-6">
                                                     <input name="usua" type="text" class="form-control" id="usua"
-                                                    placeholder="Usuario">
+                                                        placeholder="Usuario">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input name="contra" type="text" class="form-control" id="contra"
-                                                    placeholder="Contraseña">
+                                                        placeholder="Contraseña">
                                                 </div>
                                             </div>
                                             <div class="row form-row">
@@ -136,7 +138,7 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
                                                     </div>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="col-md-6">
 
@@ -160,11 +162,11 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
                 <!-- END DASHBOARD TILES -->
             </div>
         </div>
-        <!-- BEGIN CHAT --> 
+        <!-- BEGIN CHAT -->
         <div class="chat-window-wrapper">
             <?php require_once '../../chat/chat.php'; ?>
         </div>
-        <!-- END CHAT -->		  
+        <!-- END CHAT -->
     </div>
     <!-- END CONTAINER -->
 
@@ -192,7 +194,7 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
 
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="../../../public/assets/plugins/jquery-flot/jquery.flot.resize.min.js" type="text/javascript"></script>
-    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript" ></script>
+    <script src="../../../public/assets/plugins/jquery-metrojs/MetroJs.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN CORE TEMPLATE JS -->
     <script src="../../../public/assets/js/core.js" type="text/javascript"></script>
@@ -200,7 +202,7 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
     <script src="../../../public/assets/js/demo.js" type="text/javascript"></script>
     <script src="../../../public/assets/js/dashboard_v2.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".live-tile,.flip-list").liveTile();
         });
     </script>
@@ -208,4 +210,5 @@ require_once '../../clases/seguridad/class.SeguridadUsuario.php';
 
     <!-- END CORE TEMPLATE JS -->
 </body>
+
 </html>

@@ -1,22 +1,19 @@
 $(document).ready(function () {
-    listarOficinas();
+    listarCargos();
 
-    $("#BtnGuardarOficina").click(function () {
-        if ($("#id_depen_oficina").val() == 0) {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta elegir la dependencia a la cual corresponde la oficina" }, function () {});
-            $("#id_depen_oficina").focus();
-        } else if ($("#cod_oficina").val() == "") {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el código de la oficina" }, function () {});
+    $("#BtnGuardarCargos").click(function () {
+        if ($("#id_depen_cargos").val() == 0) {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta elegir la dependencia a la cual corresponde el cargo" }, function () {});
+            $("#id_depen_cargos").focus();
+        } else if ($("#nom_cargo").val() == "") {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el nombre del cargo" }, function () {});
             $("#cod_oficina").focus();
-        } else if ($("#nom_oficina").val() == "") {
-            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el nombre de la oficina" }, function () {});
-            $("#nom_oficina").focus();
         } else {
             var dataForm = new FormData($("#commentForm")[0]);
             dataForm.append("accion", "Insertar");
 
             $.ajax({
-                url: "acciones_oficinas.ajax.php",
+                url: "acciones_cargos.php",
                 type: "POST",
                 data: dataForm,
                 cache: false,
@@ -26,15 +23,13 @@ $(document).ready(function () {
                     $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información...", Imagen: "../../../public/assets/img/loading.gif" }, function () {});
                 },
                 success: function (msj) {
-                    console.log(msj);
                     if (msj == 1) {
                         $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 4, mensaje: "El registro se almaceno correctamente" }, function () {});
-                        $("#cod_oficina").focus();
-                        $("#cod_oficina").val("");
-                        $("#cod_corres_oficina").val("");
-                        $("#nom_oficina").val("");
-                        $("#observa_oficina").val("");
-                        listarOficinas();
+                        $("#nom_cargo").val("");
+                        $("#nom_cargo").focus();
+                        $("#observa_cargos").val("");
+                        $("#acti").prop("checked", true);
+                        listarCargos();
                     } else {
                         $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: msj }, function () {});
                     }
@@ -51,9 +46,9 @@ $(document).ready(function () {
      *	función para eliminar
      *
      *===========================================================================**/
-    $(document).on("click", "#BtnEliminarOficina", function (event) {
-        var Id = $(this).data("id_oficina");
-        var Nom = $(this).data("nom_oficina");
+    $(document).on("click", "#BtnEliminarCargo", function (event) {
+        var Id = $(this).data("id_cargo");
+        var Nom = $(this).data("nom_cargo");
 
         swal(
             {
@@ -68,12 +63,12 @@ $(document).ready(function () {
 
             function () {
                 $.ajax({
-                    url: "../../areas/oficinas/acciones.ajax.php",
+                    url: "../../areas/cargos/acciones.ajax.php",
                     type: "POST",
-                    data: "accion=ELIMINAR&id_oficina=" + Id,
+                    data: "accion=ELIMINAR&id_cargo=" + Id,
                     success: function (msj) {
                         if (msj == 1) {
-                            $("#TrDatosOficina" + Id).remove();
+                            $("#TrDatosCargos" + Id).remove();
                             swal("¡Eliminado!", "El registro " + Nom + " se elimino correctamente!.", "success");
                         } else {
                             swal("Error", msj, "error");
@@ -87,12 +82,12 @@ $(document).ready(function () {
         );
     });
 
-    function listarOficinas() {
+    function listarCargos() {
         $.ajax({
-            url: "listar_oficinas.php",
+            url: "listar_cargos.php",
             success: function (data) {
-                $("#tblOficinas").remove();
-                $("#divOficinas").append(data);
+                $("#tblCargos").remove();
+                $("#divCargos").append(data);
             },
         });
     }

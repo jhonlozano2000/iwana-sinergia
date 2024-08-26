@@ -1,23 +1,6 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-
-require_once '../../../config/class.Conexion.php';
-require_once "../../clases/areas/class.AreasDependencia.php";
-require_once "../../clases/configuracion/class.ConfigDepartamento.php";
-
-$Dependencia = new Dependencia();
-$Dependencia = Dependencia::Listar(6, "", "", "", "");;
-$Combo_Dependencias = "";
-foreach ($Dependencia as $Item):
-	$Combo_Dependencias .= "<option value='" . $Item['id_depen'] . "'>" . $Item['cod_corres'] . "." . $Item['nom_depen'] . "</option>";
-endforeach;
-
-$Departamento = Departamento::Listar();
-$Combo_Departamentos = "";
-foreach ($Departamento as $Item):
-	$Combo_Departamentos .= "<option value='" . $Item['id_depar'] . "'>" . $Item['nom_depar'] . "</option>";
-endforeach;
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,7 +63,7 @@ endforeach;
 					<div class="col-md-12">
 						<div class="grid simple transparent">
 							<div class="grid-title">
-								<h4>Áreas y <span class="semi-bold">Dependencias</span></h4>
+								<h4>Rutas<span class="semi-bold"> repositorios documentales</span></h4>
 							</div>
 							<div class="grid-body ">
 								<div id="DivAlerta"></div>
@@ -92,26 +75,19 @@ endforeach;
 													<li class="" data-target="#step1">
 														<a href="#tab1" data-toggle="tab">
 															<span class="step">1</span>
-															<span class="title">Dependencias</span>
+															<span class="title">Reporsitorio para archivos Temp.</span>
 														</a>
 													</li>
 													<li data-target="#step2" class="">
 														<a href="#tab2" data-toggle="tab">
 															<span class="step">2</span>
-															<span class="title">Oficinas</span>
+															<span class="title">Repositorio para archivos de calidad</span>
 														</a>
 													</li>
 													<li data-target="#step3" class="">
 														<a href="#tab3" data-toggle="tab">
 															<span class="step">3</span>
-															<span class="title">Cargos</span>
-														</a>
-													</li>
-													<li data-target="#step4" class="">
-														<a href="#tab4" data-toggle="tab">
-															<span class="step">4</span>
-															<span class="title">Funcionarios
-															</span>
+															<span class="title">Repositorio para archvivos digitalizados</span>
 														</a>
 													</li>
 												</ul>
@@ -120,32 +96,27 @@ endforeach;
 											<div class="tab-content transparent">
 												<div class="tab-pane" id="tab1"> <br>
 													<h4 class="semi-bold">Paso 1 -
-														<span class="light">Configuración basica de dependencias</span>
+														<span class="light">Configuración basica del repositorio para archivos Temp.</span>
 													</h4>
 													<br>
 
-													<?php require_once 'config_areas_dependencias.php'; ?>
+													<?php require_once 'frm_rutas_temp.php'; ?>
 												</div>
 												<div class="tab-pane" id="tab2"> <br>
 													<h4 class="semi-bold">Paso 2 -
-														<span class="light">Configuración basica de oficinas</span>
+														<span class="light">Configuración basica para el repositorio de archivos de calidad</span>
 													</h4>
 													<br>
-													<?php require_once 'config_areas_oficinas.php'; ?>
+													<?php require_once 'frm_rutas_calidad.php';
+													?>
 												</div>
 												<div class="tab-pane" id="tab3"> <br>
 													<h4 class="semi-bold">Paso 3 -
-														<span class="light">Configuración basica de cargos</span>
+														<span class="light">Configuración basica para el repositorio de archivos digitalizados</span>
 													</h4>
 													<br>
-													<?php require_once 'config_areas_cargos.php'; ?>
-												</div>
-												<div class="tab-pane" id="tab4"> <br>
-													<h4 class="semi-bold">Paso 4 -
-														<span class="light">Configuración basica de funcionarios</span>
-													</h4>
-													<br>
-													<?php require_once 'config_areas_funcionarios.php'; ?>
+													<?php require_once 'frm_rutas_digitalizacion.php';
+													?>
 												</div>
 												<br />
 												<br />
@@ -163,7 +134,7 @@ endforeach;
 													</li>
 													<div class="pull-right">
 														<li class="next">
-															<a href="../ruras_repositorios/" class="btn btn-success" id="btnTerminarAreasDependnecias">Terminar y Continuar</a>
+															<button type="button" class="btn btn-success" id="btnGuardarRutas">Terminar</button>
 														</li>
 													</div>
 												</ul>

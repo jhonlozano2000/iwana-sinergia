@@ -39,7 +39,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row form-row">
+                            <div class="row form-row m-t-15">
                                 <div class="col-md-12">
                                     <input name="dir" type="text" class="form-control" id="dir" placeholder="Dirección del funcionario">
                                 </div>
@@ -57,48 +57,52 @@
                                     <input name="email" type="text" class="form-control" id="email" placeholder="E-Mail del uncionario">
                                 </div>
                             </div>
-                            <div class="row form-row">
-                                <div class="col-md-8">
-                                    <div class="checkbox check-success">
-                                        <input id="acti" type="checkbox" checked="">
-                                        <label for="acti">Activo</label>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-md-6">
                             <h4><span class="text-success">Ubicación</span> Dentro De La Institución</h4>
                             <div class="col-md-12">
-                                <select name="id_depen" id="id_depen" class="select2 form-control">
+                                <select name="id_depen_funcio" id="id_depen_funcio" class="select2 form-control">
                                     <option value="0">...::: Elije la Dependencia :::...</option>
                                     <?php echo $Combo_Dependencias; ?>
                                 </select>
                             </div>
-                            <div class="col-md-12">
-                                <select name="id_oficina" id="id_oficina" class="select2 form-control">
+                            <div class="col-md-12 m-t-15">
+                                <select name="id_oficina_funcio" id="id_oficina_funcio" class="select2 form-control">
                                     <option value="0">...::: Elije la Oficina :::...</option>
                                     <?php echo $Combo_Oficinas; ?>
                                 </select>
                             </div>
-                            <div class="col-md-12">
-                                <select name="id_cargo" id="id_cargo" class="select2 form-control">
+                            <div class="col-md-12 m-t-15">
+                                <select name="id_cargo_funcio" id="id_cargo_funcio" class="select2 form-control">
                                     <option value="0">...::: Elije la Cargo :::...</option>
                                     <?php echo $Combo_Cargos; ?>
                                 </select>
                             </div>
-                            <h4><span class="text-success">Permisos</span></h4>
+                            <h4 class="m-t-25"><span class="text-success m-t-25">Permisos</span></h4>
                             <div class="col-md-12">
                                 <div class="checkbox check-success  ">
                                     <input name="jefe_dependencia" type="checkbox" id="jefe_dependencia">
                                     <label for="jefe_dependencia">Jefe de Dependencia</label>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Date</label>
+                                <span class="help">e.g. "25/12/2013"</span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="date">
+                                </div>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="checkbox check-success  ">
                                     <input name="propie_princi" type="checkbox" id="propie_princi">
-                                    <label for="propie_princi">Propietario principal</label>
+                                    <label class="form-label tip" for="propie_princi" data-toggle="tooltip" title="" data-placement="right" data-original-title="Permite detener el flujo de la correspondencia hasta que este usuario desbloque un radicado o haga un pase de la comunicación">Propietario principal</label>
+                                    <span class="help tip" data-toggle="tooltip" title="" data-placement="right" data-original-title="Permite detener el flujo de la correspondencia hasta que este usuario desbloque un radicado o haga un pase de la comunicación">Help</span>
                                 </div>
                             </div>
+
+
                             <div class="col-md-12">
                                 <div class="checkbox check-success  ">
                                     <input name="crea_expedien" type="checkbox" id="crea_expedien">
@@ -122,18 +126,12 @@
                 </div>
                 <div class="col-md-6">
                 </div>
-
             </div>
 
-
             <div class="pull-left">
-                <button class="btn btn-primary btn-cons" type="button" id="BtnGuardar" name="BtnGuardar">
+                <button class="btn btn-primary btn-cons" type="button" id="BtnGuardarFuncionario" name="BtnGuardarFuncionario">
                     <span class="glyphicon glyphicon-check"></span> Guardar
-                </button>
-                <button class="btn btn-white btn-cons" type="button" id="BtnRegresar" name="BtnRegresar">
-                    <span class="fa fa-mail-reply-all"></span> Regresar
                 </button>
             </div>
         </div>
-
     </div>
