@@ -348,17 +348,17 @@ $permisos = Usuario::Listar(8, $_SESSION['SesionUsuaId'], "", "", "", "", "", ""
                 <?php }
                 if (in_array('Men_Config_tipos_correspondencia', $permisos)) { ?>
                     <li id="Men_Config_tipos_correspondencia">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipo_correspondencia/"> Tipo de Correspondencia </a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipo_correspondencia/"> Tipos de Correspondencia </a>
                     </li>
                 <?php }
                 if (in_array('Men_Config_tipos_documentos', $permisos)) { ?>
                     <li id="Men_Config_tipos_documentos">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipos_documentos/"> Tipo de documentos </a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipos_documentos/"> Tipos de documentos </a>
                     </li>
                 <?php }
                 if (in_array('Men_Config_tipos_respuestas', $permisos)) { ?>
                     <li id="Men_Config_tipos_respuestas">
-                        <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipos_respuesta/"> Tipo de respuestas </a>
+                        <a href="<?php echo MI_ROOT; ?>/modulos/configuracion/tipos_respuesta/"> Tipos de respuestas </a>
                     </li>
                 <?php }
                 if (in_array('Men_Config_RutasGestion', $permisos)) { ?>

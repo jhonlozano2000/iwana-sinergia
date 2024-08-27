@@ -86,19 +86,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="form-label">Date</label>
-                                <span class="help">e.g. "25/12/2013"</span>
-                                <div class="controls">
-                                    <input type="text" class="form-control" id="date">
-                                </div>
-                            </div>
-
                             <div class="col-md-12">
                                 <div class="checkbox check-success  ">
                                     <input name="propie_princi" type="checkbox" id="propie_princi">
-                                    <label class="form-label tip" for="propie_princi" data-toggle="tooltip" title="" data-placement="right" data-original-title="Permite detener el flujo de la correspondencia hasta que este usuario desbloque un radicado o haga un pase de la comunicación">Propietario principal</label>
-                                    <span class="help tip" data-toggle="tooltip" title="" data-placement="right" data-original-title="Permite detener el flujo de la correspondencia hasta que este usuario desbloque un radicado o haga un pase de la comunicación">Help</span>
+                                    <label class="form-label  help tip" for="propie_princi" data-toggle="tooltip" title="" data-placement="right" data-original-title="Permite detener el flujo de la correspondencia hasta que este usuario desbloque un radicado o haga un pase de la comunicación">Propietario principal</label>
+
                                 </div>
                             </div>
 
