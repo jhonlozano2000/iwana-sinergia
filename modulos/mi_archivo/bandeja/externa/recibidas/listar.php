@@ -115,7 +115,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 $NumrRows = $Registro->TotalRegistros_Listar();
             }
 
-            echo "Accion: " . $Accion . "<br>Total: " . $NumrRows . "<br>Respon Princi: " . $_SESSION['SesionFuncioResponPrinci'] . " , Jefe Depen: " . $_SESSION['SesionFuncioJefeDependencia'] . ", Funcio deta: " . $_SESSION['SesionFuncioDetaId'] . " ---- Tipo listar: " . $TipoListar . " --- Limites " . $offset . " " . $per_page . " --- Tipo ver " . $TipoVer;
+            // echo "Accion: " . $Accion . "<br>Total: " . $NumrRows . "<br>Respon Princi: " . $_SESSION['SesionFuncioResponPrinci'] . " , Jefe Depen: " . $_SESSION['SesionFuncioJefeDependencia'] . ", Funcio deta: " . $_SESSION['SesionFuncioDetaId'] . " ---- Tipo listar: " . $TipoListar . " --- Limites " . $offset . " " . $per_page . " --- Tipo ver " . $TipoVer;
 
             $total_pages = ceil($NumrRows / $per_page);
             $reload      = 'index.php';

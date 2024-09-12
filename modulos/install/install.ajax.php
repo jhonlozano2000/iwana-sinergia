@@ -32,7 +32,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             }
 
             // Crear el usuario y otorgar permisos
-            $sql = "CREATE USER IF NOT EXISTS '$newUser'@'localhost' IDENTIFIED BY '$newPassword';";
+            $sql = "CREATE USER IF NOT EXISTS '$newUser'@'$host' IDENTIFIED BY '$newPassword';";
             $sql .= "GRANT ALL PRIVILEGES ON $databaseName.* TO '$newUser'@'localhost';";
             $sql .= "FLUSH PRIVILEGES;";
             if (!$conn->multi_query($sql)) {

@@ -2,9 +2,6 @@
 require_once "config/class.Conexion.php";
 require_once "config/funciones.php";
 header('Location: index_desarrollo.php');
-
-echo $nombre_de_base;
-exit();
 ?>
 <!DOCTYPE html>
 <html>
