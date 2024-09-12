@@ -2,10 +2,10 @@
 class Conexion extends PDO
 {
 	private $tipo_de_base   = 'mysql';
-	private $host           = 'iwana_localhost';
-	private $nombre_de_base = 'iwana_db';
-	private $usuario        = 'iwana_user';
-	private $contrasena     = 'iwana_password';
+	private $host           = 'localhost';
+	private $nombre_de_base = 'iwana_prueba3';
+	private $usuario        = 'iwana_prueba3';
+	private $contrasena     = 'iwana_prueba';
 
 	public function __construct()
 	{
