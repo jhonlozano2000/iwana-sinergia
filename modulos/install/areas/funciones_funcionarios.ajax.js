@@ -114,4 +114,59 @@ $(document).ready(function () {
             });
         });
     });
+
+    $("#BtnGuardarUsuario").click(function () {
+        if ($("#login").val() == "") {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta el Login del usuario." }, function () {});
+            $("#login").focus();
+        } else if ($("#contra").val() == "") {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Te hizo falta la contraseña del usuario." }, function () {});
+            $("#contra").focus();
+        } else if (!$('input[name="ChkPerfiles[]"]').is(":checked")) {
+            $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: "Para poder crear el usuario debes establecer al menos un perfil." }, function () {});
+            $("#contra").focus();
+        } else {
+            var formData = new FormData($("#FrmDatosUsuaAdmin")[0]);
+            formData.append("cambio_contra", "1");
+
+            $.ajax({
+                url: "../../seguridad/usuarios/accionesUsuarios.ajax.php",
+                type: "POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 5, mensaje: "Enviando información, por favor espere..." }, function () {});
+                },
+                success: function (msj) {
+                    if (msj == 1) {
+                        $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 4, mensaje: "El usuario se creó correctamente, estamos redireccionando para que inicies sesión" }, function () {});
+                        setTimeout(function () {
+                            window.location.href = "../../../index.php";
+                        }, 300);
+                    } else {
+                        $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 3, mensaje: msj }, function () {});
+                    }
+                },
+                error: function (msj) {
+                    $("#DivAlerta").load("../../../config/mensajes.php", { alerta: 1, mensaje: "Ha ocurrido un error durante la ejecución, " + msj }, function () {});
+                },
+            });
+        }
+        return false;
+    });
+
+    $(document).on("click", ".llevar_funiconario", function (event) {
+        event.preventDefault();
+        $("#id_funcio").val($(this).data("id_funcio"));
+        $("#cod_funcio").val($(this).data("num_documento"));
+        $("#nom_funcio").val($(this).data("nombres"));
+        $("#ape_funcio").val($(this).data("apellidos"));
+
+        var Nombre = $(this).data("nombres").split(" ");
+        var Apellidos = $(this).data("apellidos").split(" ");
+        var Login = Nombre[0] + "." + Apellidos[0];
+        $("#login").val(Login);
+    });
 });

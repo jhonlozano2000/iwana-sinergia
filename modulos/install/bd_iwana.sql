@@ -2717,8 +2717,7 @@ insert  into `config_tipos_respuestas`(`id_respue`,`nom_respues`,`acti`) values
 (5,'TRASLADADA',1);
 
 /*Data for the table `segu_modu` */
-
-insert  into `segu_modu`(`id_modu`,`nom_modu`,`menu`,`boton`,`link`,`acti`) values 
+INSERT  INTO `segu_modu`(`id_modu`,`nom_modu`,`menu`,`boton`,`link`,`acti`) VALUES 
 (8,'General - Funcionarios','Men_Gene_Funcionarios','BtnFuncionarios',NULL,1),
 (9,'General - Persona Natural','Men_Gene_Remite_Natural','BtnRemitentes',NULL,1),
 (10,'General - Presona Juridica','Men_Gene_Remite_Juridi',NULL,NULL,1),
@@ -2757,17 +2756,69 @@ insert  into `segu_modu`(`id_modu`,`nom_modu`,`menu`,`boton`,`link`,`acti`) valu
 (58,'Calidad - Procedimientos','Men_Calidad_Procedimientos',NULL,NULL,1),
 (59,'Ofi. Archivo - Digitalizar TVD','Men_OfiArchi_Digitalizacion_TVD',NULL,NULL,1),
 (60,'Ofi. Archivo - Configuración Organigrama TVD','Men_OfiArchi_Configuracion_Organigrama_TVD',NULL,NULL,1),
-(61,'Configuración - Rutas para calidad','Men_Config_Calidad',NULL,NULL,1),
-(62,'Calidad - Consultar Repositorio','Men_Calidad_Consulta_Repositorio',NULL,NULL,1);
+(61,'Configuración - Rutas para calidad','Men_Config_Calidad',NULL,NULL,1);
 
 /*Data for the table `segu_perfiles` */
 
-insert  into `segu_perfiles`(`id_perfil`,`nom_perfil`,`observa`,`acti`) values 
+INSERT  INTO `segu_perfiles`(`id_perfil`,`nom_perfil`,`observa`,`acti`) VALUES 
 (1,'RADICADOR','',1),
 (2,'ADMINISTRADOR','',1),
 (3,'MI ARCHIVO','',1),
 (4,'REPORTES','',1),
 (5,'Digitalizador','',1);
+
+/*Data for the table `segu_perfiles_deta` */
+
+INSERT  INTO `segu_perfiles_deta`(`id_perfil`,`id_modu`,`acti`) VALUES 
+(5,60,1),
+(5,47,1),
+(5,50,1),
+(5,59,1),
+(3,52,1),
+(3,40,1),
+(3,41,1),
+(1,12,1),
+(4,51,1),
+(4,43,1),
+(2,22,1),
+(2,20,1),
+(2,24,1),
+(2,21,1),
+(2,57,1),
+(2,58,1),
+(2,55,1),
+(2,56,1),
+(2,32,1),
+(2,33,1),
+(2,30,1),
+(2,29,1),
+(2,44,1),
+(2,26,1),
+(2,27,1),
+(2,61,1),
+(2,48,1),
+(2,31,1),
+(2,8,1),
+(2,9,1),
+(2,10,1),
+(2,52,1),
+(2,40,1),
+(2,41,1),
+(2,60,1),
+(2,47,1),
+(2,50,1),
+(2,59,1),
+(2,15,1),
+(2,17,1),
+(2,18,1),
+(2,16,1),
+(2,38,1),
+(2,46,1),
+(2,12,1),
+(2,51,1),
+(2,43,1),
+(2,36,1),
+(2,35,1);
 
 INSERT INTO `config_otras` (`id`) VALUES ('1');
 --

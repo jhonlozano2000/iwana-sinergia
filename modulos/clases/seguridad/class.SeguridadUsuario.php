@@ -128,12 +128,13 @@ class Usuario
 
 			if ($this->Accion == 'INSERTAR') {
 				$Sql = "INSERT INTO segu_usua(id_funcio, login, contra, cambio_contra)
-						VALUES(:id_funcio, :login, :contra, 0)";
+						VALUES(:id_funcio, :login, :contra, :cambio_contra)";
 
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':id_funcio', $this->IdFuncio, PDO::PARAM_INT);
 				$Instruc->bindParam(':login', $this->Login, PDO::PARAM_STR);
 				$Instruc->bindParam(':contra', $this->Contra, PDO::PARAM_STR);
+				$Instruc->bindParam(':cambio_contra', $this->CambioContra, PDO::PARAM_STR);
 			} elseif ($this->Accion == 'EDITAR') {
 				if ($this->Contra != '') {
 					$Sql = "UPDATE segu_usua

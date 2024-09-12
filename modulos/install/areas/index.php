@@ -163,7 +163,7 @@ endforeach;
 													</li>
 													<div class="pull-right">
 														<li class="next">
-															<a href="../ruras_repositorios/" class="btn btn-success" id="btnTerminarAreasDependnecias">Terminar y Continuar</a>
+															<a href="usuario_administrador.php" class="btn btn-success" id="btnTerminarConfiguracion">Terminar y Continuar</a>
 														</li>
 													</div>
 												</ul>

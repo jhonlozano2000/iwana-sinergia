@@ -95,5 +95,11 @@ $(document).ready(function () {
                 $("#divDependencias").append(data);
             },
         });
+
+        $.post("../../varios/combo_dependencias.php", function (data) {
+            $("#id_depen_oficina").html(data);
+            $("#id_depen_cargos").html(data);
+            $("#id_depen_funcio").html(data);
+        });
     }
 });

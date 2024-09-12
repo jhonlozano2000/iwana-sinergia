@@ -11,6 +11,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 	$login         = isset($_POST['login']) ? $_POST['login'] : null;
 	$contra        = isset($_POST['contra']) ? $_POST['contra'] : null;
 	$cambio_contra = isset($_POST['cambio_contra']) ? 1 : 0;
+
 	if ($Accion == "INSERTAR" or $Accion == "EDITAR") {
 		$Acti      = isset($_POST['acti']) ? 1 : 0;
 	} else {
@@ -41,6 +42,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 			$Usuario->setId_Funcio($id_funcio);
 			$Usuario->setLogin($login);
 			$Usuario->setContra(Encriptar($contra));
+			$Usuario->setCambioContra($cambio_contra);
 			if ($Usuario->Gestionar() == 'true') {
 
 				$id_usua = $Usuario->getId_Usua();

@@ -3,8 +3,8 @@ class Conexion extends PDO
 {
 	private $tipo_de_base   = 'mysql';
 	private $host           = 'localhost';
-	private $nombre_de_base = 'iwana_prueba3';
-	private $usuario        = 'iwana_prueba3';
+	private $nombre_de_base = 'iwana_prueba1';
+	private $usuario        = 'iwana_prueba1';
 	private $contrasena     = 'iwana_prueba';
 
 	public function __construct()
