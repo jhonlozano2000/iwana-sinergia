@@ -389,50 +389,15 @@ function nombreAleatorioArchivo($archivo)
 }
 
 // Función para cifrar el ID de usuario
-$key = 'a3f89b12c4d56e7f90a1b234c56d78e9a1b2c34d5e67f8a9b0c1234d5e67f890'; // Clave segura para el cifrado
-function encrypt($dato, $key)
+function encrypt($dato)
 {
+    $key = 'a3f89b12c4d56e7f90a1b234c56d78e9a1b2c34d5e67f8a9b0c1234d5e67f890'; // Clave segura para el cifrado
     return base64_encode(openssl_encrypt($dato, 'aes-256-cbc', $key, 0, substr(hash('sha256', $key), 0, 16)));
 }
 
 // Función para descifrar el ID de usuario
-function decrypt($dato, $key)
+function decrypt($dato)
 {
+    $key = 'a3f89b12c4d56e7f90a1b234c56d78e9a1b2c34d5e67f8a9b0c1234d5e67f890'; // Clave segura para el cifrado
     return openssl_decrypt(base64_decode($dato), 'aes-256-cbc', $key, 0, substr(hash('sha256', $key), 0, 16));
-}
-
-
-function encodeBase64($file)
-{
-    // Lee el contenido del archivo
-    $file_content = file_get_contents($file);
-
-    // Codifica el contenido en Base64
-    $base64_encoded = base64_encode($file_content);
-
-    // Muestra el resultado o lo guarda en un archivo
-    return $base64_encoded;
-}
-
-function decodeBase64($file)
-{
-    // Decodifica el contenido Base64
-    $decoded_content = base64_decode($file);
-
-    return $decoded_content;
-}
-
-function donwloadBase64($file_decoded_content, $file_name)
-{
-    // Establecer cabeceras para la descarga
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="' . $file_name . '"');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate');
-    header('Pragma: public');
-    header('Content-Length: ' . strlen($file_decoded_content));
-
-    // Enviar el archivo decodificado al navegador para su descarga
-    echo $file_decoded_content;
 }

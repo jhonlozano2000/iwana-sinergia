@@ -9,22 +9,22 @@ include("../../../config/variable.php");
 	<div class="row">
 		<div class="row column-seperation">
 			<div class="col-md-6">
-				<span class="semi-bold">Documentos Recibidos.</span>   
+				<span class="semi-bold">Documentos Recibidos.</span>
 				<div class="row form-row">
 					<div class="col-md-12">
 						<?php
 						$RadicadoEnviado = RadicadoEnviado::Listar_Varios(1, $_POST['id_radica'], "", "", 0, 0, 0, "", "", "");
-						foreach($RadicadoEnviado as $ItemRadicado):
-							if($ItemRadicado['digital'] == 1){
-								?>
+						foreach ($RadicadoEnviado as $ItemRadicado):
+							if ($ItemRadicado['digital'] == 1) {
+						?>
 								<span class="muted small-text">
-									<a href="#" id="BtnDescargarArchivoEnviado" class="descargar_pdf_enviado" 
-									data-id_radicado="<?php echo $ItemRadicado['id_radica']; ?>" 
-									data-id_ruta="<?php echo $ItemRadicado['id_ruta']; ?>" 
-									data-archivo="<?php echo $ItemRadicado['archivo']; ?>">
-									<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"></a>
+									<a href="#" id="BtnDescargarArchivoEnviado" class="descargar_pdf_enviado"
+										data-id_radicado="<?php echo $ItemRadicado['id_radica']; ?>"
+										data-id_ruta="<?php echo $ItemRadicado['id_ruta']; ?>"
+										data-archivo="<?php echo $ItemRadicado['archivo']; ?>">
+										<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"></a>
 								</span>
-								<?php
+						<?php
 							}
 						endforeach;
 						?>
@@ -42,16 +42,16 @@ include("../../../config/variable.php");
 			<div class="col-md-12">
 				<?php
 				$ArchivoAdciones = RadicadoEnviadoArchivoAdicional::Listar(1, $_POST['id_radica'], "", "");
-				foreach($ArchivoAdciones as $ItemArchivo):
-					?>
+				foreach ($ArchivoAdciones as $ItemArchivo):
+				?>
 					<span class="muted small-text">
 						<a href="#" id="BtnDescargarArchivoEnviado"
-						data-id_radicado="<?php echo $ItemArchivo['id_radica']; ?>"
-						data-id_ruta="<?php echo $ItemArchivo['id_ruta']; ?>" 
-						data-archivo="<?php echo $ItemArchivo['nom_archivo']; ?>" title="<?php echo $ItemArchivo['nom_archivo']; ?>">
-						<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"></a>
+							data-id_radicado="<?php echo $ItemArchivo['id_radica']; ?>"
+							data-id_ruta="<?php echo $ItemArchivo['id_ruta']; ?>"
+							data-archivo="<?php echo $ItemArchivo['nom_archivo']; ?>" title="<?php echo $ItemArchivo['nom_archivo']; ?>">
+							<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"></a>
 					</span>
-					<?php
+				<?php
 				endforeach;
 				?>
 			</div>

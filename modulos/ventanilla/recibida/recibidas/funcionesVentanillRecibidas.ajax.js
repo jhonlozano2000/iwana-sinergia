@@ -150,6 +150,7 @@
                 );
             },
             success: function (msj) {
+                console.log(msj);
                 if (msj == 1) {
                     $("#BtnCancelarSubirDigitalRecibido").click();
                     $("#DivAlertarAdjuntoDigital").empty();
@@ -160,6 +161,7 @@
             },
             warning: function () {
                 sweetAlert("Oops...", msj, "error");
+                console.log(msj);
             },
         });
     });
@@ -346,32 +348,8 @@
 
     $(document).on("click", "#BtnDescargarArchivoRecibido", function (event) {
         var IdRadicado = $(this).data("id_radicado");
-        var Archivo = $(this).data("archivo");
-        var IdRuta = $(this).data("id_ruta");
-
-        /* if (IdRuta == 0) {
-            sweetAlert("Oops...", "El radicado no tiene el documento digital, por favor adjunte el documento digitalizado!", "warning");
-        } else { */
-        $.ajax({
-            url: "../../../varios/upload_file.php",
-            type: "POST",
-            data: "accion=RECIBIDOS_DESCARGAR&id_radicado=" + IdRadicado + "&id_ruta=" + IdRuta,
-            beforeSend: function () {
-                $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-            },
-            success: function (msj) {
-                $("#DivAlertas").empty();
-                if (msj == 1) {
-                    window.open("../../../../archivos/temp/recibidos/" + Archivo, "_blank");
-                } else {
-                    sweetAlert("Oops...", msj, "warning");
-                }
-            },
-            error: function (error) {
-                sweetAlert("Oops...", error, "error");
-            },
-        });
-        //}
+        // Redirige al archivo PHP que maneja la descarga
+        window.location.href = "../../../varios/upload_file.php?accion=RECIBIDOS_DESCARGAR&id_radicado=" + IdRadicado;
     });
 
     $(document).on("click", "#BtnLlevarEditarAsunto", function (event) {
@@ -487,26 +465,6 @@
                     success: function (msj) {
                         if (msj == 1) {
                             $("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> El archivo se elimino correctamente. </div>');
-
-                            $.ajax({
-                                url: "../../../varios/ftp.acciones.php",
-                                type: "POST",
-                                data: "accion=RECIBIDOS_ELIMINAR_DIGITAL&id_radica=" + IdRadicado + "&id_ruta=" + IdRuta,
-                                beforeSend: function () {
-                                    $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Eliminando archivo digital, por favor espere. </div>');
-                                },
-                                success: function (msj) {
-                                    if (msj == 1) {
-                                        $("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> El archivo se elimino correctamente. </div>');
-                                        swal("Deleted!", "El archivo se elimino correctamente.", "success");
-                                    } else {
-                                        $("#DivAlertas").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> ' + msj + ".</div>");
-                                    }
-                                },
-                                error: function (msj) {
-                                    $("#DivAlertas").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución ' + msj + "</div>");
-                                },
-                            });
                         } else {
                             $("#DivAlertas").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> ' + msj + ".</div>");
                         }

@@ -22,7 +22,7 @@ class RadicadoEnviado
     private $ImpriRotu;
     private $FecHorImpriRoru;
     private $UsuaImpriRotu;
-    private $IdRadicaRespuesta;
+    private $IdRadicaRespues;
     private $Enviado;
     private $Transferido;
     private $NumeroGuia;
@@ -33,6 +33,7 @@ class RadicadoEnviado
     private $OpcionDetalle1;
     private $OpcionDetalle2;
     private $OpcionDetalle3;
+    private $NombreArchivo;
     private $Archivo;
 
     public function __construct(
@@ -51,7 +52,7 @@ class RadicadoEnviado
         $Asunto = null,
         $NumAnexos = null,
         $NumFolios = null,
-        $ObservaAneos = null,
+        $ObservaAnexos = null,
         $Digital = null,
         $ImpriRotu = null,
         $FecHorImpriRoru = null,
@@ -67,6 +68,7 @@ class RadicadoEnviado
         $OpcionDetalle1 = null,
         $OpcionDetalle2 = null,
         $OpcionDetalle3 = null,
+        $NombreArchivo = null,
         $Archivo = null
     ) {
 
@@ -85,7 +87,7 @@ class RadicadoEnviado
         $this->Asunto          = $Asunto;
         $this->NumAnexos       = $NumAnexos;
         $this->NumFolios       = $NumFolios;
-        $this->ObservaAneos    = $ObservaAneos;
+        $this->ObservaAnexos    = $ObservaAnexos;
         $this->Digital         = $Digital;
         $this->ImpriRotu       = $ImpriRotu;
         $this->FecHorImpriRoru = $FecHorImpriRoru;
@@ -101,6 +103,7 @@ class RadicadoEnviado
         $this->OpcionDetalle1  = $OpcionDetalle1;
         $this->OpcionDetalle2  = $OpcionDetalle2;
         $this->OpcionDetalle3  = $OpcionDetalle3;
+        $this->NombreArchivo = $NombreArchivo;
         $this->Archivo  = $Archivo;
     }
 
@@ -174,9 +177,9 @@ class RadicadoEnviado
         return $this->NumFolios;
     }
 
-    public function get_ObservaAneos()
+    public function get_ObservaAnexos()
     {
-        return $this->ObservaAneos;
+        return $this->ObservaAnexos;
     }
 
     public function get_Digital()
@@ -252,6 +255,11 @@ class RadicadoEnviado
     public function get_OpcionDetalle3()
     {
         return $this->OpcionDetalle3;
+    }
+
+    public function get_NombreArchivo()
+    {
+        return $this->NombreArchivo;
     }
 
     public function get_Archivo()
@@ -336,9 +344,9 @@ class RadicadoEnviado
         return $this->NumFolios = $NumFolios;
     }
 
-    public function set_ObservaAneos($ObservaAneos)
+    public function set_ObservaAnexos($ObservaAnexos)
     {
-        return $this->ObservaAneos = $ObservaAneos;
+        return $this->ObservaAnexos = $ObservaAnexos;
     }
 
     public function set_Digital($Digital)
@@ -416,6 +424,10 @@ class RadicadoEnviado
         return $this->OpcionDetalle3 = $OpcionDetalle3;
     }
 
+    public function set_NombreArchivo($NombreArchivo)
+    {
+        return $this->NombreArchivo = $NombreArchivo;
+    }
     public function set_Archivo($Archivo)
     {
         return $this->Archivo = $Archivo;
@@ -490,7 +502,7 @@ class RadicadoEnviado
                 $Instruc->bindParam(':asunto', $this->Asunto, PDO::PARAM_STR);
                 $Instruc->bindParam(':num_folio', $this->NumFolios, PDO::PARAM_INT);
                 $Instruc->bindParam(':num_anexos', $this->NumAnexos, PDO::PARAM_INT);
-                $Instruc->bindParam(':observa_anexo', $this->ObservaAneos, PDO::PARAM_STR);
+                $Instruc->bindParam(':observa_anexo', $this->ObservaAnexos, PDO::PARAM_STR);
                 $Instruc->bindParam(':num_guia', $this->NumeroGuia, PDO::PARAM_STR);
                 $Instruc->bindParam(':texto', $this->Texto, PDO::PARAM_STR);
                 $Instruc->bindParam(':opcion_relacion', $this->OpcionRelecion, $ParameOpcionRelacion);
@@ -506,7 +518,7 @@ class RadicadoEnviado
 
                 $Instruc = $conexion->prepare($Sql);
                 $Instruc->bindParam(':usua_impri_rotu', $this->UsuaImpriRotu, PDO::PARAM_INT);
-                $Instruc->bindParam(':fechor_impri_rotu', $this->fechor_impri_rotu, PDO::PARAM_STR);
+                $Instruc->bindParam(':fechor_impri_rotu', $this->FecHorImpriRoru, PDO::PARAM_STR);
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion == 3) {
                 $Sql = "UPDATE archivo_radica_enviados
@@ -516,13 +528,22 @@ class RadicadoEnviado
                 $Instruc = $conexion->prepare($Sql);
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion == 4) {
+                //Cargar archivo
                 $Sql = "UPDATE archivo_radica_enviados
-                        SET id_ruta = :id_ruta, digital = 1, archivo = :archivo
+                        SET nombre_archivo = :nombre_archivo, digital = 1, archivo = :archivo
                         WHERE id_radica = :id_radica";
 
                 $Instruc = $conexion->prepare($Sql);
-                $Instruc->bindParam(':id_ruta', $this->IdRuta, PDO::PARAM_INT);
+                $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_STR);
                 $Instruc->bindParam(':archivo', $this->Archivo, PDO::PARAM_STR);
+                $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
+            } elseif ($this->Accion === 'ELIMINAR_DIGITAL') {
+                //Cargar archivo
+                $Sql = "UPDATE archivo_radica_enviados
+                        SET nombre_archivo = null, digital = 0, archivo = null
+                        WHERE id_radica = :id_radica";
+
+                $Instruc = $conexion->prepare($Sql);
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion == 5) {
                 $Sql = "UPDATE archivo_radica_enviados
@@ -1437,6 +1458,7 @@ class RadicadoEnviado
                     $Result['opcion_detalle1'],
                     $Result['opcion_detalle2'],
                     $Result['opcion_detalle3'],
+                    $Result['nombre_archivo'],
                     $Result['archivo']
                 );
             } else {

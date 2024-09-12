@@ -119,7 +119,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             $Radicado->set_NumFolios($NumFolios);
             $Radicado->set_NumAnexos($NumAnexos);
             $Radicado->setNum_Guia($NumGuia);
-            $Radicado->set_ObservaAneos($ObservaAnexos);
+            $Radicado->set_ObservaAnexos($ObservaAnexos);
             $Radicado->set_OpcionRelecion($OpcionRelacion);
             $Radicado->set_OpcionTitulo($OpcionTitulo);
             $Radicado->set_OpcionSubTitulo($OpcionSubTitulo);
@@ -282,9 +282,9 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             break;
         case 'ELIMINAR_DIGITAL':
 
-            require_once "../../../clases/radicar/class.RadicaRecibido.php";
+            require_once "../../../clases/radicar/class.RadicaEnviado.php";
 
-            $Radicado = new RadicadoRecibido();
+            $Radicado = new RadicadoEnviado();
             $Radicado->set_Accion('ELIMINAR_DIGITAL');
             $Radicado->set_IdRadica($IdRadicado);
             if ($Radicado->Gestionar() == true) {
@@ -296,7 +296,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                 $Log = new Log();
                 $Log->set_Accion('INSERTAR_REGISTRO');
                 $Log->set_IdUsuario($_SESSION['SesionUsuaId']);
-                $Log->set_Modulo('Ventanilla->Correspondencia recibida');
+                $Log->set_Modulo('Ventanilla->Correspondencia enviada');
                 $Log->set_FecHorRegistro(Fecha_Hora_Actual());
                 $Log->set_Equipo(EQUIPO_REMOTO);
                 $Log->set_IP(getRealIP());

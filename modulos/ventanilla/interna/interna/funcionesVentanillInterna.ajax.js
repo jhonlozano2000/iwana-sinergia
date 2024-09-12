@@ -1,439 +1,448 @@
-﻿$(document).ready(function(){
+﻿$(document).ready(function () {
+    $("#BtnRadicar").click(function () {
+        if ($("#fec_docu").val() == "") {
+            sweetAlert("Oops...", "Te hizo falta la fecha del documento!", "warning");
+            $("#fec_docu").focus();
+        } else if ($("#num_folios").val() == "") {
+            sweetAlert("Oops...", "Te hizo falta el numéro de folios del documento!", "warning");
+            $("#num_folios").focus();
+        } else if ($("#chkTerms").prop("checked") === true && $("#fec_venci").val() === "") {
+            sweetAlert("Oops...", "Te hizo falta la fecha de vencimiento del documento!", "warning");
+            $("#fec_venci").focus();
+        } else if ($("#num_anexos").val() != "" && $("#observa_anexo").val() === "") {
+            sweetAlert("Oops...", "Te hizo falta la observación de los anexos!", "warning");
+            $("#observa_anexo").focus();
+        } else if ($("#asunto").val() == "") {
+            sweetAlert("Oops...", "Te hizo falta el asunto de la correspondencia!", "warning");
+            $("#asunto").focus();
+        } else if (!$('input[name="ChkResponsables[]"]').is(":checked")) {
+            sweetAlert("Oops...", "Te hizo falta el o los responsables de la correspondencia!", "warning");
+        } else if (!$('input[name="ChkFuncioRespon"]').is(":checked")) {
+            sweetAlert("Oops...", "Debe establecer el responsable de la correspondencia!", "warning");
+        } else if (!$('input[name="ChkDestinatarios[]"]').is(":checked")) {
+            sweetAlert("Oops...", "Te hizo falta el o los destinatarios de la correspondencia!", "warning");
+            $("#BtnBuscarDestinatario").click();
+        } else if ($("#incluir_trd").val() == 1 && $("#id_serie").val() == 0) {
+            sweetAlert("Oops...", "Te hizo falta la Serie de la clasificación documental de la correspondencia!", "warning");
+            $("#id_serie").focus();
+        } else if ($("#incluir_trd").val() == 1 && $("#id_subserie").val() == 0) {
+            sweetAlert("Oops...", "Te hizo falta la Subserie de la clasificación documental de la correspondencia!", "warning");
+            $("#id_subserie").focus();
+        } else if ($("#id_tipodoc").val() == 0) {
+            sweetAlert("Oops...", "Te hizo falta el tipo documental de la clasificación documental de la correspondencia!", "warning");
+            $("#id_tipodoc").focus();
+        } else {
+            var formData = new FormData($("#Frm-Data")[0]);
 
-	$('#BtnRadicar').click(function() {
+            $.ajax({
+                url: "accionesVentanillaInterna.ajax.php",
+                type: "POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+                },
+                success: function (msj) {
+                    if (msj == 1) {
+                        $("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> El registro se almaceno correctamente. </div>');
 
-		if($('#fec_docu').val() == ""){
-			sweetAlert("Oops...", "Te hizo falta la fecha del documento!", "warning");
-			$('#fec_docu').focus();
-		}else if($("#num_folios").val() == '') {
-			sweetAlert("Oops...", "Te hizo falta el numéro de folios del documento!", "warning");
-			$('#num_folios').focus();
-		}else if($("#chkTerms").prop("checked") === true && $('#fec_venci').val() === '') {
-			sweetAlert("Oops...", "Te hizo falta la fecha de vencimiento del documento!", "warning");
-			$('#fec_venci').focus();
-		}else if($('#num_anexos').val() != ""  && $('#observa_anexo').val() === '') {
-			sweetAlert("Oops...", "Te hizo falta la observación de los anexos!", "warning");
-			$('#observa_anexo').focus();
-		}else if ($('#asunto').val() == ""){
-			sweetAlert("Oops...", "Te hizo falta el asunto de la correspondencia!", "warning");
-			$('#asunto').focus();
-		}else if (!$('input[name="ChkResponsables[]"]').is(':checked')) {
-			sweetAlert("Oops...", "Te hizo falta el o los responsables de la correspondencia!", "warning");
-		}else if (!$('input[name="ChkFuncioRespon"]').is(':checked')) {
-			sweetAlert("Oops...", "Debe establecer el responsable de la correspondencia!", "warning");
-		}else if(!$('input[name="ChkDestinatarios[]"]').is(':checked')){
-			sweetAlert("Oops...", "Te hizo falta el o los destinatarios de la correspondencia!", "warning");
-			$('#BtnBuscarDestinatario').click();
-		}else if($('#incluir_trd').val() == 1 && $('#id_serie').val() == 0){
-			sweetAlert("Oops...", "Te hizo falta la Serie de la clasificación documental de la correspondencia!", "warning");
-			$('#id_serie').focus();
-		}else if($('#incluir_trd').val() == 1 && $('#id_subserie').val() == 0){
-			sweetAlert("Oops...", "Te hizo falta la Subserie de la clasificación documental de la correspondencia!", "warning");
-			$('#id_subserie').focus();
-		}else if($('#id_tipodoc').val() == 0){
-			sweetAlert("Oops...", "Te hizo falta el tipo documental de la clasificación documental de la correspondencia!", "warning");
-			$('#id_tipodoc').focus();
-		}else{
+                        setTimeout(function () {
+                            window.location.href = "index.php";
+                        }, 200);
+                    } else {
+                        sweetAlert("Oops...", msj + "!", "warning");
+                    }
+                },
+                error: function () {
+                    sweetAlert("Oops...", "Ha ocurrido un error durante la ejecución", "error");
+                },
+            });
+        }
+        return false;
+    });
 
-			var formData = new FormData($("#Frm-Data")[0]);
+    $("#BtnSubirDigital").click(function () {
+        var formData = new FormData($(".formulario")[0]);
 
-			$.ajax({
-				url: 'accionesVentanillaInterna.ajax.php',
-				type: 'POST',
-				data: formData,
-				cache: false,
-				contentType: false,
-				processData: false,
-				beforeSend: function(){
-					$("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-				},
-				success:function(msj){
-					if (msj == 1){
-						$("#DivAlertas").html('<div class="alert alert-success"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-check"></i> Ok.</a> El registro se almaceno correctamente. </div>');
+        $.ajax({
+            url: "../../../varios/upload_file.php",
+            type: "POST",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                $("#DivAlertarAdjuntoDigital").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+            },
+            success: function (msj) {
+                if (msj == 1) {
+                    $("#BtnCancelarSubirDigital").click();
+                    $("#DivAlertarAdjuntoDigital").empty();
+                } else {
+                    sweetAlert("Oops...", msj, "error");
+                }
+            },
+            warning: function () {
+                sweetAlert("Oops...", msj, "error");
+            },
+        });
+    });
 
-						setTimeout(function () {
-							window.location.href = "index.php";
-						}, 200);
+    $(document).on("click", "#BtnSubirDocumentosAdicionales", function (event) {
+        $("#id_radicado").val($(this).data("id_radicado"));
+        $("#id_depen").val($(this).data("id_depen"));
+    });
 
-					}else{
-						sweetAlert("Oops...", msj+"!", "warning");
-					}
-				},
-				error:function(){
-					sweetAlert("Oops...", "Ha ocurrido un error durante la ejecución", "error");
-				}
-			});
-		}
-		return false;
-	});
+    $(document).on("click", "#BtnSubirArchivosAdicionales", function (event) {
+        $.ajax({
+            url: "../../../varios/upload_file.php",
+            type: "POST",
+            data: "accion=INTERNO_UPLOAD&id_radicado=" + $("#id_radicado").val() + "&id_depen=" + $("#id_depen").val(),
+            beforeSend: function () {
+                $("#DivAlertarAdjuntoDigital").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+            },
+            success: function (msj) {
+                if (msj == 1) {
+                    $("#BtnCancelarSubirArchivosAdicionales").click();
+                } else {
+                    sweetAlert("Oops...", msj, "error");
+                }
+            },
+            warning: function (msj) {
+                sweetAlert("Oops...", msj, "error");
+            },
+        });
+    });
 
-	$('#BtnSubirDigital').click(function(){
+    //FUNCION PARA CARGAR LA INFORMACION DEL RADICADO
+    $(document).on("click", "#BtnMostarInfoRadicadoInterno", function (event) {
+        var IdRadicado = $(this).data("id_radicado");
 
-		var formData = new FormData($(".formulario")[0]);
+        $("#DivRadicadoInterno").html(IdRadicado);
 
-		$.ajax({
-			url: '../../../varios/ftp.acciones.php',
-			type: 'POST',
-			data: formData,
-			cache: false,
-			contentType: false,
-			processData: false,
-			beforeSend: function(){
-				$("#DivAlertarAdjuntoDigital").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-			},
-			success:function(msj){
-				if(msj == 1){
-					$('#BtnCancelarSubirDigital').click();
-					$("#DivAlertarAdjuntoDigital").empty();
-				}else{
-					sweetAlert("Oops...", msj, "error");
-				}
-			},
-			warning:function(){
-				sweetAlert("Oops...", msj, "error");
-			}
-		});
-	});
+        $.ajax({
+            url: "../../varios/tab_radicado_interno_info.php",
+            type: "POST",
+            data: "id_radica=" + IdRadicado,
+            beforeSend: function () {
+                $("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+            },
+            success: function (msj) {
+                $("#alerta").empty();
+                $("#DivMostarInfoRadicadoInterno").html(msj);
+            },
+            error: function (msj) {
+                $("#alerta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución ' + msj + "</div>");
+            },
+        });
 
-	$(document).on('click', '#BtnSubirDocumentosAdicionales', function(event){
-		$('#id_radicado').val($(this).data('id_radicado'));
-		$('#id_depen').val($(this).data('id_depen'));
-	});
+        $.ajax({
+            url: "../../varios/tab_radicado_interno_clasificacion.php",
+            type: "POST",
+            data: "id_radica=" + IdRadicado,
+            beforeSend: function () {
+                $("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+            },
+            success: function (msj) {
+                $("#alerta").empty();
+                $("#DivMostarInfoRadicadoInternoClasificacionDocumental").html(msj);
+            },
+            error: function (msj) {
+                $("#alerta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución ' + msj + "</div>");
+            },
+        });
 
-	$(document).on('click', '#BtnSubirArchivosAdicionales', function(event){
+        $.ajax({
+            url: "../../varios/tab_radicado_interno_documentos.php",
+            type: "POST",
+            data: "id_radica=" + IdRadicado,
+            beforeSend: function () {
+                $("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+            },
+            success: function (msj) {
+                $("#alerta").empty();
+                $("#DivMostarDocumentosInterno").html(msj);
+            },
+            error: function (msj) {
+                $("#alerta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución ' + msj + "</div>");
+            },
+        });
 
-		$.ajax({
-			url: '../../../varios/ftp.acciones.php',
-			type: 'POST',
-			data: 'accion=INTERNO_UPLOAD&id_radicado='+$('#id_radicado').val()+'&id_depen='+$('#id_depen').val(),
-			beforeSend: function(){
-				$("#DivAlertarAdjuntoDigital").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-			},
-			success:function(msj){
-				if(msj == 1){
-					$('#BtnCancelarSubirArchivosAdicionales').click();
-				}else{
-					sweetAlert("Oops...", msj, "error");
-				}
-			},
-			warning:function(msj){
-				sweetAlert("Oops...", msj, "error");
-			}
-		});
-	});
+        $.ajax({
+            url: "../../varios/tab_radicado_interno_otra_info.php",
+            type: "POST",
+            data: "id_radica=" + IdRadicado,
+            beforeSend: function () {
+                $("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+            },
+            success: function (msj) {
+                $("#alerta").empty();
+                $("#DivOtraInfoRadicadoInterno").html(msj);
+            },
+            error: function (msj) {
+                $("#alerta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución ' + msj + "</div>");
+            },
+        });
+    });
 
-	//FUNCION PARA CARGAR LA INFORMACION DEL RADICADO
-	$(document).on('click', '#BtnMostarInfoRadicadoInterno', function(event){
-		var IdRadicado = $(this).data('id_radicado');
+    $(document).on("click", "#BtnDescargarArchivoInterno", function (event) {
+        var IdRadicado = $(this).data("id_radicado");
+        var IdFuncionario = $(this).data("id_funcio");
+        var Archivo = $(this).data("archivo");
+        var IdRuta = $(this).data("id_ruta");
+        var Archivo = $(this).data("archivo");
 
-		$('#DivRadicadoInterno').html(IdRadicado)
+        $.ajax({
+            url: "../../../varios/ftp.acciones.php",
+            type: "POST",
+            data: "accion=INTERNO_DOWNLOAD&id_radicado=" + IdRadicado + "&id_ruta=" + IdRuta + "&archiv_interno=" + Archivo,
+            beforeSend: function () {
+                $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+            },
+            success: function (msj) {
+                if (msj == 1) {
+                    window.open("../../../../archivos/temp/interna/" + Archivo, "_blank");
+                    $("#DivAlertas").empty();
+                } else {
+                    sweetAlert("Oops...", msj, "warning");
+                }
+            },
+            error: function (msj) {
+                sweetAlert("Error...", msj, "error");
+            },
+        });
+    });
 
-		$.ajax({
-			url: '../../varios/tab_radicado_interno_info.php',
-			type: 'POST',
-			data: 'id_radica='+IdRadicado,
-			beforeSend: function(){
-				$("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-			},
-			success:function(msj){
-				$("#alerta").empty();
-				$("#DivMostarInfoRadicadoInterno").html(msj);
-			},
-			error:function(msj){
-				$("#alerta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución '+msj+'</div>');
-			}
-		});
+    $("#BtnBuscarRadicadosInternos").click(function (e) {
+        $("#TxtBusRadicadosInternosParaRespuesta").focus();
+    });
 
-		$.ajax({
-			url: '../../varios/tab_radicado_interno_clasificacion.php',
-			type: 'POST',
-			data: 'id_radica='+IdRadicado,
-			beforeSend: function(){
-				$("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-			},
-			success:function(msj){
-				$("#alerta").empty();
-				$("#DivMostarInfoRadicadoInternoClasificacionDocumental").html(msj);
-			},
-			error:function(msj){
-				$("#alerta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución '+msj+'</div>');
-			}
-		});
+    //FUNCION PARA BUSCAR EL TERCERO NATURAL
+    $("#TxtBusRadicadosInternosParaRespuesta").keyup(function (e) {
+        if (e.which == 13) {
+            if ($("#TxtBusRadicadosInternosParaRespuesta").val() === "") {
+                $("#DivAlertasRadicadosInternosParaRespuesta").load(
+                    "../../../config/funciones.php",
+                    {
+                        alerta: 3,
+                        mensaje: "Te hizo falta ingresar el criterio de busqueda",
+                    },
+                    function () {}
+                );
+                $("#TxtBusRadicadosInternosParaRespuesta").focus();
+            } else {
+                $.ajax({
+                    url: "../../varios/listar_radicados_internos_para_respuesta.php",
+                    type: "POST",
+                    data: "criterio=" + $("#TxtBusRadicadosInternosParaRespuesta").val(),
+                    beforeSend: function () {
+                        $("#DivAlertasRadicadosInternosParaRespuesta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+                    },
+                    success: function (msj) {
+                        $("#DivAlertasRadicadosInternosParaRespuesta").empty();
+                        if (msj != 1) {
+                            $("#DivRadicadosInternosParaRespuesta").html(msj);
+                        } else {
+                            $("#DivRadicadosInternosParaRespuesta").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> ' + msj + ".</div>");
+                        }
+                    },
+                    error: function (msj) {
+                        $("#DivAlertasRadicadosInternosParaRespuesta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución ' + msj + "</div>");
+                    },
+                });
+            }
+        }
+    });
+    //FUNCION PARA BORRAR UN RESPONSABLES
+    $(document).on("click", ".borrar_responsables", function (event) {
+        event.preventDefault();
+        $(this).closest("tr").remove();
+        $("#ChkResponsables" + $(this).data("id")).attr("checked", false);
+    });
 
-		$.ajax({
-			url: '../../varios/tab_radicado_interno_documentos.php',
-			type: 'POST',
-			data: 'id_radica='+IdRadicado,
-			beforeSend: function(){
-				$("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-			},
-			success:function(msj){
-				$("#alerta").empty();
-				$("#DivMostarDocumentosInterno").html(msj);
-			},
-			error:function(msj){
-				$("#alerta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución '+msj+'</div>');
-			}
-		});
+    //FUNCION PARA LLEVAR LOS RESPONSABLES
+    $("#BtnLlevarResponsables").click(function (e) {
+        $("input[name='ChkResponsables[]']:checked").each(function () {
+            if (!$("#TblResponsales" + $(this).val()).length) {
+                $("#TblResponsales tr:last").after('<tr id="TblResponsales' + $(this).val() + '"><td><div class="radio radio-success"><input type="radio" class="dependencia_del_responsable" name="ChkFuncioRespon" id="ChkFuncioRespon' + $(this).val() + '" value="' + $(this).val() + '" data-id_responsable_dependencia="' + $(this).data("id_dependencia_responsables") + '" data-id_responsable_oficina="' + $(this).data("id_oficina_responsables") + '"><label for="ChkFuncioRespon' + $(this).val() + '">' + $(this).data("nombre_responsables") + "</label></div></td><td>" + $(this).data("oficina_responsables") + '</td><td><button class="borrar_responsables btn btn-danger btn-sm btn-small" data-id="' + $(this).val() + '" ><i class="fa fa-trash-o"></i></button></td></tr>');
+            }
+        });
+    });
 
-		$.ajax({
-			url: '../../varios/tab_radicado_interno_otra_info.php',
-			type: 'POST',
-			data: 'id_radica='+IdRadicado,
-			beforeSend: function(){
-				$("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-			},
-			success:function(msj){
-				$("#alerta").empty();
-				$("#DivOtraInfoRadicadoInterno").html(msj);
-			},
-			error:function(msj){
-				$("#alerta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución '+msj+'</div>');
-			}
-		});
-	});
+    //FUNCION PARA BORRAR UN DESTINATARIOS
+    $(document).on("click", "#BtnBorraDestinatarios", function (event) {
+        event.preventDefault();
+        $(this).closest("tr").remove();
+        $("#ChkDestinatarios" + $(this).data("id")).prop("checked", false);
+    });
 
-	$(document).on('click', '#BtnDescargarArchivoInterno', function(event){
+    //FUNCION PARA LLEVAR LOS DESTINATARIOS
+    $("#BtnLlevarDestinatarios").click(function () {
+        $("input[name='ChkDestinatarios[]']:checked").each(function () {
+            if (!$("#TrDestinatarios" + $(this).val()).length) {
+                $("#TblDestinatarios tr:last").after('<tr id="TrDestinatarios' + $(this).val() + '"><td>' + $(this).data("nombre_destinatario") + "</td><td>" + $(this).data("oficina_destinatario") + '</td><td><button class="btn btn-danger btn-sm btn-small" id="BtnBorraDestinatarios" data-id="' + $(this).val() + '" ><i class="fa fa-trash-o"></i></button></td></tr>');
+            }
+        });
+    });
 
-		var IdRadicado    = $(this).data('id_radicado');
-		var IdFuncionario = $(this).data('id_funcio');
-		var Archivo       = $(this).data('archivo');
-		var IdRuta        = $(this).data('id_ruta');
-		var Archivo       = $(this).data('archivo');
+    //FUNCION PARA BORRAR UN PROYECTORES
+    $(document).on("click", "#BtnBorraProyectores", function (event) {
+        event.preventDefault();
+        $(this).closest("tr").remove();
+        $("#ChkProyectores" + $(this).data("id")).prop("checked", false);
+    });
 
-		$.ajax({
-			url: '../../../varios/ftp.acciones.php',
-			type: 'POST',
-			data: 'accion=INTERNO_DOWNLOAD&id_radicado='+IdRadicado+'&id_ruta='+IdRuta+'&archiv_interno='+Archivo,
-			beforeSend: function(){
-				$("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-			},
-			success:function(msj){
-				if(msj == 1){
-					window.open("../../../../archivos/temp/interna/"+Archivo, '_blank');
-					$("#DivAlertas").empty();
-				}else{
-					sweetAlert("Oops...", msj, "warning");
-				}
-			},
-			error:function(msj){
-				sweetAlert("Error...", msj, "error");
-			}
-		});
-	});
+    //FUNCION PARA LLEVAR LOS PROYECTORES
+    $("#BtnLlevarProyectores").click(function () {
+        $("input[name='ChkProyectores[]']:checked").each(function () {
+            if (!$("#TrProyectores" + $(this).val()).length) {
+                $("#TblProyectores tr:last").after('<tr id="TrProyectores' + $(this).val() + '"><td>' + $(this).data("nombre_proyector") + "</td><td>" + $(this).data("oficina_proyector") + '</td><td><button class="btn btn-danger btn-sm btn-small" id="BtnBorraProyectores" data-id="' + $(this).val() + '" ><i class="fa fa-trash-o"></i></button></td></tr>');
+            }
+        });
+    });
 
-	$('#BtnBuscarRadicadosInternos').click(function(e){
-		$("#TxtBusRadicadosInternosParaRespuesta").focus();
-	});
+    //FUNCION PARA BORRAR CON COPIA
+    $(document).on("click", "#BtnBorraDestinatarios", function (event) {
+        event.preventDefault();
+        $(this).closest("tr").remove();
+        $("#ChkDestinatarios" + $(this).data("id")).prop("checked", false);
+    });
 
-	//FUNCION PARA BUSCAR EL TERCERO NATURAL
-	$("#TxtBusRadicadosInternosParaRespuesta").keyup(function(e){
-		if(e.which == 13){
-			if($("#TxtBusRadicadosInternosParaRespuesta").val() === ""){
-				$("#DivAlertasRadicadosInternosParaRespuesta").load("../../../config/funciones.php",{
-					alerta:3,
-					mensaje:'Te hizo falta ingresar el criterio de busqueda'},function(){});
-				$("#TxtBusRadicadosInternosParaRespuesta").focus();
-			}else{
-				$.ajax({
-					url: '../../varios/listar_radicados_internos_para_respuesta.php',
-					type: 'POST',
-					data: 'criterio='+$("#TxtBusRadicadosInternosParaRespuesta").val(),
-					beforeSend: function(){
-						$("#DivAlertasRadicadosInternosParaRespuesta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
-					},
-					success:function(msj){
-						$("#DivAlertasRadicadosInternosParaRespuesta").empty();
-						if(msj != 1){
-							$("#DivRadicadosInternosParaRespuesta").html(msj);
-						}else{
-							$("#DivRadicadosInternosParaRespuesta").html('<div class="alert"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><i class="fa fa-exclamation-circle"></i> Upsss.</a> '+msj+'.</div>');
-						}
-					},
-					error:function(msj){
-						$("#DivAlertasRadicadosInternosParaRespuesta").html('<div class="alert alert-error"><button class="close" data-dismiss="alert"></button><a href="#" class="link">Error: </a> Ha ocurrido un error durante la ejecución '+msj+'</div>');
-					}
-				});
-			}
-		}
-	});
-	//FUNCION PARA BORRAR UN RESPONSABLES
-	$(document).on('click', '.borrar_responsables', function(event){
-		event.preventDefault();
-		$(this).closest('tr').remove();
-		$("#ChkResponsables"+$(this).data('id')).attr('checked', false);
-	});
+    //FUNCION PARA LLEVAR CON COPIA
+    $("#BtnLlevarConCopia").click(function () {
+        $("input[name='ChkConCopia[]']:checked").each(function () {
+            if (!$("#TrConCopia" + $(this).val()).length) {
+                $("#TblConCopia tr:last").after('<tr id="TrConCopia' + $(this).val() + '"><td>' + $(this).data("nombre_destinatario") + "</td><td>" + $(this).data("oficina_destinatario") + '</td><td><button class="btn btn-danger btn-sm btn-small" id="BtnBorraDestinatarios" data-id="' + $(this).val() + '" ><i class="fa fa-trash-o"></i></button></td></tr>');
+            }
+        });
+    });
 
-	//FUNCION PARA LLEVAR LOS RESPONSABLES
-	$('#BtnLlevarResponsables').click(function(e){
-		$("input[name='ChkResponsables[]']:checked").each(function (){
-			if(!$('#TblResponsales'+$(this).val()).length){
-				$('#TblResponsales tr:last').after('<tr id="TblResponsales'+$(this).val()+'"><td><div class="radio radio-success"><input type="radio" class="dependencia_del_responsable" name="ChkFuncioRespon" id="ChkFuncioRespon'+$(this).val()+'" value="'+$(this).val()+'" data-id_responsable_dependencia="'+$(this).data('id_dependencia_responsables')+'" data-id_responsable_oficina="'+$(this).data('id_oficina_responsables')+'"><label for="ChkFuncioRespon'+$(this).val()+'">'+$(this).data('nombre_responsables')+'</label></div></td><td>'+$(this).data('oficina_responsables')+'</td><td><button class="borrar_responsables btn btn-danger btn-sm btn-small" data-id="'+$(this).val()+'" ><i class="fa fa-trash-o"></i></button></td></tr>');
-			}
-		});
-	});
+    //FUNCION PARA CARGAR LA TRD DE LA DEPENDEICA DEL FUNCIONARIO ELEJIDO
+    $("body").on("change", ".dependencia_del_responsable", function (event) {
+        event.preventDefault();
 
-	//FUNCION PARA BORRAR UN DESTINATARIOS
-	$(document).on('click', '#BtnBorraDestinatarios', function(event){
-		event.preventDefault();
-		$(this).closest('tr').remove();
-		$("#ChkDestinatarios"+$(this).data('id')).prop('checked', false);
-	});
+        var IdDepen = $(this).data("id_responsable_dependencia");
+        var IdOficina = $(this).data("id_responsable_oficina");
+        var IncluirOficinaTRD = $("#incluir_oficina_trd").val();
 
-	//FUNCION PARA LLEVAR LOS DESTINATARIOS
-	$('#BtnLlevarDestinatarios').click(function(){
-		$("input[name='ChkDestinatarios[]']:checked").each(function (){
-			if(!$('#TrDestinatarios'+$(this).val()).length){
-				$('#TblDestinatarios tr:last').after('<tr id="TrDestinatarios'+$(this).val()+'"><td>'+$(this).data('nombre_destinatario')+'</td><td>'+$(this).data('oficina_destinatario')+'</td><td><button class="btn btn-danger btn-sm btn-small" id="BtnBorraDestinatarios" data-id="'+$(this).val()+'" ><i class="fa fa-trash-o"></i></button></td></tr>');
-			}
-		});
-	});
+        $("#id_depen").val(IdDepen);
+        $("#id_oficina").val(IdOficina);
+        $("#id_responsable").val($(this).val());
 
-	//FUNCION PARA BORRAR UN PROYECTORES
-	$(document).on('click', '#BtnBorraProyectores', function(event){
-		event.preventDefault();
-		$(this).closest('tr').remove();
-		$("#ChkProyectores"+$(this).data('id')).prop('checked', false);
-	});
+        $.post(
+            "../../../varios/combo_series.php",
+            {
+                id_depen: IdDepen,
+                id_oficina: IdOficina,
+                IncluirOficinaTRD: IncluirOficinaTRD,
+            },
+            function (data) {
+                $("#id_serie").html(data);
+            }
+        );
+    });
 
-	//FUNCION PARA LLEVAR LOS PROYECTORES
-	$('#BtnLlevarProyectores').click(function(){
-		$("input[name='ChkProyectores[]']:checked").each(function (){
-			if(!$('#TrProyectores'+$(this).val()).length){
-				$('#TblProyectores tr:last').after('<tr id="TrProyectores'+$(this).val()+'"><td>'+$(this).data('nombre_proyector')+'</td><td>'+$(this).data('oficina_proyector')+'</td><td><button class="btn btn-danger btn-sm btn-small" id="BtnBorraProyectores" data-id="'+$(this).val()+'" ><i class="fa fa-trash-o"></i></button></td></tr>');
-			}
-		});
-	});
+    //FUNCION PARA IMPRIMIR ROTULO
+    $(document).on("click", ".ImprimirRotulo", function (event) {
+        if ($("#tipo_impre_torulo").val() == 1) {
+            $("#ifrImprimirRotulo").attr("src", "../../../reportes/ventanilla/rotulos/imprimir_rotulo_interno_tickect.php?id_radica=" + $(this).data("id_radicado"));
+        } else if ($("#tipo_impre_torulo").val() == 2) {
+            $("#ifrImprimirRotulo").attr("src", "../../../reportes/ventanilla/rotulos/imprimir_rotulo_interno_documento.php?id_radica=" + $(this).data("id_radicado"));
+        }
 
-	//FUNCION PARA BORRAR CON COPIA
-	$(document).on('click', '#BtnBorraDestinatarios', function(event){
-		event.preventDefault();
-		$(this).closest('tr').remove();
-		$("#ChkDestinatarios"+$(this).data('id')).prop('checked', false);
-	});
+        $.ajax({
+            url: "accionesVentanillaInterna.ajax.php",
+            type: "POST",
+            data: "accion=IMPRIMIR_ROTULO&id_radica=" + $(this).data("id_radicado"),
+            success: function (data) {
+                if (data == 1) {
+                    $("i[id=BtnImprimirRotulo" + $("#id_radicado").val() + "]").removeClass("text-warning");
+                    $("i[id=BtnImprimirRotulo" + $("#id_radicado").val() + "]").addClass("text-success");
+                } else {
+                    $("i[id=BtnImprimirRotulo" + $("#id_radicado").val() + "]").removeClass("text-warning");
+                    $("i[id=BtnImprimirRotulo" + $("#id_radicado").val() + "]").addClass("text-danger");
+                }
+            },
+            error: function (data) {
+                sweetAlert("Oops...", data, "warning");
+            },
+        });
+    });
 
-	//FUNCION PARA LLEVAR CON COPIA
-	$('#BtnLlevarConCopia').click(function(){
-		$("input[name='ChkConCopia[]']:checked").each(function (){
-			if(!$('#TrConCopia'+$(this).val()).length){
-				$('#TblConCopia tr:last').after('<tr id="TrConCopia'+$(this).val()+'"><td>'+$(this).data('nombre_destinatario')+'</td><td>'+$(this).data('oficina_destinatario')+'</td><td><button class="btn btn-danger btn-sm btn-small" id="BtnBorraDestinatarios" data-id="'+$(this).val()+'" ><i class="fa fa-trash-o"></i></button></td></tr>');
-			}
-		});
-	});
+    //LIMPIAR LA FECHA DE VENCIEMIENTO CUANDO NO REQUIERE RESPUESTA
+    $("#chkTerms").change(function () {
+        var Respues = $("#chkTerms").prop("checked") ? true : false;
+        if (Respues == false) {
+            $("#fec_venci").val("");
+        }
+    });
 
-	//FUNCION PARA CARGAR LA TRD DE LA DEPENDEICA DEL FUNCIONARIO ELEJIDO
-	$("body").on("change",".dependencia_del_responsable",function(event){
-		event.preventDefault();
+    $("#id_serie").change(function () {
+        var Responsables = new Array();
 
-		var IdDepen           = $(this).data('id_responsable_dependencia');
-		var IdOficina         = $(this).data('id_responsable_oficina');
-		var IncluirOficinaTRD = $('#incluir_oficina_trd').val();
+        $("input[name='ChkResponsables[]']:checked").each(function () {
+            Responsables.push($(this).val());
+        });
 
-		$('#id_depen').val(IdDepen);
-		$('#id_oficina').val(IdOficina)
-		$('#id_responsable').val($(this).val());
+        if (Responsables == "") {
+            sweetAlert("Oops...", "Te hizo falta el o los destinatarios de la correspondencia!", "warning");
+            $("#BtnBuscarDestinatario").click();
+        } else if (!$('input[name="ChkResponsables[]"]').is(":checked")) {
+            sweetAlert("Oops...", "Debe establecer el responsable de la correspondencia!", "warning");
+        } else {
+            $("#id_serie option:selected").each(function () {
+                $.post(
+                    "../../../varios/combo_sub_series.php",
+                    {
+                        id_serie: $(this).val(),
+                        id_depen: $("#id_depen").val(),
+                        id_oficina: $("#id_oficina").val(),
+                        IncluirOficinaTRD: $("#incluir_oficina_trd").val(),
+                    },
+                    function (data) {
+                        $("#id_subserie").html(data);
+                    }
+                );
+            });
+        }
+    });
 
-		$.post("../../../varios/combo_series.php", {
-			id_depen: IdDepen,
-			id_oficina: IdOficina,
-			IncluirOficinaTRD: IncluirOficinaTRD
-		}, function (data) {
-			$("#id_serie").html(data);
-		});
-	});
+    $("#id_subserie").change(function () {
+        $("#id_subserie option:selected").each(function () {
+            var id_serie = $("#id_serie").val();
+            var id_sub_serie = $(this).val();
 
-	//FUNCION PARA IMPRIMIR ROTULO
-	$(document).on('click', '.ImprimirRotulo', function(event){
+            $.post(
+                "../../../varios/combo_tipos_documentos.php",
+                {
+                    accion: $("#accion").val(),
+                    id_depen: $("#id_depen").val(),
+                    id_serie: id_serie,
+                    id_sub_serie: id_sub_serie,
+                },
+                function (data) {
+                    $("#id_tipodoc").html(data);
+                }
+            );
+        });
+    });
 
-		if($('#tipo_impre_torulo').val() == 1){
-			$("#ifrImprimirRotulo").attr("src","../../../reportes/ventanilla/rotulos/imprimir_rotulo_interno_tickect.php?id_radica="+$(this).data('id_radicado'));
-		}else if($('#tipo_impre_torulo').val() == 2){
-			$("#ifrImprimirRotulo").attr("src","../../../reportes/ventanilla/rotulos/imprimir_rotulo_interno_documento.php?id_radica="+$(this).data('id_radicado'));
-		}
+    //FUNCIONES PARA ESTABLCER EL ID DEL RADICADO PARA AGREGAR
+    //EL ARCHIVO DIGITAL E IMPRIMIR EL ROTULO
+    $(document).on("click", ".idradicado", function (event) {
+        $("#IdRadicado").val($(this).data("id_radicado"));
+        $("#id_radicado").val($(this).data("id_radicado"));
+        $("#id_depen").val($(this).data("id_depen"));
+    });
 
-		$.ajax({
-			url: 'accionesVentanillaInterna.ajax.php',
-			type: 'POST',
-			data: 'accion=IMPRIMIR_ROTULO&id_radica='+$(this).data('id_radicado'),
-			success:function(data){
-				if(data == 1){
-					$('i[id=BtnImprimirRotulo'+$('#id_radicado').val()+']').removeClass('text-warning');
-					$('i[id=BtnImprimirRotulo'+$('#id_radicado').val()+']').addClass('text-success');
-				}else{
-					$('i[id=BtnImprimirRotulo'+$('#id_radicado').val()+']').removeClass('text-warning');
-					$('i[id=BtnImprimirRotulo'+$('#id_radicado').val()+']').addClass('text-danger');
-				}
-			},
-			error:function(data){
-				sweetAlert("Oops...", data, "warning");
-			}
-		});
-	});
+    $(document).on("click", ".ImprimirRotulo", function (event) {
+        $("#IdRadicado").val($(this).data("id_radicado"));
+        $("#id_radicado").val($(this).data("id_radicado"));
+    });
 
-	//LIMPIAR LA FECHA DE VENCIEMIENTO CUANDO NO REQUIERE RESPUESTA
-	$("#chkTerms").change(function(){
-		var Respues = $("#chkTerms").prop("checked") ? true : false
-		if(Respues == false){
-			$('#fec_venci').val('');
-		}
-	});
-
-	$("#id_serie").change(function () {
-		var Responsables = new Array();
-
-		$("input[name='ChkResponsables[]']:checked").each(function () {
-			Responsables.push($(this).val());
-		});
-
-		if (Responsables == ""){
-			sweetAlert("Oops...", "Te hizo falta el o los destinatarios de la correspondencia!", "warning");
-			$('#BtnBuscarDestinatario').click();
-		}else if (!$('input[name="ChkResponsables[]"]').is(':checked')) {
-			sweetAlert("Oops...", "Debe establecer el responsable de la correspondencia!", "warning");
-		}else{
-			$("#id_serie option:selected").each(function () {
-				$.post("../../../varios/combo_sub_series.php", {
-					id_serie: $(this).val(),
-					id_depen: $('#id_depen').val(),
-					id_oficina: $('#id_oficina').val(),
-					IncluirOficinaTRD: $('#incluir_oficina_trd').val()
-				}, function(data){
-					$("#id_subserie").html(data);
-				});
-			});
-		}
-	});
-
-	$("#id_subserie").change(function () {
-		$("#id_subserie option:selected").each(function () {
-			var id_serie = $("#id_serie").val();
-			var id_sub_serie = $(this).val();
-
-			$.post("../../../varios/combo_tipos_documentos.php", {
-				accion: $('#accion').val(),
-				id_depen: $('#id_depen').val(),
-				id_serie: id_serie,
-				id_sub_serie: id_sub_serie
-			}, function (data) {
-				$("#id_tipodoc").html(data);
-			});
-		});
-	});
-
-	//FUNCIONES PARA ESTABLCER EL ID DEL RADICADO PARA AGREGAR
-	//EL ARCHIVO DIGITAL E IMPRIMIR EL ROTULO
-	$(document).on('click', '.idradicado', function(event){
-		$('#IdRadicado').val($(this).data('id_radicado'));
-		$('#id_radicado').val($(this).data('id_radicado'));
-		$('#id_depen').val($(this).data('id_depen'));
-	});
-
-	$(document).on('click', '.ImprimirRotulo', function(event){
-		$('#IdRadicado').val($(this).data('id_radicado'));
-		$('#id_radicado').val($(this).data('id_radicado'));
-	});
-
-	$(document).on('change', '.ojo', function(event){
-	    $('#id_responsable').val($(this).val())
+    $(document).on("change", ".ojo", function (event) {
+        $("#id_responsable").val($(this).val());
     });
 });

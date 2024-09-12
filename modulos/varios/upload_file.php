@@ -17,10 +17,10 @@ require_once '../clases/configuracion/class.ConfigServidor_Calidad.php';
 require_once '../clases/calidad/class.CalidadRepositorio.php';
 require_once '../clases/varias/class.ftp.php';
 
-$Accion              = isset($_POST['accion']) ? $_POST['accion'] : null;
+$Accion              = isset($_REQUEST['accion']) ? $_REQUEST['accion'] : null;
 $archivoId           = isset($_POST['archivo_id']) ? $_POST['archivo_id'] : null;
 $IdDepen             = isset($_POST['id_depen']) ? $_POST['id_depen'] : null;
-$IdRadica            = isset($_POST['id_radicado']) ? $_POST['id_radicado'] : null;
+$IdRadica            = isset($_REQUEST['id_radicado']) ? $_REQUEST['id_radicado'] : null;
 $IdTemp              = isset($_POST['id_temp']) ? $_POST['id_temp'] : null;
 $IdPqr               = isset($_POST['id_pqr']) ? $_POST['id_pqr'] : null;
 $IdRuta              = isset($_POST['id_ruta']) ? $_POST['id_ruta'] : null;
@@ -40,20 +40,17 @@ $ArchivoInterno = isset($_POST['archiv_interno']) ? $_POST['archiv_interno'] : n
 
 switch ($Accion) {
 	case 'RECIBIDOS_UPLOAD':
+		// Lee el contenido del archivo
+		$file_content = file_get_contents($ArchivoSubirTMP);
 
-		/**
-		 * Codifico el archivo a subir
-		 */
-		$archivoCodificado = decodeBase64($ArchivoSubirTMP);
+		// Codifica el archivo en Base64
+		$base64_encoded = base64_encode($file_content);
 
-		/**
-		 * Actualizo el archivo en la tabla archivo_radica_recibidos
-		 */
 		$Radicado = new RadicadoRecibido();
 		$Radicado->set_Accion(4);
 		$Radicado->set_IdRadica($IdRadica);
-		$Radicado->set_IdRuta($IdRuta);
-		$Radicado->set_Archivo($archivoCodificado);
+		$Radicado->set_NombreArchivo($ArchivoSubirNOMBRE);
+		$Radicado->set_Archivo(encrypt($base64_encoded));
 		if ($Radicado->Gestionar() == "true") {
 			echo 1;
 			exit();
@@ -61,214 +58,57 @@ switch ($Accion) {
 
 		break;
 	case 'RECIBIDOS_DESCARGAR':
-
 		/**
 		 * Busco los datos del radicado
 		 */
-		$Radicado      = RadicadoRecibido::Buscar(1, $IdRadica, "", "", "", "");
+		$Radicado = RadicadoRecibido::Buscar(1, $IdRadica, "", "", "", "");
 
-		/**
-		 * Decodifico el archivo a subir
-		 */
-		//$archivoDecodificado = encodeBase64($Radicado->get_Archivo());
 		// Decodifica el contenido Base64
 		$decoded_content = base64_decode($Radicado->get_Archivo());
 
-		// Guarda el contenido decodificado en un nuevo archivo
-		file_put_contents('../../archivos/temp/', $decoded_content);
-
-		// Establece el nombre del archivo decodificado
-		$file_name = 'archivo_decodificado.pdf';
-
-		// Establecer cabeceras para la descarga
-		header('Content-Description: File Transfer');
+		// Enviar los encabezados para la descarga
 		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename="' . $file_name . '"');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate');
-		header('Pragma: public');
+		header('Content-Disposition: attachment; filename="' . $Radicado->get_NombreArchivo() . '"');
 		header('Content-Length: ' . strlen($decoded_content));
 
 		// Enviar el archivo decodificado al navegador para su descarga
 		echo $decoded_content;
 		exit;
-
-
-		if (!is_dir(MI_ROOT_TEMP_RELATIVA . "/recibidos/"))
-			mkdir(MI_ROOT_TEMP_RELATIVA . "/recibidos/", 0777);
-
-		$ftpObj = new FTPClient();
-
-		//Connect
-		$ftpObj->connect($Ip, $Usuario, $Contra);
-		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-
-			$NomArchivo = $Radicado->get_Archivo();
-			$RutaArchivo = "";
-
-			if ($RutaFtp != "") {
-				$RutaArchivo = $Ano . "/" . $RutaFtp . "/" . $IdRadica . "/" . $NomArchivo;
-			} else {
-				$RutaArchivo = $Ano . "/" . $IdRadica . "/" . $NomArchivo;
-			}
-
-			$ftpObj->downloadFile(MI_ROOT_TEMP_RELATIVA . "/recibidos/" . $NomArchivo, $RutaArchivo);
-			if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-				echo 1;
-				exit();
-			} else {
-				echo "No fue posible descargar el archivo o el arhivo non existe";
-				exit();
-			}
-		} else {
-			echo "No fue posible conectarme con el servidor de archivo….\nPor favor consulte con el administrador del sistema.";
-			exit();
-		}
-		break;
-	case 'RECIBIDOS_ELIMINAR_DIGITAL':
-
-		$Servidor      = ServidorTemp::Buscar(2, $IdRuta, "", 1);
-		$Ip            = $Servidor->get_Ip();
-		$Usuario       = $Servidor->get_Usua();
-		$Contra        = $Servidor->get_Contra();
-		$RutaFtp       = $Servidor->get_Ruta();
-		$Radicado      = RadicadoRecibido::Buscar(1, $IdRadica, "", "", "", "");
-		$FechaRadicado = new DateTime($Radicado->get_FecRadica());
-		$Ano           = $FechaRadicado->format('Y');
-
-		if (!is_dir(MI_ROOT_TEMP_RELATIVA . "/recibidos/"))
-			mkdir(MI_ROOT_TEMP_RELATIVA . "/recibidos/", 0777);
-
-		$ftpObj = new FTPClient();
-
-		//Connect
-		$ftpObj->connect($Ip, $Usuario, $Contra);
-		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-
-			$NomArchivo = $Radicado->get_Archivo();
-			$RutaArchivo = "";
-
-			if ($RutaFtp != "") {
-				$RutaArchivo = $Ano . "/" . $RutaFtp . "/" . $IdRadica . "/" . $NomArchivo;
-			} else {
-				$RutaArchivo = $Ano . "/" . $IdRadica . "/" . $NomArchivo;
-			}
-
-			$ftpObj->deleteFile($RutaArchivo);
-			if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-				echo 1;
-				exit();
-			} else {
-				echo "No fue posible eliminar el archivo o el arhivo non existe";
-				exit();
-			}
-		} else {
-			echo "No fue posible conectarme con el servidor de archivo….\nPor favor consulte con el administrador del sistema.";
-			exit();
-		}
 		break;
 	case 'ENVIADOS_UPLOAD':
 
-		$Servidor = ServidorTemp::Buscar(5, 0, "", 2);
+		// Lee el contenido del archivo
+		$file_content = file_get_contents($ArchivoSubirTMP);
 
-		if (!$Servidor) {
-			echo "No se encontro el servidor de archivo para esta dependencia, por favor consulte con el administador del sistema.";
+		// Codifica el archivo en Base64
+		$base64_encoded = base64_encode($file_content);
+
+		$Radicado = new RadicadoEnviado();
+		$Radicado->set_Accion(4);
+		$Radicado->set_IdRadica($IdRadica);
+		$Radicado->set_NombreArchivo($ArchivoSubirNOMBRE);
+		$Radicado->set_Archivo($base64_encoded);
+		if ($Radicado->Gestionar() == true) {
+			echo 1;
 			exit();
 		}
 
-		$IdRuta        = $Servidor->get_IdRuta();
-		$Ip            = $Servidor->get_Ip();
-		$Usuario       = $Servidor->get_Usua();
-		$Contra        = $Servidor->get_Contra();
-		$RutaFtp       = $Servidor->get_Ruta();
-		$Radicado      = RadicadoEnviado::Buscar(1, $IdRadica);
-		$FechaRadicado = new DateTime($Radicado->get_FecRadica());
-		$Ano           = $FechaRadicado->format('Y');
-
-		$ftpObj = new FTPClient();
-		//Connect
-
-		$ftpObj->connect($Ip, $Usuario, $Contra);
-		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-
-			$Ruta = "";
-			if ($RutaFtp != "") {
-				$Ruta = $Ano . "/" . $RutaFtp . "/" . $IdRadica;
-				$ftpObj->makeDir($Ano);
-				$ftpObj->makeDir($Ano . "/" . $RutaFtp);
-				$ftpObj->makeDir($Ano . "/" . $RutaFtp . "/" . $IdRadica);
-			} else {
-				$Ruta = $Ano . "/" . $IdRadica;
-				$ftpObj->makeDir($Ano);
-				$ftpObj->makeDir($Ano . "/" . $RutaFtp . "/" . $IdRadica);
-			}
-
-			$Extencion = Extencion_Archivo($ArchivoSubirNOMBRE);
-			$Archivo = $Ruta . "/" . $IdRadica . "." . $Extencion;
-
-			$ftpObj->uploadFile($ArchivoSubirTMP, $Archivo);
-			if ($ftpObj->pr($ftpObj->getMessages()[1]) == 'true') {
-
-				//ESTABLEZCO EL NUMERO DE PAGINAS DEL ARCHIVO DIGITAL
-				$Radicado = new RadicadoEnviado();
-				$Radicado->set_Accion(4);
-				$Radicado->set_IdRadica($IdRadica);
-				$Radicado->set_IdRuta($IdRuta);
-				$Radicado->set_Archivo($IdRadica . "." . $Extencion);
-				if ($Radicado->Gestionar() == true) {
-					echo 1;
-					exit();
-				}
-			} else {
-				echo "No fue posible enviar el archivo al servidor, por favor consulte con el administrador del sistema";
-				exit();
-			}
-		} else {
-			echo "No fue posible conectarme con el servidor de archivo...\nPor favor consulte con el administrador del sistema.";
-			exit();
-		}
 		break;
 	case 'ENVIADOS_DESCARGAR':
 
-		$Servidor      = ServidorTemp::Buscar(2, $IdRuta, "", 2);
-		$Ip            = $Servidor->get_Ip();
-		$Usuario       = $Servidor->get_Usua();
-		$Contra        = $Servidor->get_Contra();
-		$RutaFtp       = $Servidor->get_Ruta();
-		$Radicado      = RadicadoEnviado::Buscar(1, $IdRadica);
-		$FechaRadicado = new DateTime($Radicado->get_FecRadica());
-		$Ano           = $FechaRadicado->format('Y');
+		$Radicado = RadicadoEnviado::Buscar(1, $IdRadica);
 
-		if (!is_dir(MI_ROOT_TEMP_RELATIVA . "/enviados/"))
-			mkdir(MI_ROOT_TEMP_RELATIVA . "/enviados/", 0777);
+		// Decodifica el contenido Base64
+		$decoded_content = base64_decode($Radicado->get_Archivo());
 
-		$ftpObj = new FTPClient();
+		// Enviar los encabezados para la descarga
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="' . $Radicado->get_NombreArchivo() . '"');
+		header('Content-Length: ' . strlen($decoded_content));
 
-		//Connect
-		$ftpObj->connect($Ip, $Usuario, $Contra);
-		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-
-			$NomArchivo = $Radicado->get_Archivo();
-			$RutaArchivo = "";
-
-			if ($RutaFtp != "") {
-				$RutaArchivo = $Ano . "/" . $RutaFtp . "/" . $IdRadica . "/" . $ArchivoDigital;
-			} else {
-				$RutaArchivo = $Ano . "/" . $IdRadica . "/" . $ArchivoDigital;
-			}
-
-			$ftpObj->downloadFile(MI_ROOT_TEMP_RELATIVA . "/enviados/" . $ArchivoDigital, $RutaArchivo);
-			if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-				echo 1;
-				exit();
-			} else {
-				echo "No fue posible descargar el archivo o el arhivo non existe";
-				exit();
-			}
-		} else {
-			echo "No fue posible conectarme con el servidor de archivo….\nPor favor consulte con el administrador del sistema.";
-			exit();
-		}
+		// Enviar el archivo decodificado al navegador para su descarga
+		echo $decoded_content;
+		exit;
 		break;
 	case 'ENVIADOS_UPLOAD_ADICIONALES':
 
@@ -348,145 +188,37 @@ switch ($Accion) {
 		break;
 	case 'INTERNO_UPLOAD':
 
-		$path =  MI_ROOT_TEMP_RELATIVA . "/temp_ventanilla/internos/" . $_SESSION['SesionUsuaId'];
-		if (is_dir($path)) {
-			$Servidor = ServidorTemp::Buscar(5, 0, "", 3);
+		// Lee el contenido del archivo
+		$file_content = file_get_contents($ArchivoSubirTMP);
 
-			if (!$Servidor) {
-				echo "No se encontro el servidor de archivo para esta dependencia, por favor consulte con el administador del sistema.";
-				exit();
-			}
+		// Codifica el archivo en Base64
+		$base64_encoded = base64_encode($file_content);
 
-			$IdRuta        = $Servidor->get_IdRuta();
-			$Ip            = $Servidor->get_Ip();
-			$Usuario       = $Servidor->get_Usua();
-			$Contra        = $Servidor->get_Contra();
-			$RutaFtp       = $Servidor->get_Ruta();
-			$Radicado      = RadicadoInterno::Buscar(1, $IdRadica, "", "", "");
-			$FechaRadicado = new DateTime($Radicado->get_FecRadica());
-			$Ano           = $FechaRadicado->format('Y');
-
-			$ftpObj = new FTPClient();
-
-			// Abrimos la carpeta que nos pasan como parámetro
-			$dir = opendir($path);
-
-			// Leo todos los ficheros de la carpeta
-			while ($elemento = readdir($dir)) {
-				if ($elemento != "." && $elemento != "..") {
-					if (!is_dir($path . $elemento)) {
-
-						$ArchivoAdicional = new RadicadoInternoAdjuntos();
-						$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
-						$ArchivoAdicional->set_IdRadica($IdRadica);
-						$ArchivoAdicional->set_NomArchivo($elemento);
-						if ($ArchivoAdicional->Gestionar() == true) {
-
-							$IdArchivoAdicional = $ArchivoAdicional->get_IdArchivo();
-
-							$ftpObj = new FTPClient();
-							//Connect
-
-							$ftpObj->connect($Ip, $Usuario, $Contra);
-							if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-
-								$Ruta = "";
-								if ($RutaFtp != "") {
-									$Ruta = $Ano . "/" . $RutaFtp . "/" . $IdRadica;
-									$ftpObj->makeDir($Ano);
-									$ftpObj->makeDir($Ano . "/" . $RutaFtp);
-									$ftpObj->makeDir($Ano . "/" . $RutaFtp . "/" . $IdRadica);
-								} else {
-									$Ruta = $Ano . "/" . $IdRadica;
-									$ftpObj->makeDir($Ano);
-									$ftpObj->makeDir($Ano . "/" . $RutaFtp . "/" . $IdRadica);
-								}
-
-								$Extencion = Extencion_Archivo($elemento);
-								$Archivo = $Ruta . "/" . $elemento;
-
-								$ftpObj->uploadFile($path . '/' . $elemento, $Archivo);
-								if ($ftpObj->pr($ftpObj->getMessages()[1]) == 'true') {
-									unlink($path . '/' . $elemento);
-								} else {
-									echo "No fue posible enviar el archivo al servidor, por favor consulte con el administrador del sistema";
-									exit();
-								}
-							} else {
-								echo "No fue posible conectarme con el servidor de archivo...\nPor favor consulte con el administrador del sistema.";
-								exit();
-							}
-						}
-					}
-				}
-			}
+		$ArchivoAdicional = new RadicadoInternoAdjuntos();
+		$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
+		$ArchivoAdicional->set_IdRadica($IdRadica);
+		$ArchivoAdicional->set_NomArchivo($ArchivoSubirNOMBRE);
+		$ArchivoAdicional->set_Archivo($base64_encoded);
+		if ($ArchivoAdicional->Gestionar() == true) {
+			echo 1;
+			exit();
 		}
-
-		echo 1;
-		exit();
 		break;
 	case 'INTERNO_UPLOAD_VENTANILLA':
 
-		$Servidor = ServidorTemp::Buscar(5, 0, "", 3);
+		// Lee el contenido del archivo
+		$file_content = file_get_contents($ArchivoSubirTMP);
 
-		if (!$Servidor) {
-			echo "No se encontro el servidor de archivo para esta dependencia, por favor consulte con el administador del sistema.";
-			exit();
-		}
+		// Codifica el archivo en Base64
+		$base64_encoded = base64_encode($file_content);
 
-		$IdRuta        = $Servidor->get_IdRuta();
-		$Ip            = $Servidor->get_Ip();
-		$Usuario       = $Servidor->get_Usua();
-		$Contra        = $Servidor->get_Contra();
-		$RutaFtp       = $Servidor->get_Ruta();
-		$Radicado      = RadicadoInterno::Buscar(1, $IdRadica, "", "", "");
-		$FechaRadicado = new DateTime($Radicado->get_FecRadica());
-		$Ano           = $FechaRadicado->format('Y');
-
-		$ftpObj = new FTPClient();
-		//Connect
-		$ftpObj->connect($Ip, $Usuario, $Contra);
-		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-
-			$Extencion = Extencion_Archivo($ArchivoSubirNOMBRE);
-			$Archivo   = "";
-
-			$Ruta = "";
-			if ($RutaFtp != "") {
-				$Ruta = $Ano . "/" . $RutaFtp . "/" . $IdRadica;
-				$ftpObj->makeDir($Ano . "/" . $RutaFtp);
-				$ftpObj->makeDir($Ano . "/" . $RutaFtp . "/" . $IdRadica);
-			} else {
-				$Ruta = $Ano . "/" . $IdRadica;
-				$ftpObj->makeDir($Ano);
-				$ftpObj->makeDir($Ano . "/" . $RutaFtp . "/" . $IdRadica);
-			}
-
-			$Extencion = Extencion_Archivo($Archivo);
-			$Archivo = $Ruta . "/" . $ArchivoSubirNOMBRE;
-
-			$ftpObj->uploadFile($ArchivoSubirTMP, $Archivo);
-			if ($ftpObj->pr($ftpObj->getMessages()[1]) == 'true') {
-				$Radicado = new RadicadoInterno();
-				$Radicado->set_Accion('EDITAR_RUTA');
-				$Radicado->set_IdRadica($IdRadica);
-				$Radicado->set_IdRuta($Servidor->get_IdRuta());
-				$Radicado->set_Adjunto(1);
-				$Radicado->Gestionar();
-
-				$Archivo = new RadicadoInternoAdjuntos();
-				$Archivo->set_Accion('INSERTAR_ARCHIVO');
-				$Archivo->set_IdRadica($IdRadica);
-				$Archivo->set_NomArchivo($ArchivoSubirNOMBRE);
-				$Archivo->Gestionar();
-				echo 1;
-				exit();
-			} else {
-				echo "No fue posible enviar el archivo al servidor, por favor consulte con el administrador del sistema";
-				exit();
-			}
-		} else {
-			echo "No fue posible conectarme con el servidor de archivo….\nPor favor consulte con el administrador del sistema.";
+		$ArchivoAdicional = new RadicadoInternoAdjuntos();
+		$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
+		$ArchivoAdicional->set_IdRadica($IdRadica);
+		$ArchivoAdicional->set_NomArchivo($ArchivoSubirNOMBRE);
+		$ArchivoAdicional->set_Archivo($base64_encoded);
+		if ($ArchivoAdicional->Gestionar() == true) {
+			echo 1;
 			exit();
 		}
 		break;

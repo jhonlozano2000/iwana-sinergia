@@ -23,7 +23,6 @@
         private $TipoDocumento;
         private $RadicaRespuesta;
         private $ImpriRotulo;
-        private $Origen;
 
         public function __construct(
             $Accion = null,
@@ -47,9 +46,7 @@
             $TipoDocumento = null,
             $RadicaRespuesta = null,
             $ImpriRotulo = null,
-            $Origen = null
         ) {
-
             $this->Accion          = $Accion;
             $this->IdRadica        = $IdRadica;
             $this->IdFuncioRegis   = $IdFuncioRegis;
@@ -71,7 +68,6 @@
             $this->TipoDocumento   = $TipoDocumento;
             $this->RadicaRespuesta = $RadicaRespuesta;
             $this->ImpriRotulo     = $ImpriRotulo;
-            $this->Origen          = $Origen;
         }
 
         public function get_IdRadica()
@@ -172,11 +168,6 @@
         public function get_ImpriRotulo()
         {
             return $this->ImpriRotulo;
-        }
-
-        public function get_Origen()
-        {
-            return $this->Origen;
         }
 
         // FUNCIONES PARA ENVIAR VALORES //
@@ -285,11 +276,6 @@
             return $this->ImpriRotulo = $ImpriRotulo;
         }
 
-        public function set_Origen($Origen)
-        {
-            return $this->Origen = $Origen;
-        }
-
         public function Gestionar()
         {
             $conexion = new Conexion();
@@ -338,7 +324,6 @@
                     $Instruc->bindParam(':observa_anexos', $this->ObservaAnexos, PDO::PARAM_STR);
                     $Instruc->bindParam(':texto', $this->Texto, PDO::PARAM_STR);
                     $Instruc->bindParam(':requie_respuesta', $this->RequiRespuesta, PDO::PARAM_INT);
-                    $Instruc->bindParam(':origen', $this->Origen, PDO::PARAM_STR);
                 } elseif ($this->Accion === 'EDITAR_RUTA') {
                     $Sql = "UPDATE archivo_radica_interna
                         SET `id_ruta` = :id_ruta, adjunto = :adjunto
@@ -1155,7 +1140,6 @@
                         $Result['tipo_documento'],
                         $Result['radica_respuesta'],
                         $Result['impri_rotu'],
-                        $Result['origen']
                     );
                 } else {
                     return false;
@@ -1174,7 +1158,7 @@
                 /* TOTALES DE RADICADOS CON COINSEDENCIAS EN EL RADICADO */
                 $SqlTotalIdRadica    = "SELECT COUNT(id_radica) AS 'Total' FROM `archivo_radica_interna` WHERE `transferido` = 0 AND `id_radica` LIKE ?";
                 $InstrucTotaIdRadica = $conexion->prepare($SqlTotalIdRadica);
-                $InstrucTotaIdRadica->execute(array('%' . $Criterio3 . '%')) or die(print_r($InstrucTotalAsunto->errorInfo() . " - " . $SqlTotalIdRadica, true));
+                $InstrucTotaIdRadica->execute(array('%' . $Criterio3 . '%')) or die(print_r($InstrucTotaIdRadica->errorInfo() . " - " . $SqlTotalIdRadica, true));
                 $ResultTotalIdRadica = $InstrucTotaIdRadica->fetch();
                 $TotalIdRadica       = $ResultTotalIdRadica['Total'];
 
@@ -1205,7 +1189,7 @@
                                     INNER JOIN `gene_funcionarios` AS `desti` ON (`desti_deta`.`id_funcio` = `desti`.`id_funcio`)
                                 WHERE (`radi`.`transferido` = 0 AND CONCAT(TRIM(`desti`.`nom_funcio`), ' ', TRIM(`desti`.`ape_funcio`)) LIKE ?)";
                 $InstrucTotalDestina = $conexion->prepare($SqlTotalDestina);
-                $InstrucTotalDestina->execute(array('%' . $Criterio3 . '%')) or die(print_r($SqlTotalContacto->errorInfo() . " - " . $SqlTotalContacto, true));
+                $InstrucTotalDestina->execute(array('%' . $Criterio3 . '%')) or die(print_r($InstrucTotalDestina->errorInfo() . " - " . $SqlTotalDestina, true));
                 $ResultTotalDestina = $InstrucTotalDestina->fetch();
                 $TotalDestina = $ResultTotalDestina['Total'];
 

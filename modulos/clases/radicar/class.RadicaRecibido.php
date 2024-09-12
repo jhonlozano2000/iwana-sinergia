@@ -36,6 +36,7 @@ class RadicadoRecibido
     private $OpcionDetalle1;
     private $OpcionDetalle2;
     private $OpcionDetalle3;
+    private $NombreArchivo;
     private $Archivo;
 
     public function __construct(
@@ -74,6 +75,7 @@ class RadicadoRecibido
         $OpcionDetalle1 = null,
         $OpcionDetalle2 = null,
         $OpcionDetalle3 = null,
+        $NombreArchivo = null,
         $Archivo = null
     ) {
 
@@ -112,6 +114,7 @@ class RadicadoRecibido
         $this->OpcionDetalle1  = $OpcionDetalle1;
         $this->OpcionDetalle2  = $OpcionDetalle2;
         $this->OpcionDetalle3  = $OpcionDetalle3;
+        $this->NombreArchivo   = $NombreArchivo;
         $this->Archivo         = $Archivo;
     }
 
@@ -290,6 +293,11 @@ class RadicadoRecibido
         return $this->Archivo;
     }
 
+    public function get_NombreArchivo()
+    {
+        return $this->NombreArchivo;
+    }
+
     public function set_Accion($Accion)
     {
         $this->Accion = $Accion;
@@ -460,6 +468,11 @@ class RadicadoRecibido
         $this->OpcionDetalle3 = $OpcionDetalle3;
     }
 
+    public function set_NombreArchivo($NombreArchivo)
+    {
+        return $this->NombreArchivo = $NombreArchivo;
+    }
+
     public function set_Archivo($Archivo)
     {
         $this->Archivo = $Archivo;
@@ -574,7 +587,7 @@ class RadicadoRecibido
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion == 'ELIMINAR_DIGITAL') {
                 $Sql = "UPDATE archivo_radica_recibidos
-                        SET digital = 0, id_ruta = 0
+                        SET digital = 0, nombre_archivo = null, archivo = null
                         WHERE id_radica = :id_radica";
 
                 $Instruc = $conexion->prepare($Sql);
@@ -587,12 +600,15 @@ class RadicadoRecibido
                 $Instruc = $conexion->prepare($Sql);
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion == 4) {
+                /**
+                 * Cargar archivo
+                 */
                 $Sql = "UPDATE archivo_radica_recibidos
-                        SET digital = 1, id_ruta = :id_ruta, archivo = :archivo
+                        SET digital = 1, nombre_archivo = :nombre_archivo, archivo = :archivo
                         WHERE id_radica = :id_radica";
 
                 $Instruc = $conexion->prepare($Sql);
-                $Instruc->bindParam(':id_ruta', $this->IdRuta, PDO::PARAM_INT);
+                $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_STR);
                 $Instruc->bindParam(':archivo', $this->Archivo, PDO::PARAM_STR);
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion == 6) {
@@ -1019,6 +1035,7 @@ class RadicadoRecibido
                     $Result['opcion_detalle1'],
                     $Result['opcion_detalle2'],
                     $Result['opcion_detalle3'],
+                    $Result['nombre_archivo'],
                     $Result['archivo']
                 );
             } else {

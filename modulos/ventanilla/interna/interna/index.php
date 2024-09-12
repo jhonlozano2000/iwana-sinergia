@@ -223,7 +223,7 @@ $ConfigOtas = ConfigOtras::Buscar();
                 <div class="clearfix"></div>
             </div>
             <div class="clearfix"></div>
-            <div class="admin-bar" id="quick-access" style="display:">
+            <div class="admin-bar" id="quick-access">
                 <div class="admin-bar-inner">
                     <button class="btn btn-danger  btn-add" type="button"><i class="icon-trash"></i> Tranferir al archivo de gestión</button>
                     <button class="btn btn-white  btn-cancel" type="button">Cancel</button>
