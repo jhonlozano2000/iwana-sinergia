@@ -232,7 +232,7 @@ switch ($Accion) {
 
 					if ($ArchivoAdicional->Gestionar()) {
 						// Uncomment the following line if you want to delete the file after processing
-						// unlink($archivo_ruta);
+						unlink($archivo_ruta);
 						$file_content = null;
 					} else {
 						echo "Error al guardar el archivo " . htmlspecialchars($elemento) . "<br />";
@@ -289,13 +289,20 @@ switch ($Accion) {
 		header('Content-Disposition: attachment; filename="' . $nombreArchivo . '"');
 		header('Content-Length: ' . strlen($decoded_content));
 
-		// Limpia el buffer de salida para evitar cualquier dato previo
-		ob_clean();
-		flush();
 
-		// Enviar el archivo decodificado al navegador
-		echo $decoded_content;
-		flush(); // Asegura que el archivo se envíe completamente
+		// Enviar los datos en trozos
+		$fp = fopen('php://output', 'w');
+		$offset = 0;
+
+		while ($offset < strlen($decoded_content)) {
+			$chunk = substr($decoded_content, $offset, $chunk_size);
+			fwrite($fp, $chunk);
+			flush(); // Asegura que el buffer se envíe antes de continuar
+			$offset += $chunk_size;
+		}
+
+		fclose($fp);
+		exit();
 
 		exit;
 		break;

@@ -23,7 +23,7 @@ require_once '../../clases/radicar/class.RadicaInternoAdjuntos.php';
 					<hr />
 					<span class="semi-bold">Documentos Adjuntos.</span>
 					<div class="row form-row">
-						<div class="col-md-12">
+						<div class="col-md-12" style="overflow-y: scroll; height: 300px;">
 							<?php
 							$RadicadoInternoArchivos = RadicadoInternoAdjuntos::Listar(1, $_REQUEST['id_radica'], "");
 							foreach ($RadicadoInternoArchivos as $ItemRadicado):
@@ -32,6 +32,7 @@ require_once '../../clases/radicar/class.RadicaInternoAdjuntos.php';
 									<a href="#" id="BtnDescargarArchivoInternoAdjuntos" class="descargar_pdf_interno"
 										data-id_archivo="<?php echo $ItemRadicado['id_archivo']; ?>">
 										<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"><?php echo $ItemRadicado['nombre_archivo']; ?></a>
+									<br />
 								</span>
 							<?php
 							endforeach;

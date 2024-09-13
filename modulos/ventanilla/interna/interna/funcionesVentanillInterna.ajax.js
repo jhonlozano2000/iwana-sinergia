@@ -195,7 +195,6 @@
 
     $(document).on("click", "#BtnDescargarArchivoInternoAdjuntos", function (event) {
         var IdArchivo = $(this).data("id_archivo");
-
         window.location.href = "../../../varios/admin_file.php?accion=INTERNO_DOWNLOAD_ADJUNTO&archivo_id=" + IdArchivo;
     });
 
