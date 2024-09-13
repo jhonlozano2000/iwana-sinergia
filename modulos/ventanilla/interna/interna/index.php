@@ -65,21 +65,22 @@ $ConfigOtas = ConfigOtras::Buscar();
                 },
                 removedfile: function(file, serverFileName) {
                     var name = file.name;
+                    console.log(`Archivo: ${name}`)
                     $.ajax({
                         type: "POST",
                         url: "uploads.php?delete=true",
                         data: "filename=" + name,
                         success: function(data) {
-
                             var json = JSON.parse(data);
-                            alert(json.res)
                             if (json.res == true) {
                                 var element;
                                 (element = file.previewElement) != null ?
                                     element.parentNode.removeChild(file.previewElement) :
                                     false;
-                                alert("El elemento fué eliminado: " + name);
                             }
+                        },
+                        error: function(e) {
+                            console.log(e)
                         }
                     });
                 }

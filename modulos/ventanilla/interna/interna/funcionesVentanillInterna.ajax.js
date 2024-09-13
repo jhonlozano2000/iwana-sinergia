@@ -99,7 +99,7 @@
         $.ajax({
             url: "../../../varios/upload_file.php",
             type: "POST",
-            data: "accion=INTERNO_UPLOAD&id_radicado=" + $("#id_radicado").val() + "&id_depen=" + $("#id_depen").val(),
+            data: "accion=ENVIADOS_UPLOAD_ADICIONALES&id_radicado=" + $("#id_radicado").val() + "&id_depen=" + $("#id_depen").val(),
             beforeSend: function () {
                 $("#DivAlertarAdjuntoDigital").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
             },

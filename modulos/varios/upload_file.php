@@ -206,21 +206,34 @@ switch ($Accion) {
 		break;
 	case 'INTERNO_UPLOAD_VENTANILLA':
 
-		// Lee el contenido del archivo
-		$file_content = file_get_contents($ArchivoSubirTMP);
+		// Abrimos la carpeta que nos pasan como parámetro
+		$path =  MI_ROOT_TEMP_RELATIVA . "/temp_ventanilla/enviados/" . $_SESSION['SesionUsuaId'];
+		$dir = opendir($path);
+		// Leo todos los ficheros de la carpeta
+		while ($elemento = readdir($dir)) {
+			if ($elemento != "." && $elemento != "..") {
+				if (!is_dir($path . $elemento)) {
+					// Lee el contenido del archivo
+					$file_content = file_get_contents($ArchivoSubirTMP);
 
-		// Codifica el archivo en Base64
-		$base64_encoded = base64_encode($file_content);
+					// Codifica el archivo en Base64
+					$base64_encoded = base64_encode($file_content);
 
-		$ArchivoAdicional = new RadicadoInternoAdjuntos();
-		$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
-		$ArchivoAdicional->set_IdRadica($IdRadica);
-		$ArchivoAdicional->set_NomArchivo($ArchivoSubirNOMBRE);
-		$ArchivoAdicional->set_Archivo($base64_encoded);
-		if ($ArchivoAdicional->Gestionar() == true) {
-			echo 1;
-			exit();
+					$ArchivoAdicional = new RadicadoInternoAdjuntos();
+					$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
+					$ArchivoAdicional->set_IdRadica($IdRadica);
+					$ArchivoAdicional->set_NomArchivo($ArchivoSubirNOMBRE);
+					$ArchivoAdicional->set_Archivo($base64_encoded);
+					if ($ArchivoAdicional->Gestionar() == true) {
+						unlink($path . '/' . $elemento);
+					}
+				}
+			}
 		}
+
+		echo 1;
+		exit();
+
 		break;
 	case 'INTERNO_DOWNLOAD':
 
