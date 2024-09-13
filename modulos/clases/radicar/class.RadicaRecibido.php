@@ -774,7 +774,7 @@ class RadicadoRecibido
                             `remite_contac`.`nom_contac` AS `nom_remite`, `remite_empre`.`razo_soci` AS `razo_soci_remite`, `remite_contac`.`dir` AS `dir_remite`,
                             `remite_contac`.`tel` AS `tel_remite`, `remite_contac`.`cel` AS `cel_remite`, `remite_contac`.`fax` AS `fax_remite`, `remite_contac`.`email` AS `email_remite`, `remite_contac`.`cargo`,
                             `forma_llegada`.`nom_formaenvi` AS `nom_forma_llega`, `radi_respues`.`id_radica` AS `radica_respuesta`, `radi_respues`.`fec_docu` AS `fec_docu_respuesta`,
-                            `radi_respues`.`fechor_radica` AS `fechor_radica_respuesta`, `radi_respues`.`asunto` AS `asunto_respuesta`, `radi`.`archivo`
+                            `radi_respues`.`fechor_radica` AS `fechor_radica_respuesta`, `radi_respues`.`asunto` AS `asunto_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_recibidos` AS `radi`
                             LEFT JOIN `archivo_trd_series` AS `serie` ON (`radi`.`id_serie` = `serie`.`id_serie`)
                             LEFT JOIN `archivo_trd_subserie` AS `subserie` ON (`radi`.`id_subserie` = `subserie`.`id_subserie`)

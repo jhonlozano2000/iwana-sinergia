@@ -130,7 +130,7 @@
     $("#BtnSubirDigitalRecibido").click(function () {
         var formData = new FormData($(".formulario")[0]);
 
-        var urlParaCargarArchivo = "../../../varios/upload_file.php";
+        var urlParaCargarArchivo = "../../../varios/admin_file.php";
 
         $.ajax({
             url: urlParaCargarArchivo,
@@ -349,7 +349,7 @@
     $(document).on("click", "#BtnDescargarArchivoRecibido", function (event) {
         var IdRadicado = $(this).data("id_radicado");
         // Redirige al archivo PHP que maneja la descarga
-        window.location.href = "../../../varios/upload_file.php?accion=RECIBIDOS_DESCARGAR&id_radicado=" + IdRadicado;
+        window.location.href = "../../../varios/admin_file.php?accion=RECIBIDOS_DESCARGAR&id_radicado=" + IdRadicado;
     });
 
     $(document).on("click", "#BtnLlevarEditarAsunto", function (event) {

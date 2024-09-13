@@ -8,20 +8,20 @@ require_once '../../clases/radicar/class.RadicaInternoProyectores.php';
 include("../../../config/variable.php");
 
 $RadicadoInterno = RadicadoInterno::Listar_Varios(1, $_POST['id_radica'], "", "", 0, 0, 0, "", "", "");
-foreach($RadicadoInterno as $ItemRadicado):
+foreach ($RadicadoInterno as $ItemRadicado):
 
 	$Responsable = "";
 	$Responsables = "";
-	
+
 	$RegisResponsable = RadicadoInternoResponsable::Listar(1, $ItemRadicado['id_radica'], "", "", 0, 0, 0, "", "", "");
 	foreach ($RegisResponsable as $ItemRessponsa) {
-		if($ItemRessponsa['respon'] == 1){
-			$Responsable.= utf8_encode($ItemRessponsa['nom_funcio']." ".$ItemRessponsa['ape_funcio']." [".$ItemRessponsa['nom_depen']."]");
+		if ($ItemRessponsa['respon'] == 1) {
+			$Responsable .= utf8_encode($ItemRessponsa['nom_funcio'] . " " . $ItemRessponsa['ape_funcio'] . " [" . $ItemRessponsa['nom_depen'] . "]");
 		}
 
-		$Responsables.= utf8_encode($ItemRessponsa['nom_funcio']." ".$ItemRessponsa['ape_funcio']." [".$ItemRessponsa['nom_depen']."]<br><br>");
+		$Responsables .= utf8_encode($ItemRessponsa['nom_funcio'] . " " . $ItemRessponsa['ape_funcio'] . " [" . $ItemRessponsa['nom_depen'] . "]<br><br>");
 	}
-	?>
+?>
 	<div class="col-md-3">
 		<div class="row">
 			<div class="col-md-12 sortable">
@@ -29,7 +29,6 @@ foreach($RadicadoInterno as $ItemRadicado):
 					<div class="grid-title no-border">
 						<h4><i class='glyphicon glyphicon-info-sign text-info'></i> <span class="semi-bold">Info.</span></h4>
 						<input type="hidden" id="id_ruta" value="<?php echo $ItemRadicado['id_ruta']; ?>" />
-						<input name="RutaUpload" id="RutaUpload" type="hidden" value="<?php echo MI_ROOT_TEMP_DOCUMENTOS_SALIDA; ?>">
 						<input type="hidden" id="id_radica" value="<?php echo $_POST['id_radica']; ?>" />
 					</div>
 					<div class="grid-body no-border">
@@ -37,7 +36,7 @@ foreach($RadicadoInterno as $ItemRadicado):
 							<div class="scroller scrollbar-dynamic" data-height="245px">
 								<table width="251" class="table table-hover table-condensed" id="example">
 									<tr>
-										<td width="87">Radicado  </td>
+										<td width="87">Radicado </td>
 										<td width="152"><?php echo $ItemRadicado['id_radica']; ?></td>
 									</tr>
 									<tr>
@@ -62,7 +61,7 @@ foreach($RadicadoInterno as $ItemRadicado):
 									</tr>
 									<tr>
 										<td>Radicado Por </td>
-										<td><?php echo utf8_encode($ItemRadicado['nom_funcio_radi']." ".$ItemRadicado['ape_funcio_radi']); ?></td>
+										<td><?php echo utf8_encode($ItemRadicado['nom_funcio_radi'] . " " . $ItemRadicado['ape_funcio_radi']); ?></td>
 									</tr>
 								</table>
 							</div>
@@ -84,10 +83,10 @@ foreach($RadicadoInterno as $ItemRadicado):
 							<div class="scroller scrollbar-dynamic" data-height="245px">
 								<table width="251" class="table table-hover table-condensed" id="example">
 									<tr>
-										<td><?php echo "<p class='text-success'>Responsable</p>".$Responsable; ?></td>
+										<td><?php echo "<p class='text-success'>Responsable</p>" . $Responsable; ?></td>
 									</tr>
 									<tr>
-										<td><?php echo "<p class='text-success'>Remitentes</p>".$Responsables; ?></td>
+										<td><?php echo "<p class='text-success'>Remitentes</p>" . $Responsables; ?></td>
 									</tr>
 								</table>
 							</div>
@@ -116,15 +115,15 @@ foreach($RadicadoInterno as $ItemRadicado):
 									$Destinatarios = RadicadoInternoDestinatario::Listar(1, $ItemRadicado['id_radica'], "");
 									foreach ($Destinatarios as $ItemDestinatarios) {
 									?>
-									<tr>
-										<td>
-											<?php echo utf8_encode($ItemDestinatarios['nom_funcio']." ".$ItemDestinatarios['ape_funcio']."<br>[".$ItemDestinatarios['nom_depen'])."]<br><br>"; ?>
+										<tr>
+											<td>
+												<?php echo utf8_encode($ItemDestinatarios['nom_funcio'] . " " . $ItemDestinatarios['ape_funcio'] . "<br>[" . $ItemDestinatarios['nom_depen']) . "]<br><br>"; ?>
 											</td>
-									</tr>
+										</tr>
 									<?php
-								}
-								?>
-									
+									}
+									?>
+
 								</table>
 							</div>
 						</div>
@@ -147,14 +146,14 @@ foreach($RadicadoInterno as $ItemRadicado):
 								<table width="251" class="table table-hover table-condensed" id="example">
 									<?php
 									$Proyectores = RadicadoInternoProyector::Listar(1, $ItemRadicado['id_radica'], "", "", "", "", "", "");
-									foreach($Proyectores as $ItemProyectores){
-										?>
+									foreach ($Proyectores as $ItemProyectores) {
+									?>
 										<tr>
 											<td>
-												<?php echo utf8_encode($ItemProyectores['nom_funcio']." ".$ItemProyectores['ape_funcio']." [".$ItemProyectores['nom_depen']."]"); ?>
+												<?php echo utf8_encode($ItemProyectores['nom_funcio'] . " " . $ItemProyectores['ape_funcio'] . " [" . $ItemProyectores['nom_depen'] . "]"); ?>
 											</td>
 										</tr>
-										<?php
+									<?php
 									}
 									?>
 								</table>
@@ -166,6 +165,6 @@ foreach($RadicadoInterno as $ItemRadicado):
 		</div>
 	</div>
 
-	<?php
+<?php
 endforeach;
 ?>

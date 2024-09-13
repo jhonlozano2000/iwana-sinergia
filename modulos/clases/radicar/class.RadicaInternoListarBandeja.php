@@ -173,7 +173,7 @@
                             `destina_depen`.`nom_depen` AS `nom_depen_destina`, `destina_ofi`.`nom_oficina` AS `nom_oficina_destina`,
                             `radi_destina`.`leido`, `radi_destina`.`fechor_leido`, `radi_destina`.`cc`, `radi_destina`.`id_funcio_deta`,
                             `radi_destina`.`leido`, `radi`.`transferido`, `radi`.`requie_respuesta`, `funcio_regis`.`nom_funcio` AS 'nom_funcio_regis',
-                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`
+                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_interna` AS `radi`
                             INNER JOIN `gene_funcionarios_deta` AS `fun_regis` ON (`radi`.`id_funcio_regis` = `fun_regis`.`id_funcio_deta`)
                             INNER JOIN `gene_funcionarios` AS `funcio_regis` ON (`fun_regis`.`id_funcio` = `funcio_regis`.`id_funcio`)
@@ -210,7 +210,7 @@
                             `destina_depen`.`nom_depen` AS `nom_depen_destina`, `destina_ofi`.`nom_oficina` AS `nom_oficina_destina`,
                             `radi_destina`.`leido`, `radi_destina`.`fechor_leido`, `radi_destina`.`cc`, `radi_destina`.`id_funcio_deta`,
                             `radi_destina`.`leido`, `radi`.`transferido`, `radi`.`requie_respuesta`, `funcio_regis`.`nom_funcio` AS 'nom_funcio_regis',
-                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`
+                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_interna` AS `radi`
                             INNER JOIN `gene_funcionarios_deta` AS `fun_regis` ON (`radi`.`id_funcio_regis` = `fun_regis`.`id_funcio_deta`)
                             INNER JOIN `gene_funcionarios` AS `funcio_regis` ON (`fun_regis`.`id_funcio` = `funcio_regis`.`id_funcio`)
@@ -248,7 +248,7 @@
                             `destina_depen`.`nom_depen` AS `nom_depen_destina`, `destina_ofi`.`nom_oficina` AS `nom_oficina_destina`,
                             `radi_destina`.`leido`, `radi_destina`.`fechor_leido`, `radi_destina`.`cc`, `radi_destina`.`id_funcio_deta`,
                             `radi_destina`.`leido`, `radi`.`transferido`, `radi`.`requie_respuesta`, `funcio_regis`.`nom_funcio` AS 'nom_funcio_regis',
-                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`
+                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_interna` AS `radi`
                             INNER JOIN `gene_funcionarios_deta` AS `fun_regis` ON (`radi`.`id_funcio_regis` = `fun_regis`.`id_funcio_deta`)
                             INNER JOIN `gene_funcionarios` AS `funcio_regis` ON (`fun_regis`.`id_funcio` = `funcio_regis`.`id_funcio`)
@@ -286,7 +286,7 @@
                             `destina_depen`.`nom_depen` AS `nom_depen_destina`, `destina_ofi`.`nom_oficina` AS `nom_oficina_destina`,
                             `radi_destina`.`leido`, `radi_destina`.`fechor_leido`, `radi_destina`.`cc`, `radi_destina`.`id_funcio_deta`,
                             `radi_destina`.`leido`, `radi`.`transferido`, `radi`.`requie_respuesta`, `funcio_regis`.`nom_funcio` AS 'nom_funcio_regis',
-                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`
+                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_interna` AS `radi`
                             INNER JOIN `gene_funcionarios_deta` AS `fun_regis` ON (`radi`.`id_funcio_regis` = `fun_regis`.`id_funcio_deta`)
                             INNER JOIN `gene_funcionarios` AS `funcio_regis` ON (`fun_regis`.`id_funcio` = `funcio_regis`.`id_funcio`)
@@ -324,7 +324,7 @@
                             `destina_depen`.`nom_depen` AS `nom_depen_destina`, `destina_ofi`.`nom_oficina` AS `nom_oficina_destina`,
                             `radi_destina`.`leido`, `radi_destina`.`fechor_leido`, `radi_destina`.`cc`, `radi_destina`.`id_funcio_deta`,
                             `radi_destina`.`leido`, `radi`.`transferido`, `radi`.`requie_respuesta`, `funcio_regis`.`nom_funcio` AS 'nom_funcio_regis',
-                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`
+                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_interna` AS `radi`
                             INNER JOIN `gene_funcionarios_deta` AS `fun_regis` ON (`radi`.`id_funcio_regis` = `fun_regis`.`id_funcio_deta`)
                             INNER JOIN `gene_funcionarios` AS `funcio_regis` ON (`fun_regis`.`id_funcio` = `funcio_regis`.`id_funcio`)
@@ -361,7 +361,7 @@
                             `destina_depen`.`nom_depen` AS `nom_depen_destina`, `destina_ofi`.`nom_oficina` AS `nom_oficina_destina`,
                             `radi_destina`.`leido`, `radi_destina`.`fechor_leido`, `radi_destina`.`cc`, `radi_destina`.`id_funcio_deta`,
                             `radi_destina`.`leido`, `radi`.`transferido`, `radi`.`requie_respuesta`, `funcio_regis`.`nom_funcio` AS 'nom_funcio_regis',
-                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`
+                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_interna` AS `radi`
                             INNER JOIN `gene_funcionarios_deta` AS `fun_regis` ON (`radi`.`id_funcio_regis` = `fun_regis`.`id_funcio_deta`)
                             INNER JOIN `gene_funcionarios` AS `funcio_regis` ON (`fun_regis`.`id_funcio` = `funcio_regis`.`id_funcio`)
@@ -378,12 +378,12 @@
                             INNER JOIN `areas_oficinas` AS `destina_ofi` ON (`respon_deta`.`id_oficina` = `destina_ofi`.`id_oficina`)
                             INNER JOIN `areas_dependencias` AS `destina_depen` ON (`respon_ofici`.`id_depen` = `destina_depen`.`id_depen`)
                         WHERE (`radi`.`transferido` = 0 AND `radi_respon`.`respon` = 1 AND " . $TipoFuncionario . " = id_funcio_deta
-                            " . self::Generar_Query_Correspondencia($this->Buscar) . ")
+                            " . self::Generar_Query_Correspondencia($this->Buscar, "", "", "", "", "", "", "") . ")
                         ORDER BY `radi`.`fechor_radica` DESC
                         LIMIT :Limite1, :Limite2";
 
                     $Instruc = $conexion->prepare($Sql);
-                    $Instruc->bindParam(":id_funcio_deta", $this->IdFuncioDeta, PDO::PARAM_INT);
+                    $Instruc->bindParam(":id_funcio_deta", $this->IdFuncioSesion, PDO::PARAM_INT);
                     $Instruc->bindParam(":Limite1", $this->Limite1, PDO::PARAM_INT);
                     $Instruc->bindParam(":Limite2", $this->Limite2, PDO::PARAM_INT);
                     $Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
@@ -400,7 +400,7 @@
                             `destina_depen`.`nom_depen` AS `nom_depen_destina`, `destina_ofi`.`nom_oficina` AS `nom_oficina_destina`,
                             `radi_destina`.`leido`, `radi_destina`.`fechor_leido`, `radi_destina`.`cc`, `radi_destina`.`id_funcio_deta`,
                             `radi_destina`.`leido`, `radi`.`transferido`, `radi`.`requie_respuesta`, `funcio_regis`.`nom_funcio` AS 'nom_funcio_regis',
-                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`
+                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_interna` AS `radi`
                             INNER JOIN `gene_funcionarios_deta` AS `fun_regis` ON (`radi`.`id_funcio_regis` = `fun_regis`.`id_funcio_deta`)
                             INNER JOIN `gene_funcionarios` AS `funcio_regis` ON (`fun_regis`.`id_funcio` = `funcio_regis`.`id_funcio`)
@@ -416,7 +416,7 @@
                             INNER JOIN `gene_funcionarios` AS `destina` ON (`respon_deta`.`id_funcio` = `destina`.`id_funcio`)
                             INNER JOIN `areas_oficinas` AS `destina_ofi` ON (`respon_deta`.`id_oficina` = `destina_ofi`.`id_oficina`)
                             INNER JOIN `areas_dependencias` AS `destina_depen` ON (`respon_ofici`.`id_depen` = `destina_depen`.`id_depen`)
-                        WHERE (`radi_respon`.`respon` = 1 AND `radi`.`transferido` = 0 AND " . $TipoFuncionario . " = ? " . self::Generar_Query_Correspondencia($this->Buscar) . ")
+                        WHERE (`radi_respon`.`respon` = 1 AND `radi`.`transferido` = 0 AND " . $TipoFuncionario . " = ? " . self::Generar_Query_Correspondencia($this->Buscar, "", "", "", "", "", "", "") . ")
                         ORDER BY `radi`.`fechor_radica` DESC
                         LIMIT :Limite1, :Limite2";
 
@@ -437,7 +437,7 @@
                             `destina_depen`.`nom_depen` AS `nom_depen_destina`, `destina_ofi`.`nom_oficina` AS `nom_oficina_destina`,
                             `radi_destina`.`leido`, `radi_destina`.`fechor_leido`, `radi_destina`.`cc`, `radi_destina`.`id_funcio_deta`,
                             `radi_destina`.`leido`, `radi`.`transferido`, `radi`.`requie_respuesta`, `funcio_regis`.`nom_funcio` AS 'nom_funcio_regis',
-                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`
+                             `funcio_regis`.`nom_funcio` AS 'ape_funcio_regis', `radi`.`impri_rotu`, `radi`.`radica_respuesta`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_interna` AS `radi`
                             INNER JOIN `gene_funcionarios_deta` AS `fun_regis` ON (`radi`.`id_funcio_regis` = `fun_regis`.`id_funcio_deta`)
                             INNER JOIN `gene_funcionarios` AS `funcio_regis` ON (`fun_regis`.`id_funcio` = `funcio_regis`.`id_funcio`)
@@ -453,7 +453,7 @@
                             INNER JOIN `gene_funcionarios` AS `destina` ON (`respon_deta`.`id_funcio` = `destina`.`id_funcio`)
                             INNER JOIN `areas_oficinas` AS `destina_ofi` ON (`respon_deta`.`id_oficina` = `destina_ofi`.`id_oficina`)
                             INNER JOIN `areas_dependencias` AS `destina_depen` ON (`respon_ofici`.`id_depen` = `destina_depen`.`id_depen`)
-                        WHERE `radi_respon`.`respon` = 1 AND `radi`.`transferido` = 0 AND `respon_depen`.`id_depen` = :id_depen AND `respon_ofici`.`id_oficina` = :id_oficina " . self::Generar_Query_Correspondencia($this->Buscar) . "
+                        WHERE `radi_respon`.`respon` = 1 AND `radi`.`transferido` = 0 AND `respon_depen`.`id_depen` = :id_depen AND `respon_ofici`.`id_oficina` = :id_oficina " . self::Generar_Query_Correspondencia($this->Buscar, "", "", "", "", "", "", "") . "
                         ORDER BY `radi`.`fechor_radica` DESC
                         LIMIT :Limite1, :Limite2";
 

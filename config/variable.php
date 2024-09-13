@@ -44,7 +44,4 @@ define("CONTRA_FTP", 'Diplomado1');
 define("RUTA_FTP", 'diplomado1');
 */
 
-define("SERVER_FTP", '192.168.0.3');
-define("USUA_FTP", 'hospital-espinal@innovaj2la.com');
-define("CONTRA_FTP", 'OjoTodoBien2018');
-define("RUTA_FTP", '');
+$key = 'a3f89b12c4d56e7f90a1b234c56d78e9a1b2c34d5e67f8a9b0c1234d5e67f890';

@@ -20,9 +20,10 @@
         private $Adjunto;
         private $RequiRespuesta;
         private $Transferido;
-        private $TipoDocumento;
         private $RadicaRespuesta;
         private $ImpriRotulo;
+        private $NombreArchivo;
+        private $Archivo;
 
         public function __construct(
             $Accion = null,
@@ -43,9 +44,10 @@
             $Adjunto = null,
             $RequiRespuesta = null,
             $Transferido = null,
-            $TipoDocumento = null,
             $RadicaRespuesta = null,
             $ImpriRotulo = null,
+            $NombreArchivo = null,
+            $Archivo = null
         ) {
             $this->Accion          = $Accion;
             $this->IdRadica        = $IdRadica;
@@ -65,9 +67,10 @@
             $this->Adjunto         = $Adjunto;
             $this->RequiRespuesta  = $RequiRespuesta;
             $this->Transferido     = $Transferido;
-            $this->TipoDocumento   = $TipoDocumento;
             $this->RadicaRespuesta = $RadicaRespuesta;
             $this->ImpriRotulo     = $ImpriRotulo;
+            $this->NombreArchivo = $NombreArchivo;
+            $this->Archivo         = $Archivo;
         }
 
         public function get_IdRadica()
@@ -155,11 +158,6 @@
             return $this->Transferido;
         }
 
-        public function get_TipoDocumento()
-        {
-            return $this->TipoDocumento;
-        }
-
         public function get_RadicaRespuesta()
         {
             return $this->RadicaRespuesta;
@@ -168,6 +166,16 @@
         public function get_ImpriRotulo()
         {
             return $this->ImpriRotulo;
+        }
+
+        public function get_NombreArchivo()
+        {
+            return $this->NombreArchivo;
+        }
+
+        public function get_Archivo()
+        {
+            return $this->Archivo;
         }
 
         // FUNCIONES PARA ENVIAR VALORES //
@@ -261,11 +269,6 @@
             return $this->Transferido = $Transferido;
         }
 
-        public function set_TipoDocumento($TipoDocumento)
-        {
-            return $this->TipoDocumento = $TipoDocumento;
-        }
-
         public function set_RadicaRespuesta($RadicaRespuesta)
         {
             return $this->RadicaRespuesta = $RadicaRespuesta;
@@ -274,6 +277,16 @@
         public function set_ImpriRotulo($ImpriRotulo)
         {
             return $this->ImpriRotulo = $ImpriRotulo;
+        }
+
+        public function set_NombreArchivo($NombreArchivo)
+        {
+            return $this->NombreArchivo = $NombreArchivo;
+        }
+
+        public function set_Archivo($Archivo)
+        {
+            return $this->Archivo = $Archivo;
         }
 
         public function Gestionar()
@@ -356,6 +369,15 @@
 
                     $Instruc = $conexion->prepare($Sql);
                     $Instruc->bindParam(':radica_respuesta', $this->RadicaRespuesta, PDO::PARAM_STR);
+                    $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
+                } elseif ($this->Accion === 'INSERTAR_ARCHIVO') {
+                    $Sql = "UPDATE archivo_radica_interna
+                        SET `nombre_archivo` = :nombre_archivo, archivo = :archivo
+                        WHERE `id_radica` = :id_radica";
+
+                    $Instruc = $conexion->prepare($Sql);
+                    $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_STR);
+                    $Instruc->bindParam(':archivo', $this->Archivo, PDO::PARAM_STR);
                     $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
                 }
 
@@ -1137,9 +1159,10 @@
                         $Result['adjunto'],
                         $Result['requie_respuesta'],
                         $Result['transferido'],
-                        $Result['tipo_documento'],
                         $Result['radica_respuesta'],
                         $Result['impri_rotu'],
+                        $Result['nombre_archivo'],
+                        $Result['archivo'],
                     );
                 } else {
                     return false;

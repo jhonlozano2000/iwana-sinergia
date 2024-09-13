@@ -36,6 +36,9 @@ include("../../../config/variable.php");
 			</div>
 		</div>
 	</div>
+	<br />
+	<hr />
+	<br />
 	<div class="row">
 		<span class="semi-bold">Documentos adjuntos.</span>
 		<div class="row form-row">
@@ -45,11 +48,11 @@ include("../../../config/variable.php");
 				foreach ($ArchivoAdciones as $ItemArchivo):
 				?>
 					<span class="muted small-text">
-						<a href="#" id="BtnDescargarArchivoEnviado"
-							data-id_radicado="<?php echo $ItemArchivo['id_radica']; ?>"
-							data-id_ruta="<?php echo $ItemArchivo['id_ruta']; ?>"
-							data-archivo="<?php echo $ItemArchivo['nom_archivo']; ?>" title="<?php echo $ItemArchivo['nom_archivo']; ?>">
-							<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"></a>
+						<a href="#" id="BtnDescargarArchivoEnviadoAdjunto"
+							data-id_archivo="<?php echo $ItemArchivo['id_archivo']; ?>">
+							<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36">
+							<?php echo $ItemArchivo['nom_archivo']; ?>
+						</a>
 					</span>
 				<?php
 				endforeach;

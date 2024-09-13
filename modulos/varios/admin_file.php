@@ -1,4 +1,11 @@
 <?php
+
+/**
+ *
+ * Archivo para administrar el cargue de archivos y convertirlos a Base64
+ *
+ */
+
 ob_start();
 session_start();
 include("../../config/funciones.php");
@@ -18,7 +25,7 @@ require_once '../clases/calidad/class.CalidadRepositorio.php';
 require_once '../clases/varias/class.ftp.php';
 
 $Accion              = isset($_REQUEST['accion']) ? $_REQUEST['accion'] : null;
-$archivoId           = isset($_POST['archivo_id']) ? $_POST['archivo_id'] : null;
+$archivoId           = isset($_REQUEST['archivo_id']) ? $_REQUEST['archivo_id'] : null;
 $IdDepen             = isset($_POST['id_depen']) ? $_POST['id_depen'] : null;
 $IdRadica            = isset($_REQUEST['id_radicado']) ? $_REQUEST['id_radicado'] : null;
 $IdTemp              = isset($_POST['id_temp']) ? $_POST['id_temp'] : null;
@@ -110,26 +117,26 @@ switch ($Accion) {
 		echo $decoded_content;
 		exit;
 		break;
-	case 'ENVIADOS_UPLOAD_ADICIONALES':
+	case 'ENVIADOS_DESCARGAR_ADJUNTO':
 
-		$Servidor = ServidorTemp::Buscar(5, 0, "", 2);
+		$Radicado = RadicadoEnviadoArchivoAdicional::Buscar(2, "", $archivoId, "");
 
-		if (!$Servidor) {
-			echo "No se encontro el servidor de archivo para esta dependencia, por favor consulte con el administador del sistema.";
-			exit();
-		}
+		// Decodifica el contenido Base64
+		$decoded_content = base64_decode($Radicado->get_Archivo());
 
-		$IdRuta        = $Servidor->get_IdRuta();
-		$Ip            = $Servidor->get_Ip();
-		$Usuario       = $Servidor->get_Usua();
-		$Contra        = $Servidor->get_Contra();
-		$RutaFtp       = $Servidor->get_Ruta();
-		$Radicado      = RadicadoEnviado::Buscar(1, $IdRadica);
-		$FechaRadicado = new DateTime($Radicado->get_FecRadica());
-		$Ano           = $FechaRadicado->format('Y');
+		// Enviar los encabezados para la descarga
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="' . $Radicado->get_NombreArchivo() . '"');
+		header('Content-Length: ' . strlen($decoded_content));
 
-		$ftpObj = new FTPClient();
-
+		// Enviar el archivo decodificado al navegador para su descarga
+		echo $decoded_content;
+		exit;
+		break;
+	case 'ENVIADOS_UPLOAD_ADJUNTOS':
+		/**
+		 * Aqui hago el cargue de los documentos adjunto de la correspondencia enviada
+		 */
 		// Abrimos la carpeta que nos pasan como parámetro
 		$path =  MI_ROOT_TEMP_RELATIVA . "/temp_ventanilla/enviados/" . $_SESSION['SesionUsuaId'];
 		$dir = opendir($path);
@@ -138,93 +145,18 @@ switch ($Accion) {
 			if ($elemento != "." && $elemento != "..") {
 				if (!is_dir($path . $elemento)) {
 
-					$ArchivoAdicional = new RadicadoEnviadoArchivoAdicional();
-					$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
-					$ArchivoAdicional->set_IdRadica($IdRadica);
-					$ArchivoAdicional->set_NomArchivo($elemento);
-					if ($ArchivoAdicional->Gestionar() == true) {
-
-						$IdArchivoAdicional = $ArchivoAdicional->get_IdArchivo();
-
-						$ftpObj = new FTPClient();
-						//Connect
-
-						$ftpObj->connect($Ip, $Usuario, $Contra);
-						if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-
-							$Ruta = "";
-							if ($RutaFtp != "") {
-								$Ruta = $Ano . "/" . $RutaFtp . "/" . $IdRadica;
-								$ftpObj->makeDir($Ano);
-								$ftpObj->makeDir($Ano . "/" . $RutaFtp);
-								$ftpObj->makeDir($Ano . "/" . $RutaFtp . "/" . $IdRadica);
-							} else {
-								$Ruta = $Ano . "/" . $IdRadica;
-								$ftpObj->makeDir($Ano);
-								$ftpObj->makeDir($Ano . "/" . $RutaFtp . "/" . $IdRadica);
-							}
-
-							$Extencion = Extencion_Archivo($elemento);
-							$Archivo = $Ruta . "/" . $elemento;
-
-							$ftpObj->uploadFile($path . '/' . $elemento, $Archivo);
-							if ($ftpObj->pr($ftpObj->getMessages()[1]) == 'true') {
-								unlink($path . '/' . $elemento);
-							} else {
-								echo "No fue posible enviar el archivo al servidor, por favor consulte con el administrador del sistema";
-								exit();
-							}
-						} else {
-							echo "No fue posible conectarme con el servidor de archivo...\nPor favor consulte con el administrador del sistema.";
-							exit();
-						}
-					}
-				}
-			}
-		}
-
-		echo 1;
-		exit();
-		break;
-	case 'INTERNO_UPLOAD':
-
-		// Lee el contenido del archivo
-		$file_content = file_get_contents($ArchivoSubirTMP);
-
-		// Codifica el archivo en Base64
-		$base64_encoded = base64_encode($file_content);
-
-		$ArchivoAdicional = new RadicadoInternoAdjuntos();
-		$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
-		$ArchivoAdicional->set_IdRadica($IdRadica);
-		$ArchivoAdicional->set_NomArchivo($ArchivoSubirNOMBRE);
-		$ArchivoAdicional->set_Archivo($base64_encoded);
-		if ($ArchivoAdicional->Gestionar() == true) {
-			echo 1;
-			exit();
-		}
-		break;
-	case 'INTERNO_UPLOAD_VENTANILLA':
-
-		// Abrimos la carpeta que nos pasan como parámetro
-		$path =  MI_ROOT_TEMP_RELATIVA . "/temp_ventanilla/enviados/" . $_SESSION['SesionUsuaId'];
-		$dir = opendir($path);
-		// Leo todos los ficheros de la carpeta
-		while ($elemento = readdir($dir)) {
-			if ($elemento != "." && $elemento != "..") {
-				if (!is_dir($path . $elemento)) {
 					// Lee el contenido del archivo
-					$file_content = file_get_contents($ArchivoSubirTMP);
+					$file_content = file_get_contents($path . '/' . $elemento);
 
 					// Codifica el archivo en Base64
 					$base64_encoded = base64_encode($file_content);
 
-					$ArchivoAdicional = new RadicadoInternoAdjuntos();
-					$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
-					$ArchivoAdicional->set_IdRadica($IdRadica);
-					$ArchivoAdicional->set_NomArchivo($ArchivoSubirNOMBRE);
-					$ArchivoAdicional->set_Archivo($base64_encoded);
-					if ($ArchivoAdicional->Gestionar() == true) {
+					$ArchivoAdjuntos = new RadicadoEnviadoArchivoAdicional();
+					$ArchivoAdjuntos->set_Accion('INSERTAR_ARCHIVO');
+					$ArchivoAdjuntos->set_IdRadica($IdRadica);
+					$ArchivoAdjuntos->set_NomArchivo($elemento);
+					$ArchivoAdjuntos->set_Archivo($base64_encoded);
+					if ($ArchivoAdjuntos->Gestionar() == true) {
 						unlink($path . '/' . $elemento);
 					}
 				}
@@ -233,51 +165,157 @@ switch ($Accion) {
 
 		echo 1;
 		exit();
+		break;
+	case 'INTERNO_UPLOAD_VENTANILLA':
+		/**
+		 * Aqui se hace el cargue del documento digital desde ventanilla
+		 */
+		// Lee el contenido del archivo
+		$file_content = file_get_contents($ArchivoSubirTMP);
 
+		// Codifica el archivo en Base64
+		$base64_encoded = base64_encode($file_content);
+
+		$ArchivoAdicional = new RadicadoInterno();
+		$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
+		$ArchivoAdicional->set_IdRadica($IdRadica);
+		$ArchivoAdicional->set_NombreArchivo($ArchivoSubirNOMBRE);
+		$ArchivoAdicional->set_Archivo($base64_encoded);
+		if ($ArchivoAdicional->Gestionar() == true) {
+			echo 1;
+			exit();
+		}
+		break;
+	case 'INTERNO_UPLOAD_ADJUNTOS_VENTANILLA':
+		/**
+		 * Aqui se hace el cargue desde ventailla de los documentos adjuntos
+		 */
+		// Abrimos la carpeta que nos pasan como parámetro
+
+		$path = MI_ROOT_TEMP_RELATIVA . "/temp_ventanilla/internos/" . $_SESSION['SesionUsuaId'];
+		$dir = opendir($path);
+
+		if ($dir === false) {
+			die("Error al abrir el directorio.");
+		}
+
+		// Lee todos los ficheros de la carpeta
+		while (($elemento = readdir($dir)) !== false) {
+			if ($elemento !== "." && $elemento !== "..") {
+				$archivo_ruta = $path . '/' . $elemento;
+
+				if (!is_dir($archivo_ruta)) {
+					// Debug para ver si se está leyendo el archivo correcto
+					echo "Leyendo archivo: " . htmlspecialchars($archivo_ruta) . "<br />";
+
+					// Lee el contenido del archivo
+					$file_content = file_get_contents($archivo_ruta);
+
+					if ($file_content === false) {
+						echo "Error al leer el archivo " . htmlspecialchars($elemento) . "<br />";
+						continue; // Continúa con el siguiente archivo
+					}
+
+					// Codifica el archivo en Base64
+					$base64_encoded = base64_encode($file_content);
+
+					echo "Contenido codificado del archivo " . htmlspecialchars($elemento) . " - " . htmlspecialchars(substr($base64_encoded, 0, 100)) . "<br />";
+					echo "Tamaño del archivo: " . strlen($file_content) . " bytes<br />";
+					echo "Hash MD5 del archivo " . htmlspecialchars($elemento) . " - " . md5($file_content) . "<br /><br /><br />";
+
+					// Guardo el archivo adjunto en la base de datos
+					$ArchivoAdicional = new RadicadoInternoAdjuntos();
+					$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
+					$ArchivoAdicional->set_IdRadica($IdRadica);
+					$ArchivoAdicional->set_NombreArchivo($elemento);
+					$ArchivoAdicional->set_Archivo($base64_encoded);
+
+					if ($ArchivoAdicional->Gestionar()) {
+						// Uncomment the following line if you want to delete the file after processing
+						// unlink($archivo_ruta);
+						$file_content = null;
+					} else {
+						echo "Error al guardar el archivo " . htmlspecialchars($elemento) . "<br />";
+					}
+				}
+			}
+		}
+
+		closedir($dir);
+
+
+
+		echo 1;
+		exit();
 		break;
 	case 'INTERNO_DOWNLOAD':
+		/**
+		 * Busco los datos del radicado
+		 */
+		// Busco los datos del radicado
+		$Radicado = RadicadoInterno::Buscar(1, $IdRadica, "", "", "");
 
-		$Servidor = ServidorTemp::Buscar(5, 0, "", 3);
+		// Obtener el nombre del archivo
+		$nombreArchivo = $Radicado->get_NombreArchivo();
+		$archivoBase64 = $Radicado->get_Archivo();
 
-		if (!$Servidor) {
-			echo "No se encontro el servidor de archivo para esta dependencia, por favor consulte con el administador del sistema.";
+		// Verificar si el contenido Base64 es válido
+		if (!preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $archivoBase64)) {
+			echo ("El archivo " . $nombreArchivo . " está mal codificado en Base64.");
 			exit();
 		}
 
-		$Ip            = $Servidor->get_Ip();
-		$Usuario       = $Servidor->get_Usua();
-		$Contra        = $Servidor->get_Contra();
-		$RutaFtp       = $Servidor->get_Ruta();
-		$Radicado      = RadicadoInterno::Buscar(1, $IdRadica, "", "", "");
-		$FechaRadicado = new DateTime($Radicado->get_FecRadica());
-		$Ano           = $FechaRadicado->format('Y');
+		// Decodifica el contenido Base64 de forma segura
+		$decoded_content = base64_decode($archivoBase64, true);
 
-		if (!is_dir(MI_ROOT_TEMP_RELATIVA . "/interna/"))
-			mkdir(MI_ROOT_TEMP_RELATIVA . "/interna/", 0777);
-
-		$ftpObj = new FTPClient();
-
-		$ftpObj->connect($Ip, $Usuario, $Contra);
-		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
-
-			$Ruta = "";
-			if ($RutaFtp != "") {
-				$Ruta = $Ano . "/" . $RutaFtp . "/" . $IdRadica;
-			} else {
-				$Ruta = $Ano . "/" . $IdRadica;
-			}
-
-			$Archivo = $Ruta . "/" . $ArchivoInterno;
-
-			$ftpObj->downloadFile(MI_ROOT_TEMP_RELATIVA . "/interna/" . $ArchivoInterno, $Archivo);
-			if ($ftpObj->pr($ftpObj->getMessages()[0]) == "true") {
-				echo 1;
-				exit();
-			}
-		} else {
-			echo "No fue posible conectarme con el servidor de archivo….\nPor favor consulte con el administrador del sistema.";
+		if ($decoded_content === false) {
+			echo ("Error al decodificar el archivo.");
 			exit();
 		}
+
+		// Obtener la extensión del archivo
+		$extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+
+		// Determinar el tipo MIME del archivo
+		$tipoMime = mime_content_type($nombreArchivo);
+
+		// Si no se pudo determinar el tipo MIME, usar application/octet-stream
+		if ($tipoMime === false) {
+			$tipoMime = 'application/octet-stream';
+		}
+
+		// Enviar los encabezados para la descarga
+		header('Content-Type: ' . $tipoMime);
+		header('Content-Disposition: attachment; filename="' . $nombreArchivo . '"');
+		header('Content-Length: ' . strlen($decoded_content));
+
+		// Limpia el buffer de salida para evitar cualquier dato previo
+		ob_clean();
+		flush();
+
+		// Enviar el archivo decodificado al navegador
+		echo $decoded_content;
+		flush(); // Asegura que el archivo se envíe completamente
+
+		exit;
+		break;
+	case 'INTERNO_DOWNLOAD_ADJUNTO':
+		/**
+		 * Busco los datos del radicado
+		 */
+		$Radicado = RadicadoInternoAdjuntos::Buscar(3, "", $archivoId);
+
+		// Decodifica el contenido Base64
+		$decoded_content = base64_decode($Radicado->get_Archivo());
+
+		// Enviar los encabezados para la descarga
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="' . $Radicado->get_NombreArchivo() . '"');
+		header('Content-Length: ' . strlen($decoded_content));
+
+		// Enviar el archivo decodificado al navegador para su descarga
+		echo $decoded_content;
+		exit;
 		break;
 	case 'PLANTILLA_DESCARGAR':
 

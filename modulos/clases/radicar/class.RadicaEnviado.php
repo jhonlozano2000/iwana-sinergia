@@ -596,7 +596,7 @@ class RadicadoEnviado
                             `FunRegis`.`ape_funcio` AS `ape_funcio_regis`, `FormaEnvi`.`nom_formaenvi`, `DestinaEmpre`.`nit_empre`, `DestinaEmpre`.`razo_soci`,
                             `DestinaContac`.`num_docu`, `DestinaContac`.`nom_contac`, `DestinaContac`.`cargo`, `DeparEmpre`.`nom_depar` AS `nom_depar_empre`,
                             `MuniEmpre`.`nom_muni` AS `nom_muni_empre`, `DeparContac`.`nom_depar` AS `nom_depar_remite`, `MuniContac`.`nom_muni` AS `nom_muni_remite`,
-                            `DestinaContac`.`dir` AS `dir_destina`, `DestinaContac`.`tel` AS `tel_destina`, `DestinaContac`.`cel` AS `cel_destina`, `DestinaContac`.`fax` AS `fax_destina`, `DestinaContac`.`cargo`, 
+                            `DestinaContac`.`dir` AS `dir_destina`, `DestinaContac`.`tel` AS `tel_destina`, `DestinaContac`.`cel` AS `cel_destina`, `DestinaContac`.`fax` AS `fax_destina`, `DestinaContac`.`cargo`,
                             `DestinaContac`.`email` AS `email_destina`, `Serie`.`cod_serie`, `Serie`.`nom_serie`, `SubSerie`.`cod_subserie`, `SubSerie`.`nom_subserie`,
                             `TipDoc`.`nom_tipodoc`, `radi`.`id_ruta`, `radi`.`fec_docu`, `radi`.`fechor_radica`, `radi`.`asunto`, `radi`.`num_anexos`,
                             `radi`.`num_folio`, `radi`.`digital`, `radi`.`adjunto`, `radi`.`impri_rotu`, `radi`.`enviado`,

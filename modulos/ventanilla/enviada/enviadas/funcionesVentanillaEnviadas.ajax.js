@@ -274,9 +274,9 @@
 
     $(document).on("click", "#BtnSubirArchivosAdicionales", function (event) {
         $.ajax({
-            url: "../../../varios/ftp.acciones.php",
+            url: "../../../varios/admin_file.php",
             type: "POST",
-            data: "accion=ENVIADOS_UPLOAD_ADICIONALES&id_radicado=" + $("#id_radicado").val() + "&id_depen=" + $("#id_depen").val(),
+            data: "accion=ENVIADOS_UPLOAD_ADJUNTOS&id_radicado=" + $("#id_radicado").val() + "&id_depen=" + $("#id_depen").val(),
             beforeSend: function () {
                 $("#DivAlertarAdjuntoDigital").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
             },
@@ -297,7 +297,7 @@
         var formData = new FormData($(".formulario")[0]);
 
         $.ajax({
-            url: "../../../varios/upload_file.php",
+            url: "../../../varios/admin_file.php",
             type: "POST",
             data: formData,
             cache: false,
@@ -378,8 +378,15 @@
 
     $(document).on("click", "#BtnDescargarArchivoEnviado", function (event) {
         var IdRadicado = $(this).data("id_radicado");
+        var IdRadicado = $(this).data("id_radicado");
 
-        window.location.href = "../../../varios/upload_file.php?accion=ENVIADOS_DESCARGAR&id_radicado=" + IdRadicado;
+        window.location.href = "../../../varios/admin_file.php?accion=ENVIADOS_DESCARGAR&id_radicado=" + IdRadicado;
+    });
+
+    $(document).on("click", "#BtnDescargarArchivoEnviadoAdjunto", function (event) {
+        var IdArchivo = $(this).data("id_archivo");
+
+        window.location.href = "../../../varios/admin_file.php?accion=ENVIADOS_DESCARGAR_ADJUNTO&archivo_id=" + IdArchivo;
     });
 
     $("#BtnBuscarDestinatarioNatural").click(function (e) {

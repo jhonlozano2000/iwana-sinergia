@@ -250,7 +250,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
                                         <div class="col-md-1">
 
-                                            <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#myModalMostrarInfoRadicadoInterno" id="BtnMostarInfoRadicadoInterno" data-id_radicado="<?php echo $item['id_radica']; ?>" title="Info. del radicado">
+                                            <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#myModalMostrarInfoRadicadoInterno" id="BtnMostarInfoRadicadoInterno" data-id_radicado="<?php echo $item['id_radica']; ?>" data-nombre_archivo="<?php echo $item['nombre_archivo']; ?>" title="Info. del radicado">
                                                 <i class="fa fa-info"></i>
                                             </button>
                                             <?php

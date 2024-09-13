@@ -2,6 +2,7 @@
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 	require('config/class.Conexion.php');
 	require('config/funciones.php');
+	require('config/variable.php');
 	require_once("modulos/clases/seguridad/class.SeguridadUsuario.php");
 
 	$estado = session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
@@ -40,12 +41,12 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 				$RegisUsuario = Usuario::Listar(6, 0, $Login, $Contra, "", "", 0, 0);
 				foreach ($RegisUsuario as $ItemUsuario) :
 
-					$cookie_name = $ItemUsuario['id_usua'];
-					$encryptedUserId = encrypt($ItemUsuario['id_usua'], $key);
+					/* $cookie_name = $ItemUsuario['id_usua'];
+					$encryptedUserId = encrypt($ItemUsuario['id_usua'], $key); */
 
 					// Configurar la cookie con el ID cifrado
-					$cookie_expiration = time() + (86400 * 1); // La cookie durará 30 días
-					setcookie($cookie_name, $encryptedUserId, $cookie_expiration, "/", "", false, true); // `HttpOnly` bandera habilitada
+					/* $cookie_expiration = time() + (86400 * 1); // La cookie durará 30 días
+					setcookie($cookie_name, $encryptedUserId, $cookie_expiration, "/", "", false, true); // `HttpOnly` bandera habilitada */
 
 					$_SESSION['SesionUsuaId']                = $ItemUsuario['id_usua'];
 					$_SESSION['SesionFuncioDetaId']          = $ItemUsuario['id_funcio_deta'];

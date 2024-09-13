@@ -266,7 +266,7 @@ $ConfigOtas = ConfigOtras::Buscar();
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <form enctype="multipart/form-data" class="formulario">
+                            <form enctype="multipart/form-data" class="formularioCargueDigital">
                                 <input type="file" class="filestyle" data-buttonBefore="true" data-buttonName="btn-success" name="archivo" id="archivo">
                                 <input name="id_radicado" id="id_radicado" type="hidden">
                                 <input name="id_depen" id="id_depen" type="hidden">
