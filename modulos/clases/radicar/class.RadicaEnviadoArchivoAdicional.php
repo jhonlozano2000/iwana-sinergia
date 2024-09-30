@@ -111,7 +111,7 @@ class RadicadoEnviadoArchivoAdicional
                 /******************************************************************************************/
                 /*  LISTO LOS ARCHIVOS DE UN RADICADO
                 /******************************************************************************************/
-                $Sql = "SELECT `radi`.`id_radica`, `radi`.`id_ruta`, `radi_archi`.`id_archivo`, `radi_archi`.`nom_archivo`, `radi_archi`.`nom_archivo`
+                $Sql = "SELECT `radi`.`id_radica`, `radi`.`id_ruta`, `radi_archi`.`id_archivo`, `radi_archi`.`archivo`, `radi_archi`.`nom_archivo`, `radi`.`tipo_cargue_archivos`
                         FROM `archivo_radica_enviados_archivos` AS `radi_archi`
                             INNER JOIN `archivo_radica_enviados` AS `radi` ON (`radi_archi`.`id_radica` = `radi`.`id_radica`)
                         WHERE (`radi`.`id_radica` = :id_radica)";

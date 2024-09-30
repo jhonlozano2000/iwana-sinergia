@@ -35,6 +35,7 @@ class RadicadoEnviado
     private $OpcionDetalle3;
     private $NombreArchivo;
     private $Archivo;
+    private $TipoCargueArchivo;
 
     public function __construct(
         $Accion = null,
@@ -69,7 +70,8 @@ class RadicadoEnviado
         $OpcionDetalle2 = null,
         $OpcionDetalle3 = null,
         $NombreArchivo = null,
-        $Archivo = null
+        $Archivo = null,
+        $TipoCargueArchivo = null
     ) {
 
         $this->Accion          = $Accion;
@@ -105,6 +107,7 @@ class RadicadoEnviado
         $this->OpcionDetalle3  = $OpcionDetalle3;
         $this->NombreArchivo = $NombreArchivo;
         $this->Archivo  = $Archivo;
+        $this->TipoCargueArchivo = $TipoCargueArchivo;
     }
 
     public function get_IdRadica()
@@ -265,6 +268,11 @@ class RadicadoEnviado
     public function get_Archivo()
     {
         return $this->Archivo;
+    }
+
+    public function get_TipoCargueArchivo()
+    {
+        return $this->TipoCargueArchivo;
     }
 
     ///////////////////////////////////////////////////
@@ -433,6 +441,11 @@ class RadicadoEnviado
         return $this->Archivo = $Archivo;
     }
 
+    public function set_TipoCargueArchivo($TipoCargueArchivo)
+    {
+        return $this->TipoCargueArchivo = $TipoCargueArchivo;
+    }
+
     //Metodos
     public function Gestionar()
     {
@@ -476,6 +489,11 @@ class RadicadoEnviado
         $ParameOpcionDetalle3 = PDO::PARAM_STR;
         if ($this->OpcionDetalle3 == NULL) {
             $ParameOpcionDetalle3 = PDO::PARAM_NULL;
+        }
+
+        $ParameIdRuta = PDO::PARAM_INT;
+        if ($this->IdRuta == NULL) {
+            $ParameIdRuta = PDO::PARAM_NULL;
         }
 
         try {
@@ -530,20 +548,22 @@ class RadicadoEnviado
             } elseif ($this->Accion == 4) {
                 //Cargar archivo
                 $Sql = "UPDATE archivo_radica_enviados
-                        SET nombre_archivo = :nombre_archivo, digital = 1, archivo = :archivo
+                        SET nombre_archivo = :nombre_archivo, digital = 1, archivo = :archivo, tipo_cargue_archivos = :tipo_cargue_archivos
                         WHERE id_radica = :id_radica";
 
                 $Instruc = $conexion->prepare($Sql);
                 $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_STR);
                 $Instruc->bindParam(':archivo', $this->Archivo, PDO::PARAM_STR);
+                $Instruc->bindParam(':tipo_cargue_archivos', $this->TipoCargueArchivo, PDO::PARAM_INT);
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion === 'ELIMINAR_DIGITAL') {
                 //Cargar archivo
                 $Sql = "UPDATE archivo_radica_enviados
-                        SET nombre_archivo = null, digital = 0, archivo = null
+                        SET id_ruta = :id_ruta, nombre_archivo = null, digital = 1, archivo = null
                         WHERE id_radica = :id_radica";
 
                 $Instruc = $conexion->prepare($Sql);
+                $Instruc->bindParam(':id_ruta', $this->IdRuta, $ParameIdRuta);
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion == 5) {
                 $Sql = "UPDATE archivo_radica_enviados
@@ -600,7 +620,7 @@ class RadicadoEnviado
                             `DestinaContac`.`email` AS `email_destina`, `Serie`.`cod_serie`, `Serie`.`nom_serie`, `SubSerie`.`cod_subserie`, `SubSerie`.`nom_subserie`,
                             `TipDoc`.`nom_tipodoc`, `radi`.`id_ruta`, `radi`.`fec_docu`, `radi`.`fechor_radica`, `radi`.`asunto`, `radi`.`num_anexos`,
                             `radi`.`num_folio`, `radi`.`digital`, `radi`.`adjunto`, `radi`.`impri_rotu`, `radi`.`enviado`,
-                            `radi`.`trasnferido`, `radi`.`num_guia`, `re_recibido`.`radica_respuesta`, `radi`.`archivo`
+                            `radi`.`trasnferido`, `radi`.`num_guia`, `re_recibido`.`radica_respuesta`, `radi`.`archivo`, `radi`.`tipo_cargue_archivos`
                         FROM`archivo_radica_enviados` AS `radi`
                             INNER JOIN `config_formaenvio` AS `FormaEnvi` ON (`radi`.`id_formaenvio` = `FormaEnvi`.`id_formaenvio`)
                             LEFT JOIN `archivo_trd_series` AS `Serie` ON (`Serie`.`id_serie` = `radi`.`id_serie`)
@@ -1459,7 +1479,8 @@ class RadicadoEnviado
                     $Result['opcion_detalle2'],
                     $Result['opcion_detalle3'],
                     $Result['nombre_archivo'],
-                    $Result['archivo']
+                    $Result['archivo'],
+                    $Result['tipo_cargue_archivos'],
                 );
             } else {
                 return false;

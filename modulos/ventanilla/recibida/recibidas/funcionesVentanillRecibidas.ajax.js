@@ -128,9 +128,15 @@
     });
 
     $("#BtnSubirDigitalRecibido").click(function () {
+        let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
         var formData = new FormData($(".formulario")[0]);
+        formData.append("tipo_cargue_archivos", tipoCargueArchivo);
 
-        var urlParaCargarArchivo = "../../../varios/admin_file.php";
+        if (tipoCargueArchivo == 0) {
+            var urlParaCargarArchivo = "../../../varios/ftp.acciones.php";
+        } else if (tipoCargueArchivo == 1) {
+            var urlParaCargarArchivo = "../../../varios/admin_getion_files.php";
+        }
 
         $.ajax({
             url: urlParaCargarArchivo,
@@ -348,8 +354,44 @@
 
     $(document).on("click", "#BtnDescargarArchivoRecibido", function (event) {
         var IdRadicado = $(this).data("id_radicado");
-        // Redirige al archivo PHP que maneja la descarga
-        window.location.href = "../../../varios/admin_file.php?accion=RECIBIDOS_DESCARGAR&id_radicado=" + IdRadicado;
+        let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
+
+        if (tipoCargueArchivo == 0) {
+            var urlParaCargarArchivo = "../../../varios/ftp.acciones.php";
+
+            var IdRadicado = $(this).data("id_radicado");
+            var Archivo = $(this).data("archivo");
+            var IdRuta = $(this).data("id_ruta");
+
+            if (IdRuta == 0) {
+                sweetAlert("Oops...", "El radicado no tiene el documento digital, por favor adjunte el documento digitalizado!", "warning");
+            } else {
+                $.ajax({
+                    url: urlParaCargarArchivo,
+                    type: "POST",
+                    data: "accion=RECIBIDOS_DESCARGAR&id_radicado=" + IdRadicado + "&id_ruta=" + IdRuta,
+                    beforeSend: function () {
+                        $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+                    },
+                    success: function (msj) {
+                        $("#DivAlertas").empty();
+                        if (msj == 1) {
+                            window.open("../../../../archivos/temp/recibidos/" + Archivo, "_blank");
+                        } else {
+                            sweetAlert("Oops...", msj, "warning");
+                        }
+                    },
+                    error: function (error) {
+                        sweetAlert("Oops...", error, "error");
+                    },
+                });
+            }
+        } else if (tipoCargueArchivo == 1) {
+            var urlParaCargarArchivo = "../../../varios/admin_getion_files.php";
+
+            // Redirige al archivo PHP que maneja la descarga
+            window.location.href = `${urlParaCargarArchivo}?accion=RECIBIDOS_DESCARGAR&id_radicado=${IdRadicado}`;
+        }
     });
 
     $(document).on("click", "#BtnLlevarEditarAsunto", function (event) {

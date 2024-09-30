@@ -220,7 +220,7 @@ if ($ConfiguracionOtras->get_Incluir_TRD() == 0) {
                                                     <input name="num_anexos" type="text" class="form-control" id="num_anexos" placeholder="# De Anexos">
                                                 </div>
                                                 <div class="form-group col-md-8">
-                                                    <input name="observa_anexo" type="text" class="form-control" id="observa_anexo" placeholder="Ingrese aquí las observaciones de los anexos">
+                                                    <input name="observa_anexos" type="text" class="form-control" id="observa_anexos" placeholder="Ingrese aquí las observaciones de los anexos">
                                                 </div>
                                             </div>
                                             <div class="row">

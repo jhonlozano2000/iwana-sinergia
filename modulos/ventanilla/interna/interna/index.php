@@ -9,8 +9,14 @@ require_once '../../../clases/configuracion/class.ConfigOtras.php';
 require_once("../../../clases/seguridad/class.SeguridadMostrarBuscar.php");
 require_once("../../../clases/general/class.GeneralFuncionario.php");
 require_once '../../../clases/seguridad/class.SeguridadPermiso.php';
+
 $ConfigOtas = ConfigOtras::Buscar();
 
+/**
+ * Elimino los temporales del usuario
+ */
+$path =  MI_ROOT_TEMP_RELATIVA . "/temp_ventanilla/internos/" . $_SESSION['SesionUsuaId'];
+deleteDirectory($path);
 ?>
 <!DOCTYPE html>
 <html>
@@ -177,10 +183,13 @@ $ConfigOtas = ConfigOtras::Buscar();
                     <a href="#" id="btn-back">
                         <i class="icon-custom-left"></i>
                     </a>
-                    <h3>Regresar- <span class="semi-bold">Correspondencia recibida</span></h3>
+                    <h3>Regresar - <span class="semi-bold">Correspondencia recibida</span></h3>
                 </div>
                 <div class="row" id="inbox-wrapper">
+
                     <input name="tipo_impre_torulo" id="tipo_impre_torulo" type="hidden" value="<?php echo $ConfigOtas->get_TipoImpresionRotulo(); ?>">
+                    <input name="tipo_cargue_archivos" id="tipo_cargue_archivos" type="hidden" value="<?php echo $ConfigOtas->get_TipoCargueArchivos(); ?>">
+
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
@@ -226,7 +235,9 @@ $ConfigOtas = ConfigOtras::Buscar();
             <div class="clearfix"></div>
             <div class="admin-bar" id="quick-access">
                 <div class="admin-bar-inner">
-                    <button class="btn btn-danger  btn-add" type="button"><i class="icon-trash"></i> Tranferir al archivo de gestión</button>
+                    <button class="btn btn-danger  btn-add" type="button">
+                        <i class="icon-trash"></i> Tranferir al archivo de gestión
+                    </button>
                     <button class="btn btn-white  btn-cancel" type="button">Cancel</button>
                 </div>
             </div>
@@ -270,7 +281,7 @@ $ConfigOtas = ConfigOtras::Buscar();
                                 <input type="file" class="filestyle" data-buttonBefore="true" data-buttonName="btn-success" name="archivo" id="archivo">
                                 <input name="id_radicado" id="id_radicado" type="hidden">
                                 <input name="id_depen" id="id_depen" type="hidden">
-                                <input name="accion" id="accion" type="hidden" value="INTERNO_UPLOAD_VENTANILLA">
+                                <input name="accion" id="accion" type="hidden" value="INTERNO_UPLOAD">
                             </form>
                         </div>
                     </div>

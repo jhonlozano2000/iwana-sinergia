@@ -273,10 +273,18 @@
     });
 
     $(document).on("click", "#BtnSubirArchivosAdicionales", function (event) {
+        let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
+
+        if (tipoCargueArchivo == 0) {
+            var urlParaCargarArchivo = "../../../varios/ftp.acciones.php";
+        } else if (tipoCargueArchivo == 1) {
+            var urlParaCargarArchivo = "../../../varios/admin_getion_files.php";
+        }
+
         $.ajax({
-            url: "../../../varios/admin_file.php",
+            url: urlParaCargarArchivo,
             type: "POST",
-            data: "accion=ENVIADOS_UPLOAD_ADJUNTOS&id_radicado=" + $("#id_radicado").val() + "&id_depen=" + $("#id_depen").val(),
+            data: "accion=ENVIADOS_UPLOAD_ADJUNTOS&id_radicado=" + $("#id_radicado").val(),
             beforeSend: function () {
                 $("#DivAlertarAdjuntoDigital").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
             },
@@ -294,10 +302,18 @@
     });
 
     $("#BtnSubirDigital").click(function () {
+        let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
         var formData = new FormData($(".formulario")[0]);
+        formData.append("tipo_cargue_archivos", tipoCargueArchivo);
+
+        if (tipoCargueArchivo == 0) {
+            var urlParaCargarArchivo = "../../../varios/ftp.acciones.php";
+        } else if (tipoCargueArchivo == 1) {
+            var urlParaCargarArchivo = "../../../varios/admin_getion_files.php";
+        }
 
         $.ajax({
-            url: "../../../varios/admin_file.php",
+            url: urlParaCargarArchivo,
             type: "POST",
             data: formData,
             cache: false,
@@ -377,16 +393,78 @@
     });
 
     $(document).on("click", "#BtnDescargarArchivoEnviado", function (event) {
+        let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
         var IdRadicado = $(this).data("id_radicado");
-        var IdRadicado = $(this).data("id_radicado");
+        var IdRuta = $(this).data("id_ruta");
+        var Archivo = $(this).data("archivo");
 
-        window.location.href = "../../../varios/admin_file.php?accion=ENVIADOS_DESCARGAR&id_radicado=" + IdRadicado;
+        if (tipoCargueArchivo == 0) {
+            if ($("#id_ruta").val() == 0) {
+                sweetAlert("Oops...", "El radicado no tiene el documento digital, por favor adjunte el documento digitalizado!", "warning");
+            } else {
+                $.ajax({
+                    url: "../../../varios/ftp.acciones.php",
+                    type: "POST",
+                    data: "accion=ENVIADOS_DESCARGAR&id_radicado=" + IdRadicado + "&id_ruta=" + IdRuta,
+                    beforeSend: function () {
+                        $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+                    },
+                    success: function (msj) {
+                        $("#DivAlertas").empty();
+                        if (msj == 1) {
+                            url = "../../../../archivos/temp/enviados/" + Archivo;
+                            window.open(url, "Download");
+                        } else {
+                            sweetAlert("Oops...", msj, "error");
+                        }
+                    },
+                    error: function (error) {
+                        sweetAlert("Oops...", error, "error");
+                    },
+                });
+            }
+        } else {
+            var urlParaCargarArchivo = "../../../varios/admin_getion_files.php";
+            window.location.href = `${urlParaCargarArchivo}?accion=ENVIADOS_DESCARGAR&id_radicado=${IdRadicado}`;
+        }
     });
 
     $(document).on("click", "#BtnDescargarArchivoEnviadoAdjunto", function (event) {
         var IdArchivo = $(this).data("id_archivo");
+        var IdRadicado = $(this).data("id_radica");
+        var IdRuta = $(this).data("id_ruta");
+        var NomArchivo = $(this).data("nom_archivo");
+        let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
 
-        window.location.href = "../../../varios/admin_file.php?accion=ENVIADOS_DESCARGAR_ADJUNTO&archivo_id=" + IdArchivo;
+        if (tipoCargueArchivo == 0) {
+            if ($("#id_ruta").val() == 0) {
+                sweetAlert("Oops...", "El radicado no tiene el documento digital, por favor adjunte el documento digitalizado!", "warning");
+            } else {
+                $.ajax({
+                    url: "../../../varios/ftp.acciones.php",
+                    type: "POST",
+                    data: "accion=ENVIADOS_DESCARGAR_ADJUNTO&id_radicado=" + IdRadicado + "&id_ruta=" + IdRuta + "&archivo_id=" + IdArchivo,
+                    beforeSend: function () {
+                        $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+                    },
+                    success: function (msj) {
+                        $("#DivAlertas").empty();
+                        if (msj == 1) {
+                            url = "../../../../archivos/temp/enviados/" + NomArchivo;
+                            window.open(url, "Download");
+                        } else {
+                            sweetAlert("Oops...", msj, "error");
+                        }
+                    },
+                    error: function (error) {
+                        sweetAlert("Oops...", error, "error");
+                    },
+                });
+            }
+        } else {
+            var urlParaCargarArchivo = "../../../varios/admin_getion_files.php";
+            window.location.href = `${urlParaCargarArchivo}?accion=ENVIADOS_DESCARGAR_ADJUNTO&archivo_id=${IdArchivo}`;
+        }
     });
 
     $("#BtnBuscarDestinatarioNatural").click(function (e) {

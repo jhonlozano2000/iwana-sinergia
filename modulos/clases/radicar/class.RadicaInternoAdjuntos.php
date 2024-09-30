@@ -98,16 +98,17 @@ class RadicadoInternoAdjuntos
 
         try {
             if ($Accion == 1) {
-                $Sql = "SELECT `radica`.`id_radica`, `radica`.`id_ruta`, `adjunto`.`id_archivo`, `adjunto`.`nombre_archivo`
-                        FROM `archivo_radica_interna_adjuntos` AS `adjunto`
-                            INNER JOIN `archivo_radica_interna` AS `radica` ON (`adjunto`.`id_radica` = `radica`.`id_radica`)
-                        WHERE (`radica`.`id_radica` = :id_radica)";
+                $Sql = "SELECT `radi`.`id_radica`, `radi`.`tipo_cargue_archivos`, `radi`.`nombre_archivo` AS `nombre_archivo_radica`, `radi`.`archivo` AS `archivo_radica`
+                            , `adjuntos`.`id_archivo`, `adjuntos`.`nombre_archivo` AS `nombre_archivo_adjunto`, `adjuntos`.`archivo` AS `archivo_adjunto`,  `adjuntos`.`id_archivo`, `radi`.`id_ruta`
+                        FROM `archivo_radica_interna_adjuntos` AS `adjuntos`
+                            INNER JOIN `archivo_radica_interna` AS `radi` ON (`adjuntos`.`id_radica` = `radi`.`id_radica`)
+                        WHERE (`radi`.`id_radica` = :id_radica)";
 
                 $Instruc = $conexion->prepare($Sql);
                 $Instruc->bindParam(":id_radica", $IdRadicado, PDO::PARAM_STR);
                 $Instruc->execute() or die(print_r($Instruc->errorInfo() . " - " . $Sql, true));
             } elseif ($Accion == 2) {
-                $Sql = "SELECT * FROM archivo_radica_interna_adjuntos 
+                $Sql = "SELECT * FROM archivo_radica_interna_adjuntos
                         WHERE id_radica = :id_radica  AND nom_archivo = :nom_archivo";
 
                 $Instruc = $conexion->prepare($Sql);

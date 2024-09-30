@@ -1,7 +1,7 @@
 ﻿<?php
 require_once "config/class.Conexion.php";
 require_once "config/funciones.php";
-//header('Location: index_desarrollo.php');
+header('Location: index_desarrollo.php');
 ?>
 <!DOCTYPE html>
 <html>

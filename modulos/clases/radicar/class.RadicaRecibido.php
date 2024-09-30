@@ -38,6 +38,7 @@ class RadicadoRecibido
     private $OpcionDetalle3;
     private $NombreArchivo;
     private $Archivo;
+    private $TipoCargueArchivo;
 
     public function __construct(
         $Accion = null,
@@ -76,7 +77,8 @@ class RadicadoRecibido
         $OpcionDetalle2 = null,
         $OpcionDetalle3 = null,
         $NombreArchivo = null,
-        $Archivo = null
+        $Archivo = null,
+        $TipoCargueArchivo = null
     ) {
 
         $this->Accion          = $Accion;
@@ -116,6 +118,7 @@ class RadicadoRecibido
         $this->OpcionDetalle3  = $OpcionDetalle3;
         $this->NombreArchivo   = $NombreArchivo;
         $this->Archivo         = $Archivo;
+        $this->TipoCargueArchivo = $TipoCargueArchivo;
     }
 
     public function get_IdRadica()
@@ -291,6 +294,11 @@ class RadicadoRecibido
     public function get_Archivo()
     {
         return $this->Archivo;
+    }
+
+    public function get_TipoCargueArchivo()
+    {
+        return $this->TipoCargueArchivo;
     }
 
     public function get_NombreArchivo()
@@ -478,6 +486,11 @@ class RadicadoRecibido
         $this->Archivo = $Archivo;
     }
 
+    public function set_TipoCargueArchivo($TipoCargueArchivo)
+    {
+        return $this->TipoCargueArchivo = $TipoCargueArchivo;
+    }
+
     //Metodos
     public function Gestionar()
     {
@@ -533,6 +546,11 @@ class RadicadoRecibido
             $ParameOpcionDetalle3 = PDO::PARAM_NULL;
         }
 
+        $ParameIdRuta = PDO::PARAM_INT;
+        if ($this->IdRuta == NULL) {
+            $ParameIdRuta = PDO::PARAM_NULL;
+        }
+
         try {
             if ($this->Accion == 'GUARDAR_RADICADO') {
                 $Sql = "INSERT INTO archivo_radica_recibidos(id_radica, id_serie, id_subserie, id_tipodoc, id_usua_regis,
@@ -553,7 +571,7 @@ class RadicadoRecibido
                 $Instruc->bindParam(':id_forma_llegada', $this->FormaLlegada, PDO::PARAM_INT);
                 $Instruc->bindParam(':id_remite', $this->IdRemite, PDO::PARAM_INT);
                 $Instruc->bindParam(':id_tipo_correspon', $this->IdTipoCorrespon, PDO::PARAM_INT);
-                $Instruc->bindParam(':id_ruta', $this->IdRuta, PDO::PARAM_INT);
+                $Instruc->bindParam(':id_ruta', $this->IdRuta, $ParameIdRuta);
                 $Instruc->bindParam(':fechor_radica', $this->FecRadica, PDO::PARAM_STR);
                 $Instruc->bindParam(':fec_docu', $this->FecDocu, PDO::PARAM_STR);
                 $Instruc->bindParam(':fec_venci', $this->FecVenciDocu, $ParameFecVencimi);
@@ -604,12 +622,14 @@ class RadicadoRecibido
                  * Cargar archivo
                  */
                 $Sql = "UPDATE archivo_radica_recibidos
-                        SET digital = 1, nombre_archivo = :nombre_archivo, archivo = :archivo
+                        SET id_ruta = :id_ruta, digital = 1, nombre_archivo = :nombre_archivo, archivo = :archivo, tipo_cargue_archivos = :tipo_cargue_archivos
                         WHERE id_radica = :id_radica";
 
                 $Instruc = $conexion->prepare($Sql);
+                $Instruc->bindParam(':id_ruta', $this->IdRuta, $ParameIdRuta);
                 $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_STR);
                 $Instruc->bindParam(':archivo', $this->Archivo, PDO::PARAM_STR);
+                $Instruc->bindParam(':tipo_cargue_archivos', $this->TipoCargueArchivo, PDO::PARAM_INT);
                 $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
             } elseif ($this->Accion == 6) {
                 $Sql = "UPDATE archivo_radica_recibidos
@@ -774,7 +794,7 @@ class RadicadoRecibido
                             `remite_contac`.`nom_contac` AS `nom_remite`, `remite_empre`.`razo_soci` AS `razo_soci_remite`, `remite_contac`.`dir` AS `dir_remite`,
                             `remite_contac`.`tel` AS `tel_remite`, `remite_contac`.`cel` AS `cel_remite`, `remite_contac`.`fax` AS `fax_remite`, `remite_contac`.`email` AS `email_remite`, `remite_contac`.`cargo`,
                             `forma_llegada`.`nom_formaenvi` AS `nom_forma_llega`, `radi_respues`.`id_radica` AS `radica_respuesta`, `radi_respues`.`fec_docu` AS `fec_docu_respuesta`,
-                            `radi_respues`.`fechor_radica` AS `fechor_radica_respuesta`, `radi_respues`.`asunto` AS `asunto_respuesta`, `radi`.`nombre_archivo`
+                            `radi_respues`.`fechor_radica` AS `fechor_radica_respuesta`, `radi_respues`.`asunto` AS `asunto_respuesta`, `radi`.`archivo`, `radi`.`nombre_archivo`
                         FROM `archivo_radica_recibidos` AS `radi`
                             LEFT JOIN `archivo_trd_series` AS `serie` ON (`radi`.`id_serie` = `serie`.`id_serie`)
                             LEFT JOIN `archivo_trd_subserie` AS `subserie` ON (`radi`.`id_subserie` = `subserie`.`id_subserie`)
@@ -818,7 +838,7 @@ class RadicadoRecibido
                 /******************************************************************************************/
                 $Sql = "SELECT CONCAT((SELECT CONCAT(cod_depen, cod_corres)
                         FROM areas_dependencias
-                        WHERE id_depen = :id_depen),'-',LPAD(COUNT(id_radica)+1, 5, 0)) AS IdRadicado
+                        WHERE id_depen = :id_depen,'-',LPAD(COUNT(id_radica)+1, 5, 0)) AS IdRadicado
                         FROM archivo_radica_recibidos WHERE YEAR(fechor_radica) = YEAR(NOW())";
 
                 $Instruc = $conexion->prepare($Sql);
@@ -871,7 +891,8 @@ class RadicadoRecibido
                 /*  PLANILLA POR RANGO DE RADICADOS
                 /******************************************************************************************/
                 $Sql = "SELECT `ra`.`id_radica`, DATE_FORMAT(`ra`.`fechor_radica`, '%H:%I:%S') as 'hor_llegada', `forma_envi`.`nom_formaenvi`,
-                            `ra`.`asunto`, `depn`.`cod_depen`, `depn`.`cod_corres`, `fun`.`nom_funcio`, `fun`.`ape_funcio`, `ra`.`num_folio`, `ra`.`num_anexos`, `ra`.`requie_respues`, `remite`.`nom_contac`, `remite_empre`.`razo_soci`
+                            `ra`.`asunto`, `depn`.`cod_depen`, `depn`.`cod_corres`, `fun`.`nom_funcio`, `fun`.`ape_funcio`, `ra`.`num_folio`, `ra`.`num_anexos`, `ra`.`requie_respues`,
+                            `remite`.`nom_contac`, `remite_empre`.`razo_soci`
                         FROM `archivo_radica_recibidos_responsa` AS `ra_respon`
                             INNER JOIN `archivo_radica_recibidos` AS `ra` ON (`ra_respon`.`id_radica` = `ra`.`id_radica`)
                             INNER JOIN `config_formaenvio` AS `forma_envi` ON (`ra`.`id_forma_llegada` = `forma_envi`.`id_formaenvio`)
@@ -1036,7 +1057,8 @@ class RadicadoRecibido
                     $Result['opcion_detalle2'],
                     $Result['opcion_detalle3'],
                     $Result['nombre_archivo'],
-                    $Result['archivo']
+                    $Result['archivo'],
+                    $Result['tipo_cargue_archivos']
                 );
             } else {
                 return false;

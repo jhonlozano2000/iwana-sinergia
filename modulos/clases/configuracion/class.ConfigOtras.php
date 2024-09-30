@@ -27,6 +27,7 @@ class ConfigOtras
 	private $EmailVentanillaServidor;
 	private $EmailVentanillaPuerto;
 	private $EmailVentanillaAutenti;
+	private $TipoCargueArchivos;
 
 	public function __construct(
 		$Accion = null,
@@ -54,7 +55,8 @@ class ConfigOtras
 		$EmailVentanillaContra = null,
 		$EmailVentanillaServidor = null,
 		$EmailVentanillaPuerto = null,
-		$EmailVentanillaAutenti = null
+		$EmailVentanillaAutenti = null,
+		$TipoCargueArchivos = null
 	) {
 
 		$this->Accion                  = $Accion;
@@ -83,6 +85,7 @@ class ConfigOtras
 		$this->EmailVentanillaServidor = $EmailVentanillaServidor;
 		$this->EmailVentanillaPuerto   = $EmailVentanillaPuerto;
 		$this->EmailVentanillaAutenti  = $EmailVentanillaAutenti;
+		$this->TipoCargueArchivos      = $TipoCargueArchivos;
 	}
 
 	public function get_Id()
@@ -208,6 +211,11 @@ class ConfigOtras
 	public function get_EmailVentanillaAutenti()
 	{
 		return $this->EmailVentanillaAutenti;
+	}
+
+	public function get_TipoCargueArchivos()
+	{
+		return $this->TipoCargueArchivos;
 	}
 
 	/////////////////////////////////////
@@ -336,6 +344,11 @@ class ConfigOtras
 		$this->EmailVentanillaAutenti = $EmailVentanillaAutenti;
 	}
 
+	public function set_TipoCargueArchivos($TipoCargueArchivos)
+	{
+		return $this->TipoCargueArchivos = $TipoCargueArchivos;
+	}
+
 	public function Gestionar()
 	{
 		$conexion = new Conexion();
@@ -345,11 +358,12 @@ class ConfigOtras
 				$Sql = "INSERT INTO `config_otras`(`corres_recibida_titulo`, `corres_recibida_subtitulo`, `corres_recibida_codigo`, `corres_recibida_version`, `corres_enviada_titulo`, 
 									`corres_enviada_subtitulo`, `corres_enviada_codigo`, `corres_enviada_version`, `corres_interna_titulo`, `corres_interna_subtitulo`, `corres_interna_codigo`, 
 									`corres_interna_version`, `planti_correspondencia`, `tipo_radica_recibida`, `tipo_radica_enviado`, `tipo_radica_interno`, `tipo_impre_torulo`, `incluir_trd`, 
-									`incluir_oficina_trd`, `email_ventanilla_usuario`, `email_ventanilla_contra`, `mail_ventanilla_servidor`, `email_ventanilla_puerto`, `email_ventanilla_autenti`)
+									`incluir_oficina_trd`, `email_ventanilla_usuario`, `email_ventanilla_contra`, `mail_ventanilla_servidor`, `email_ventanilla_puerto`, `email_ventanilla_autenti`,
+									`tipo_cargue_archivos)
 						VALUES (:corres_recibida_titulo, :corres_recibida_subtitulo, :corres_recibida_codigo, :corres_recibida_version, :corres_enviada_titulo, :corres_enviada_subtitulo, 
 								:corres_enviada_codigo, :corres_enviada_version, :corres_interna_titulo, :corres_interna_subtitulo, :corres_interna_codigo, :corres_interna_version, 
 								:planti_correspondencia, :tipo_radica_recibida, :tipo_radica_enviado, :tipo_radica_interno, :tipo_impre_torulo, :incluir_trd, :incluir_oficina_trd, 
-								:email_ventanilla_usuario, :email_ventanilla_contra, :mail_ventanilla_servidor, :email_ventanilla_puerto, :email_ventanilla_autenti);";
+								:email_ventanilla_usuario, :email_ventanilla_contra, :mail_ventanilla_servidor, :email_ventanilla_puerto, :email_ventanilla_autenti, :tipo_cargue_archivos);";
 
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':corres_recbida_titulo', $this->CoresReciTitulo, PDO::PARAM_STR);
@@ -375,6 +389,7 @@ class ConfigOtras
 				$Instruc->bindParam(':mail_ventanilla_servidor', $this->EmailVentanillaServidor, PDO::PARAM_STR);
 				$Instruc->bindParam(':email_ventanilla_puerto', $this->EmailVentanillaPuerto, PDO::PARAM_STR);
 				$Instruc->bindParam(':email_ventanilla_autenti', $this->EmailVentanillaAutenti, PDO::PARAM_STR);
+				$Instruc->bindParam(':tipo_cargue_archivos', $this->TipoCargueArchivos, PDO::PARAM_INT);
 			} elseif ($this->Accion == 1) {
 				$Sql = "UPDATE config_otras SET corres_recibida_titulo = :corres_recibida_titulo, corres_recibida_subtitulo = :corres_recibida_subtitulo, 
 							corres_recibida_codigo = :corres_recibida_codigo, corres_recibida_version = :corres_recibida_version,  
@@ -385,7 +400,8 @@ class ConfigOtras
 							incluir_trd = :incluir_trd, incluir_oficina_trd = :incluir_oficina_trd, tipo_radica_recibida = :tipo_radica_recibida, tipo_radica_enviado = :tipo_radica_enviado, 
 							tipo_radica_interno = :tipo_radica_interno, tipo_impre_torulo = :tipo_impre_torulo, email_ventanilla_usuario = :email_ventanilla_usuario, 
 							email_ventanilla_contra = :email_ventanilla_contra, mail_ventanilla_servidor = :mail_ventanilla_servidor, 
-							email_ventanilla_puerto = :email_ventanilla_puerto, email_ventanilla_autenti = :email_ventanilla_autenti";
+							email_ventanilla_puerto = :email_ventanilla_puerto, email_ventanilla_autenti = :email_ventanilla_autenti, 
+							tipo_cargue_archivos = :tipo_cargue_archivos";
 
 				$Instruc = $conexion->prepare($Sql);
 				$Instruc->bindParam(':corres_recibida_titulo', $this->CoresReciTitulo, PDO::PARAM_STR);
@@ -411,6 +427,7 @@ class ConfigOtras
 				$Instruc->bindParam(':mail_ventanilla_servidor', $this->EmailVentanillaServidor, PDO::PARAM_STR);
 				$Instruc->bindParam(':email_ventanilla_puerto', $this->EmailVentanillaPuerto, PDO::PARAM_STR);
 				$Instruc->bindParam(':email_ventanilla_autenti', $this->EmailVentanillaAutenti, PDO::PARAM_STR);
+				$Instruc->bindParam(':tipo_cargue_archivos', $this->TipoCargueArchivos, PDO::PARAM_INT);
 			} elseif ($this->Accion == 2) {
 				$Sql = "UPDATE config_otras
 						SET planti_correspondencia = :planti_correspondencia";
@@ -495,7 +512,8 @@ class ConfigOtras
 					$Result['email_ventanilla_contra'],
 					$Result['mail_ventanilla_servidor'],
 					$Result['email_ventanilla_puerto'],
-					$Result['email_ventanilla_autenti']
+					$Result['email_ventanilla_autenti'],
+					$Result['tipo_cargue_archivos'],
 				);
 			} else {
 				return false;

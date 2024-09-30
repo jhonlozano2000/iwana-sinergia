@@ -370,6 +370,33 @@ endforeach;
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <h4>
+                                                    <span class="text-success">
+                                                        <i class="glyphicon glyphicon-check"></i> Permitir el cargue,
+                                                    </span>de archivos:
+                                                </h4>
+                                                <div class="row form-row">
+
+                                                    <?php
+                                                    $checkedTipoCargueArchivos1 = "";
+                                                    $checkedTipoCargueArchivo2 = "";
+
+                                                    if ($ConfiguracionOtras->get_TipoCargueArchivos() == 0) {
+                                                        $checkedTipoCargueArchivos1 = "checked";
+                                                    } else if ($ConfiguracionOtras->get_TipoRadicadEnviada() == 1) {
+                                                        $checkedTipoCargueArchivo2 = "checked";
+                                                    }
+                                                    ?>
+
+                                                    <div class="radio radio-success">
+                                                        <input id="ChkCargueArchivos1" type="radio" name="tipo_cargue_archivos" value="0" <?php echo $checkedTipoCargueArchivos1; ?>>
+                                                        <label for="ChkCargueArchivos1"> Por Ftp</label>
+                                                        <input id="ChkCargueArchivos2" type="radio" name="tipo_cargue_archivos" value="1" <?php echo $checkedTipoCargueArchivo2; ?>>
+                                                        <label for="ChkCargueArchivos2"> Cargar archivos a la BD de Iwana</label>
+                                                    </div>
+                                                </div>
+
                                                 <h4>
                                                     <span class="text-success">
                                                         <i class="glyphicon glyphicon-check"></i> E -Mail,

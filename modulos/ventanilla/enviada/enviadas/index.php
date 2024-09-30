@@ -13,6 +13,12 @@ require_once '../../../clases/seguridad/class.SeguridadPermiso.php';
 $SesionNomUsua = $_SESSION['SesionFuncioNom'];
 
 $ConfigOtas = ConfigOtras::Buscar();
+
+/**
+ * Elimino los temporales del usuario
+ */
+$path =  MI_ROOT_TEMP_RELATIVA . "/temp_ventanilla/enviados/" . $_SESSION['SesionUsuaId'];
+deleteDirectory($path);
 ?>
 <!DOCTYPE html>
 <html>
@@ -150,6 +156,7 @@ $ConfigOtas = ConfigOtras::Buscar();
 
                     <input name="tipo_impre_torulo" id="tipo_impre_torulo" type="hidden" value="<?php echo $ConfigOtas->get_TipoImpresionRotulo(); ?>">
                     <input name="id_radica" id="id_radica" type="hidden">
+                    <input name="tipo_cargue_archivos" id="tipo_cargue_archivos" type="text" value="<?php echo $ConfigOtas->get_TipoCargueArchivos(); ?>">
 
                     <div class="col-md-12">
                         <div class="row">

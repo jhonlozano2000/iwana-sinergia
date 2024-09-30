@@ -67,6 +67,8 @@ $mail_ventanilla_servidor = isset($_POST['mail_ventanilla_servidor']) ? $_POST['
 $email_ventanilla_puerto   = isset($_POST['email_ventanilla_puerto']) ? $_POST['email_ventanilla_puerto'] : null;
 $email_ventanilla_autenti   = isset($_POST['email_ventanilla_autenti']) ? $_POST['email_ventanilla_autenti'] : null;
 
+$tipo_cargue_archivos   = isset($_POST['tipo_cargue_archivos']) ? $_POST['tipo_cargue_archivos'] : null;
+
 if ($incluir_trd == 'true') {
 	$incluir_trd = 1;
 } else {
@@ -104,6 +106,7 @@ $ConfigOtras->set_EmailVentanillaContra($email_ventanilla_contra);
 $ConfigOtras->set_EmailVentanillaServidor($mail_ventanilla_servidor);
 $ConfigOtras->set_EmailVentanillaPuerto($email_ventanilla_puerto);
 $ConfigOtras->set_EmailVentanillaAutenti($email_ventanilla_autenti);
+$ConfigOtras->set_TipoCargueArchivos($tipo_cargue_archivos);
 
 $ConfigOtras->Gestionar();
 

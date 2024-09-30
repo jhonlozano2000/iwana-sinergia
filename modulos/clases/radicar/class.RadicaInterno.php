@@ -24,6 +24,7 @@
         private $ImpriRotulo;
         private $NombreArchivo;
         private $Archivo;
+        private $TipoCargueArchivo;
 
         public function __construct(
             $Accion = null,
@@ -47,7 +48,8 @@
             $RadicaRespuesta = null,
             $ImpriRotulo = null,
             $NombreArchivo = null,
-            $Archivo = null
+            $Archivo = null,
+            $TipoCargueArchivo = null
         ) {
             $this->Accion          = $Accion;
             $this->IdRadica        = $IdRadica;
@@ -71,6 +73,7 @@
             $this->ImpriRotulo     = $ImpriRotulo;
             $this->NombreArchivo = $NombreArchivo;
             $this->Archivo         = $Archivo;
+            $this->TipoCargueArchivo = $TipoCargueArchivo;
         }
 
         public function get_IdRadica()
@@ -176,6 +179,11 @@
         public function get_Archivo()
         {
             return $this->Archivo;
+        }
+
+        public function get_TipoCargueArchivo()
+        {
+            return $this->TipoCargueArchivo;
         }
 
         // FUNCIONES PARA ENVIAR VALORES //
@@ -289,6 +297,11 @@
             return $this->Archivo = $Archivo;
         }
 
+        public function set_TipoCargueArchivo($TipoCargueArchivo)
+        {
+            return $this->TipoCargueArchivo = $TipoCargueArchivo;
+        }
+
         public function Gestionar()
         {
             $conexion = new Conexion();
@@ -317,10 +330,10 @@
 
                 if ($this->Accion === 'RADICAR_COMUNCACION') {
                     //ACTUALIZO LA CORRESPONDENCIA SIN GENERAR EL RADICADO
-                    $Sql = 'INSERT INTO `archivo_radica_interna`(`id_radica`, `id_serie`, `id_subserie`, `id_tipodoc`, `id_funcio_regis`, `fechor_radica`,
-                            `fec_docu`, `fec_venci`, `asunto`, `num_folio`, `num_anexos`, `observa_anexos`, `texto`, `requie_respuesta`, origen)
-                        VALUES (:id_radica, :id_serie, :id_subserie, :id_tipodoc, :id_funcio_regis, :fechor_radica, :fec_docu, :fec_venci, :asunto,
-                                :num_folio, :num_anexos, :observa_anexos, :texto, :requie_respuesta, :origen)';
+                    $Sql = 'INSERT INTO `archivo_radica_interna`(`id_radica`, `id_serie`, `id_subserie`, `id_tipodoc`, `id_funcio_regis`, `fechor_radica`, 
+                                `fec_docu`, `fec_venci`, `asunto`, `num_folio`, `num_anexos`, `observa_anexos`, `texto`, `requie_respuesta`, `tipo_cargue_archivos`)
+                            VALUES (:id_radica, :id_serie, :id_subserie, :id_tipodoc, :id_funcio_regis, :fechor_radica, :fec_docu, :fec_venci, :asunto,
+                                :num_folio, :num_anexos, :observa_anexos, :texto, :requie_respuesta, :tipo_cargue_archivos)';
 
                     $Instruc = $conexion->prepare($Sql);
                     $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
@@ -337,47 +350,41 @@
                     $Instruc->bindParam(':observa_anexos', $this->ObservaAnexos, PDO::PARAM_STR);
                     $Instruc->bindParam(':texto', $this->Texto, PDO::PARAM_STR);
                     $Instruc->bindParam(':requie_respuesta', $this->RequiRespuesta, PDO::PARAM_INT);
+                    $Instruc->bindParam(':tipo_cargue_archivos', $this->TipoCargueArchivo, PDO::PARAM_INT);
                 } elseif ($this->Accion === 'EDITAR_RUTA') {
                     $Sql = "UPDATE archivo_radica_interna
-                        SET `id_ruta` = :id_ruta, adjunto = :adjunto
-                        WHERE `id_radica` = :id_radica";
+                            SET `id_ruta` = :id_ruta, adjunto = :adjunto
+                            WHERE `id_radica` = :id_radica";
 
                     $Instruc = $conexion->prepare($Sql);
                     $Instruc->bindParam(':id_ruta', $this->IdRuta, PDO::PARAM_INT);
                     $Instruc->bindParam(':adjunto', $this->Adjunto, PDO::PARAM_INT);
                     $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
-                } elseif ($this->Accion === 'EDITAR_RUTA_ADJUNTO') {
+                } elseif ($this->Accion === 'INSERTAR_ARCHIVO') {
                     $Sql = "UPDATE archivo_radica_interna
-                        SET `id_ruta` = :id_ruta, `adjunto` = :adjunto
-                        WHERE `id_radica` = :id_radica";
+                            SET `id_ruta` = :id_ruta, `adjunto` = :adjunto, nombre_archivo = :nombre_archivo, tipo_cargue_archivos = :tipo_cargue_archivos
+                            WHERE `id_radica` = :id_radica";
 
                     $Instruc = $conexion->prepare($Sql);
                     $Instruc->bindParam(':id_ruta', $this->IdRuta, PDO::PARAM_INT);
                     $Instruc->bindParam(':adjunto', $this->Adjunto, PDO::PARAM_INT);
+                    $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_INT);
+                    $Instruc->bindParam(':tipo_cargue_archivos', $this->TipoCargueArchivo, PDO::PARAM_INT);
                     $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
                 } elseif ($this->Accion === 'IMPRIMIR_ROTULO') {
                     $Sql = "UPDATE archivo_radica_interna
-                        SET impri_rotu = 1
-                        WHERE id_radica = :id_radica";
+                            SET impri_rotu = 1
+                            WHERE id_radica = :id_radica";
 
                     $Instruc = $conexion->prepare($Sql);
                     $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
                 } elseif ($this->Accion === 'RESPONDER') {
                     $Sql = "UPDATE archivo_radica_interna
-                        SET `radica_respuesta` = :radica_respuesta
-                        WHERE `id_radica` = :id_radica";
+                            SET `radica_respuesta` = :radica_respuesta
+                            WHERE `id_radica` = :id_radica";
 
                     $Instruc = $conexion->prepare($Sql);
                     $Instruc->bindParam(':radica_respuesta', $this->RadicaRespuesta, PDO::PARAM_STR);
-                    $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
-                } elseif ($this->Accion === 'INSERTAR_ARCHIVO') {
-                    $Sql = "UPDATE archivo_radica_interna
-                        SET `nombre_archivo` = :nombre_archivo, archivo = :archivo
-                        WHERE `id_radica` = :id_radica";
-
-                    $Instruc = $conexion->prepare($Sql);
-                    $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_STR);
-                    $Instruc->bindParam(':archivo', $this->Archivo, PDO::PARAM_STR);
                     $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
                 }
 

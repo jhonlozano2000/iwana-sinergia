@@ -21,8 +21,10 @@ include("../../../config/variable.php");
 									<a href="#" id="BtnDescargarArchivoEnviado" class="descargar_pdf_enviado"
 										data-id_radicado="<?php echo $ItemRadicado['id_radica']; ?>"
 										data-id_ruta="<?php echo $ItemRadicado['id_ruta']; ?>"
-										data-archivo="<?php echo $ItemRadicado['archivo']; ?>">
-										<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"></a>
+										data-archivo="<?php echo $ItemRadicado['archivo']; ?>"
+										data-tipo_cargue_archivos="<?php echo $ItemRadicado['tipo_cargue_archivos']; ?>">
+										<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36">
+									</a>
 								</span>
 						<?php
 							}
@@ -49,7 +51,11 @@ include("../../../config/variable.php");
 				?>
 					<span class="muted small-text">
 						<a href="#" id="BtnDescargarArchivoEnviadoAdjunto"
-							data-id_archivo="<?php echo $ItemArchivo['id_archivo']; ?>">
+							data-id_radica="<?php echo $ItemArchivo['id_radica']; ?>"
+							data-id_ruta="<?php echo $ItemRadicado['id_ruta']; ?>"
+							data-id_archivo="<?php echo $ItemArchivo['id_archivo']; ?>"
+							data-nom_archivo="<?php echo $ItemArchivo['nom_archivo']; ?>"
+							data-tipo_cargue_archivos="<?php echo $ItemArchivo['tipo_cargue_archivos']; ?>">
 							<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36">
 							<?php echo $ItemArchivo['nom_archivo']; ?>
 						</a>

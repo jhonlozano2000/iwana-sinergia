@@ -111,6 +111,7 @@ $ConfigOtas = ConfigOtras::Buscar();
 
                     <input name="tipo_impre_torulo" id="tipo_impre_torulo" type="hidden" value="<?php echo $ConfigOtas->get_TipoImpresionRotulo(); ?>">
                     <input name="id_radica" id="id_radica" type="hidden">
+                    <input name="tipo_cargue_archivos" id="tipo_cargue_archivos" type="hidden" value="<?php echo $ConfigOtas->get_TipoCargueArchivos(); ?>">
 
                     <div class="col-md-12">
                         <div class="row">

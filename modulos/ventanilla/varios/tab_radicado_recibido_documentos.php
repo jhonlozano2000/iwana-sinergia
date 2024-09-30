@@ -21,8 +21,10 @@ foreach ($RegisRadicado as $ItemRadicado):
 								?>
 									<span class="muted small-text">
 										<a href="#" id="BtnDescargarArchivoRecibido" class="descargar_pdf_recibido"
-											data-id_radicado="<?php echo $ItemRadicado['id_radica']; ?>">
-											<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="50" height="56"></a>
+											data-id_radicado="<?php echo $ItemRadicado['id_radica']; ?>"
+											data-id_ruta="<?php echo $ItemRadicado['id_ruta']; ?>"
+											data-archivo="<?php echo $ItemRadicado['archivo']; ?>">
+											<img src=" <?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="50" height="56"></a>
 									</span>
 								<?php
 								}
