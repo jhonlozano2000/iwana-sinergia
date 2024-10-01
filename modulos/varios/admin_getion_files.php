@@ -210,23 +210,11 @@ switch ($Accion) {
 				$archivo_ruta = $path . '/' . $elemento;
 
 				if (!is_dir($archivo_ruta)) {
-					// Debug para ver si se está leyendo el archivo correcto
-					echo "Leyendo archivo: " . htmlspecialchars($archivo_ruta) . "<br />";
-
 					// Lee el contenido del archivo
 					$file_content = file_get_contents($archivo_ruta);
 
-					if ($file_content === false) {
-						echo "Error al leer el archivo " . htmlspecialchars($elemento) . "<br />";
-						continue; // Continúa con el siguiente archivo
-					}
-
 					// Codifica el archivo en Base64
 					$base64_encoded = base64_encode($file_content);
-
-					echo "Contenido codificado del archivo " . htmlspecialchars($elemento) . " - " . htmlspecialchars(substr($base64_encoded, 0, 100)) . "<br />";
-					echo "Tamaño del archivo: " . strlen($file_content) . " bytes<br />";
-					echo "Hash MD5 del archivo " . htmlspecialchars($elemento) . " - " . md5($file_content) . "<br /><br /><br />";
 
 					// Guardo el archivo adjunto en la base de datos
 					$ArchivoAdicional = new RadicadoInternoAdjuntos();

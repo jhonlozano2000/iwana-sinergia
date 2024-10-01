@@ -284,7 +284,7 @@
                 });
             }
         } else {
-            window.location.href = "../../../varios/admin_file.php?accion=INTERNO_DOWNLOAD_ADJUNTO&archivo_id=" + IdArchivo;
+            window.location.href = "../../../varios/admin_getion_files.php?accion=INTERNO_DOWNLOAD_ADJUNTO&archivo_id=" + IdArchivo;
         }
     });
 

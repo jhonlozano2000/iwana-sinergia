@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <querybuilder version="8.3">
 <source>
-<database charset="utf8mb4" collation="utf8mb4_0900_ai_ci">iwana_espinal</database>
+<database charset="utf8mb4" collation="utf8mb4_0900_ai_ci">iwana_sinergia</database>
 </source>
 <canvas>
 <table tablename="archivo_radica_recibidos" alias="ra" left="17" top="15" width="138" height="518" />
@@ -20,6 +20,7 @@
 <table tablename="archivo_trd_tipo_docu" alias="tipo_doc" left="519" top="13" width="150" height="113" />
 <table tablename="archivo_radica_enviados" alias="ra_envia" left="719" top="275" width="150" height="293" />
 <table tablename="config_tipos_respuestas" alias="" left="1103" top="146" width="150" height="113" />
+<table tablename="config_tipo_correspondencia" alias="" left="1099" top="293" width="150" height="203" />
 <join type = "Inner Join">
 <from tablename = "archivo_radica_recibidos" alias = "ra">id_serie</from>
 <to tablename = "archivo_trd_series" alias = "serie">id_serie</to>
@@ -79,6 +80,10 @@
 <join type = "Left Join">
 <from tablename = "archivo_radica_enviados" alias = "ra_envia">id_tipo_respue</from>
 <to tablename = "config_tipos_respuestas" alias = "">id_respue</to>
+</join>
+<join type = "Left Join">
+<from tablename = "archivo_radica_recibidos" alias = "ra">id_tipo_correspon</from>
+<to tablename = "config_tipo_correspondencia" alias = "">id_tipo</to>
 </join>
 </canvas>
 <grid>
@@ -490,6 +495,21 @@
 <column id="28">
 <table tablename="config_tipos_respuestas"></table>
 <field>nom_respues</field>
+<alias></alias>
+<show>true</show>
+<sortorder></sortorder>
+<sort></sort>
+<groupby>false</groupby>
+<aggfunct></aggfunct>
+<criteria></criteria>
+<or1></or1>
+<or2></or2>
+<or3></or3>
+<or4></or4>
+</column>
+<column id="29">
+<table tablename="config_tipo_correspondencia"></table>
+<field>nom_tipo</field>
 <alias></alias>
 <show>true</show>
 <sortorder></sortorder>
