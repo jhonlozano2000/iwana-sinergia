@@ -362,13 +362,14 @@
                     $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
                 } elseif ($this->Accion === 'INSERTAR_ARCHIVO') {
                     $Sql = "UPDATE archivo_radica_interna
-                            SET `id_ruta` = :id_ruta, `adjunto` = :adjunto, nombre_archivo = :nombre_archivo, tipo_cargue_archivos = :tipo_cargue_archivos
+                            SET `id_ruta` = :id_ruta, `adjunto` = :adjunto, archivo = :archivo, nombre_archivo = :nombre_archivo, tipo_cargue_archivos = :tipo_cargue_archivos
                             WHERE `id_radica` = :id_radica";
 
                     $Instruc = $conexion->prepare($Sql);
                     $Instruc->bindParam(':id_ruta', $this->IdRuta, PDO::PARAM_INT);
                     $Instruc->bindParam(':adjunto', $this->Adjunto, PDO::PARAM_INT);
-                    $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_INT);
+                    $Instruc->bindParam(':archivo', $this->Archivo, PDO::PARAM_STR);
+                    $Instruc->bindParam(':nombre_archivo', $this->NombreArchivo, PDO::PARAM_STR);
                     $Instruc->bindParam(':tipo_cargue_archivos', $this->TipoCargueArchivo, PDO::PARAM_INT);
                     $Instruc->bindParam(':id_radica', $this->IdRadica, PDO::PARAM_STR);
                 } elseif ($this->Accion === 'IMPRIMIR_ROTULO') {

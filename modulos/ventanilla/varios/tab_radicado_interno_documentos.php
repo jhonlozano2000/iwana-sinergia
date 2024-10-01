@@ -15,7 +15,10 @@ require_once '../../clases/radicar/class.RadicaInternoAdjuntos.php';
 						<div class="col-md-12">
 							<span class="muted small-text">
 								<a href="#" id="BtnDescargarArchivoInterno" class="descargar_pdf_interno"
-									data-id_radicado="<?php echo $_REQUEST['id_radica']; ?>">
+									data-id_radicado="<?php echo $_REQUEST['id_radica']; ?>"
+									data-id_ruta="<?php echo $_REQUEST['id_ruta']; ?>"
+									data-tipo_cargue_archivos="<?php echo $_REQUEST['tipo_cargue_archivos']; ?>"
+									data-nombre_archivo="<?php echo $_REQUEST['nombre_archivo']; ?>">
 									<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"></a>
 							</span>
 						</div>
@@ -30,12 +33,13 @@ require_once '../../clases/radicar/class.RadicaInternoAdjuntos.php';
 							?>
 								<span class="muted small-text">
 									<a href="#" id="BtnDescargarArchivoInternoAdjuntos" class="descargar_pdf_interno"
-										data-id_radica="<?php echo $ItemArchivo['id_radica']; ?>"
+										data-id_archivo="<?php echo $ItemRadicado['id_archivo']; ?>"
+										data-id_radica="<?php echo $ItemRadicado['id_radica']; ?>"
 										data-id_ruta="<?php echo $ItemRadicado['id_ruta']; ?>"
-										data-id_archivo="<?php echo $ItemArchivo['id_archivo']; ?>"
-										data-nom_archivo="<?php echo $ItemArchivo['nombre_archivo_adjunto']; ?>"
-										data-tipo_cargue_archivos="<?php echo $ItemArchivo['tipo_cargue_archivos']; ?>">
-										<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"><?php echo $ItemRadicado['nombre_archivo_adjunto']; ?></a>
+										data-id_archivo="<?php echo $ItemRadicado['id_archivo']; ?>"
+										data-nom_archivo="<?php echo $ItemRadicado['nombre_archivo_adjunto']; ?>"
+										data-tipo_cargue_archivos="<?php echo $ItemRadicado['tipo_cargue_archivos']; ?>">
+										<img src="<?php echo MI_ROOT; ?>/public/assets/img/pdf.png" width="30" height="36"> <?php echo $ItemRadicado['nombre_archivo_adjunto']; ?></a>
 									<br />
 								</span>
 							<?php

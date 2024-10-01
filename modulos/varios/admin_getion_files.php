@@ -169,7 +169,7 @@ switch ($Accion) {
 		echo 1;
 		exit();
 		break;
-	case 'INTERNO_UPLOAD_VENTANILLA':
+	case 'INTERNO_UPLOAD':
 		/**
 		 * Aqui se hace el cargue del documento digital desde ventanilla
 		 */
@@ -179,17 +179,19 @@ switch ($Accion) {
 		// Codifica el archivo en Base64
 		$base64_encoded = base64_encode($file_content);
 
-		$ArchivoAdicional = new RadicadoInterno();
-		$ArchivoAdicional->set_Accion('INSERTAR_ARCHIVO');
-		$ArchivoAdicional->set_IdRadica($IdRadica);
-		$ArchivoAdicional->set_NombreArchivo($ArchivoSubirNOMBRE);
-		$ArchivoAdicional->set_Archivo($base64_encoded);
-		if ($ArchivoAdicional->Gestionar() == true) {
+		$Radicado = new RadicadoInterno();
+		$Radicado->set_Accion('INSERTAR_ARCHIVO');
+		$Radicado->set_IdRadica($IdRadica);
+		$Radicado->set_Adjunto(1);
+		$Radicado->set_TipoCargueArchivo($TipoCargueArchivo);
+		$Radicado->set_NombreArchivo($ArchivoSubirNOMBRE);
+		$Radicado->set_Archivo($base64_encoded);
+		if ($Radicado->Gestionar() == true) {
 			echo 1;
 			exit();
 		}
 		break;
-	case 'INTERNO_UPLOAD_ADJUNTOS_VENTANILLA':
+	case 'INTERNO_UPLOAD_ADJUNTOS':
 		/**
 		 * Aqui se hace el cargue desde ventailla de los documentos adjuntos
 		 */
@@ -685,6 +687,6 @@ switch ($Accion) {
 		}
 		break;
 	default:
-		echo 'No hay accion para realizar por FTP';
+		echo 'No hay accion para realizar por Admin Gestion File';
 }
 ob_end_flush();

@@ -36,7 +36,7 @@ $IdArchivoDigital   = isset($_POST['id_archivo']) ? $_POST['id_archivo'] : null;
 $ArchivoDigital     = isset($_REQUEST['archivo']) ? $_REQUEST['archivo'] : null;
 $TipoArchivoDigital = isset($_POST['tipo_archivo']) ? $_POST['tipo_archivo'] : null;
 
-$ArchivoInterno = isset($_POST['archiv_interno']) ? $_POST['archiv_interno'] : null;
+$ArchivoInterno = isset($_REQUEST['archiv_interno']) ? $_POST['archiv_interno'] : null;
 $TipoCargueArchivo  = isset($_POST['tipo_cargue_archivos']) ? $_POST['tipo_cargue_archivos'] : null;
 
 switch ($Accion) {
@@ -552,7 +552,7 @@ switch ($Accion) {
 		break;
 	case 'INTERNO_DOWNLOAD':
 
-		$Servidor = ServidorTemp::Buscar(5, 0, "", 3);
+		$Servidor = ServidorTemp::Buscar(5, $IdRuta, "", 3);
 
 		if (!$Servidor) {
 			echo "No se encontro el servidor de archivo para esta dependencia, por favor consulte con el administador del sistema.";
@@ -585,6 +585,52 @@ switch ($Accion) {
 			$Archivo = $Ruta . "/" . $ArchivoInterno;
 
 			$ftpObj->downloadFile(MI_ROOT_TEMP_RELATIVA . "/interna/" . $ArchivoInterno, $Archivo);
+			if ($ftpObj->pr($ftpObj->getMessages()[0]) == "true") {
+				echo 1;
+				exit();
+			}
+		} else {
+			echo "No fue posible conectarme con el servidor de archivo….\nPor favor consulte con el administrador del sistema.";
+			exit();
+		}
+		break;
+	case 'INTERNO_DOWNLOAD_ADJUNTO':
+
+		$Servidor = ServidorTemp::Buscar(5, $IdRuta, "", 3);
+
+		if (!$Servidor) {
+			echo "No se encontro el servidor de archivo para esta dependencia, por favor consulte con el administador del sistema.";
+			exit();
+		}
+
+		$Ip            = $Servidor->get_Ip();
+		$Usuario       = $Servidor->get_Usua();
+		$Contra        = $Servidor->get_Contra();
+		$RutaFtp       = $Servidor->get_Ruta();
+		$Radicado      = RadicadoInterno::Buscar(1, $IdRadica, "", "", "");
+		$FechaRadicado = new DateTime($Radicado->get_FecRadica());
+		$ArchivoAdjunto = RadicadoInternoAdjuntos::Buscar(3, "", $archivoId);
+		$Ano           = $FechaRadicado->format('Y');
+
+		if (!is_dir(MI_ROOT_TEMP_RELATIVA . "/interna/"))
+			mkdir(MI_ROOT_TEMP_RELATIVA . "/interna/", 0777);
+
+		$ftpObj = new FTPClient();
+
+		$ftpObj->connect($Ip, $Usuario, $Contra);
+		if ($ftpObj->pr($ftpObj->getMessages()[0]) == 'true') {
+
+			$Ruta = "";
+			if ($RutaFtp != "") {
+				$Ruta = $Ano . "/" . $RutaFtp . "/" . $IdRadica;
+			} else {
+				$Ruta = $Ano . "/" . $IdRadica;
+			}
+
+			$Archivo = $Ruta . "/" . $ArchivoAdjunto->get_NombreArchivo();
+
+
+			$ftpObj->downloadFile(MI_ROOT_TEMP_RELATIVA . "/interna/" . $ArchivoAdjunto->get_NombreArchivo(), $Archivo);
 			if ($ftpObj->pr($ftpObj->getMessages()[0]) == "true") {
 				echo 1;
 				exit();

@@ -140,6 +140,10 @@
         var IdRadicado = $(this).data("id_radicado");
         var NombreArchivo = $(this).data("nombre_archivo");
 
+        let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
+        var IdRadicado = $(this).data("id_radicado");
+        var IdRuta = $(this).data("id_ruta");
+
         $("#DivRadicadoInterno").html(IdRadicado);
 
         $.ajax({
@@ -161,7 +165,7 @@
         $.ajax({
             url: "../../varios/tab_radicado_interno_clasificacion.php",
             type: "POST",
-            data: "id_radica=" + IdRadicado,
+            data: "id_radica=" + IdRadicado + "",
             beforeSend: function () {
                 $("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
             },
@@ -177,7 +181,7 @@
         $.ajax({
             url: "../../varios/tab_radicado_interno_documentos.php",
             type: "POST",
-            data: "id_radica=" + IdRadicado + "&nombre_archivo=" + NombreArchivo,
+            data: "id_radica=" + IdRadicado + "&nombre_archivo=" + NombreArchivo + "&id_ruta=" + IdRuta + "&tipo_cargue_archivos=" + tipoCargueArchivo + "&nombre_archivo=" + NombreArchivo,
             beforeSend: function () {
                 $("#alerta").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
             },
@@ -209,16 +213,10 @@
 
     $(document).on("click", "#BtnDescargarArchivoInterno", function (event) {
         var IdRadicado = $(this).data("id_radicado");
-        window.location.href = "../../../varios/admin_file.php?accion=INTERNO_DOWNLOAD&id_radicado=" + IdRadicado;
-    });
-
-    $(document).on("click", "#BtnDescargarArchivoInternoAdjuntos", function (event) {
-        var IdArchivo = $(this).data("id_archivo");
-
         let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
         var IdRadicado = $(this).data("id_radicado");
         var IdRuta = $(this).data("id_ruta");
-        var Archivo = $(this).data("archivo");
+        var Archivo = $(this).data("nombre_archivo");
 
         if (tipoCargueArchivo == 0) {
             if ($("#id_ruta").val() == 0) {
@@ -227,14 +225,54 @@
                 $.ajax({
                     url: "../../../varios/ftp.acciones.php",
                     type: "POST",
-                    data: "accion=INTERNO_DOWNLOAD&id_radicado=" + IdRadicado + "&id_ruta=" + IdRuta + "&tipo_cargue_archivos=" + tipoCargueArchivo,
+                    data: "accion=INTERNO_DOWNLOAD&id_radicado=" + IdRadicado + "&id_ruta=" + IdRuta + "&tipo_cargue_archivos=" + tipoCargueArchivo + "&archiv_interno=" + Archivo,
                     beforeSend: function () {
                         $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
                     },
                     success: function (msj) {
                         $("#DivAlertas").empty();
                         if (msj == 1) {
-                            url = "../../../../archivos/temp/enviados/" + Archivo;
+                            url = "../../../../archivos/temp/interna/" + Archivo;
+                            window.open(url, "Download");
+                        } else {
+                            sweetAlert("Oops...", msj, "error");
+                        }
+                    },
+                    error: function (error) {
+                        sweetAlert("Oops...", error, "error");
+                    },
+                });
+            }
+        } else {
+            window.location.href = "../../../varios/admin_file.php?accion=INTERNO_DOWNLOAD&id_radicado=" + IdRadicado;
+        }
+    });
+
+    $(document).on("click", "#BtnDescargarArchivoInternoAdjuntos", function (event) {
+        var IdArchivo = $(this).data("id_archivo");
+
+        let tipoCargueArchivo = $("#tipo_cargue_archivos").val();
+        var IdRadicado = $(this).data("id_radica");
+        var IdRuta = $(this).data("id_ruta");
+        var Archivo = $(this).data("archivo");
+        var IdArchivo = $(this).data("id_archivo");
+        var NomArchivo = $(this).data("nom_archivo");
+
+        if (tipoCargueArchivo == 0) {
+            if ($("#id_ruta").val() == 0) {
+                sweetAlert("Oops...", "El radicado no tiene el documento digital, por favor adjunte el documento digitalizado!", "warning");
+            } else {
+                $.ajax({
+                    url: "../../../varios/ftp.acciones.php",
+                    type: "POST",
+                    data: "accion=INTERNO_DOWNLOAD_ADJUNTO&id_radicado=" + IdRadicado + "&id_ruta=" + IdRuta + "&archivo_id=" + IdArchivo,
+                    beforeSend: function () {
+                        $("#DivAlertas").html('<div class="alert alert-info"><button class="close" data-dismiss="alert"></button><a href="#" class="link"><img src="../../../../public/assets/img/loading.gif" width="20" height="20"> Info.:</a> Enviando informacóm, por favor espere. </div>');
+                    },
+                    success: function (msj) {
+                        $("#DivAlertas").empty();
+                        if (msj == 1) {
+                            url = "../../../../archivos/temp/interna/" + NomArchivo;
                             window.open(url, "Download");
                         } else {
                             sweetAlert("Oops...", msj, "error");
